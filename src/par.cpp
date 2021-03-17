@@ -131,3 +131,13 @@ double PAR::desviacionParticiom(vector<vector<vector<double>>> C){
 
     return distancia;
 }
+
+
+/*
+        Calcula el número de restricciones violadas. COMPLETAR
+    */
+    int PAR::infeasibility(){
+        int restricciones_violadas=0; 
+
+        return restricciones_violadas;
+    }

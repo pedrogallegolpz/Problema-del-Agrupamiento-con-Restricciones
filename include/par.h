@@ -57,7 +57,10 @@ public:
     */
     double desviacionParticiom(vector<vector<vector<double>>> C);
 
-
+    /*
+        Calcula el número de restricciones violadas
+    */
+    int infeasibility();
 
 
 
