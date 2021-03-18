@@ -18,13 +18,12 @@ using namespace std;
 void PAR::generarRestricciones(){
     for(int i=0; i< num_instancias; i++){
         for(int j=i+1; j<num_instancias; j++){
-
-            if(restricciones[i][j]==1){
+            if(restricciones[i][j]==1){         // Restricciones ML
                 vector<int> v;
                 v.push_back(i);
                 v.push_back(j);
                 ML.push_back(v);
-            }else if(restricciones[i][j]==-1){
+            }else if(restricciones[i][j]==-1){  // Restricciones CL
                 vector<int> v;
                 v.push_back(i);
                 v.push_back(j);
@@ -229,6 +228,4 @@ void PAR::asignarInstanciasAClustersCercanos(){
         vector<int> restricciones_incumplidas;       // restricciones violadas con los cluster
         //ACORDARME DE LIMPIAR EL VECTOR DE DISTANCIAS
     }
-
-
 }

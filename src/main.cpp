@@ -31,7 +31,7 @@ int main(int argc, char * argv[]) {
         cout << "Uso: " << argv[0] << " ./data/<filename> " << endl << "No hay que poner el .dat en el archivo por parámetro." << endl << endl;
         return 1;
     }
-    
+
     string filestring(argv[1]);
 
     if(filestring!="./data/bupa_set" && filestring!="./data/zoo_set" && filestring!="./data/glass_set"){
@@ -41,9 +41,16 @@ int main(int argc, char * argv[]) {
         return 1;
     }
 
-    /*
-    AQUÍ PODEMOS ESTABLECER EL NÚMERO DE CLASES EN FUNCION DE filestring 
-    */
+
+    // Establecemos el número de clases en función del archivo
+    int clases=0;
+    if(filestring=="./data/bupa_set"){
+        clases=16;
+    }else if(filestring=="./data/zoo_set"){
+        clases=7;
+    }else if(filestring=="./data/glass_set"){
+        clases=7;
+    }
 
 
     // Estructuras para la lectura
@@ -64,12 +71,14 @@ int main(int argc, char * argv[]) {
     par_10.setNumInstancias(data.size());
     par_10.setNumAtributos(data[0].size());
     par_10.setRestricciones(const_10);
+    par_10.setNumClases(clases);
 
 
     par_20.setInstancias(data); 
     par_20.setNumInstancias(data.size());
     par_20.setNumAtributos(data[0].size());
     par_20.setRestricciones(const_20);
+    par_20.setNumClases(clases);
 
     cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
     greedyCOPKM(par_10);
