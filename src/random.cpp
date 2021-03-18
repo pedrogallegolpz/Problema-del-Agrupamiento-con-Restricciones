@@ -1,5 +1,9 @@
 #include <math.h>
+#include <vector>
 #include "../include/random.h"
+
+
+using namespace std;
 
 unsigned long Seed = 0L;
 
@@ -12,6 +16,7 @@ void Set_random (unsigned long x)
    Solo debe llamarse a esta funcion una vez en todo el programa */
 {
     Seed = (unsigned long) x;
+
 }
 
 unsigned long Get_random (void)
@@ -20,7 +25,7 @@ unsigned long Get_random (void)
     return Seed;
 }
 
-float Rand(void)
+double Rand(void)
 /* Genera un numero aleatorio real en el intervalo [0,1[
    (incluyendo el 0 pero sin incluir el 1) */
 {
@@ -33,9 +38,34 @@ int Randint(int low, int high)
     return (int) (low + (high-(low)+1) * Rand());
 }
 
-float Randfloat(float low, float high)
+double Randfloat(double low, double high)
 /* Genera un numero aleatorio real en el intervalo [low,...,high[
    (incluyendo 'low' pero sin incluir 'high') */
 {
     return (low + (high-(low))*Rand());
+}
+
+
+vector<int> ShuffleIndices(int size)
+/*
+Barajar un vector*/
+{
+    vector<int> indices;
+    for(int i=0; i<size; i++){
+        indices.push_back(i);
+    }
+
+    vector<int> indices_shuffled;
+    int i=0;
+    while(i<indices.size()){
+        int j=Randint(0,indices.size());
+
+        // Insertamos el índice
+        indices_shuffled.push_back(indices[j]);
+
+        // Lo borramos del primer vector
+        indices.erase(indices.begin()+j);
+    }
+
+    return indices_shuffled;
 }

@@ -18,23 +18,33 @@
 #include "random.h"
 #include "par.h"
 #include "readfiles.h"
+#include "greedyCOPKM.h"
 
 using namespace std;
 
 
 int main(int argc, char * argv[]) {
 
-    string filestring(argv[1]);
+    
 
     if(argc != 2){
         cout << "Uso: " << argv[0] << " ./data/<filename> " << endl << "No hay que poner el .dat en el archivo por parámetro." << endl << endl;
         return 1;
-    }else if(filestring!="./data/bupa_set" && filestring!="./data/zoo_set" && filestring!="./data/glass_set"){
+    }
+    
+    string filestring(argv[1]);
+
+    if(filestring!="./data/bupa_set" && filestring!="./data/zoo_set" && filestring!="./data/glass_set"){
         cout << "No existe ese archivo. Por favor introduzca uno de los siguientes:" << endl;
         cout << " - ./data/bupa_set" << endl << " - ./data/zoo_set" << endl << " - ./data/glass_set" << endl << endl;
 
         return 1;
     }
+
+    /*
+    AQUÍ PODEMOS ESTABLECER EL NÚMERO DE CLASES EN FUNCION DE filestring 
+    */
+
 
     // Estructuras para la lectura
     vector<vector<double> > data;
@@ -55,10 +65,50 @@ int main(int argc, char * argv[]) {
     par_10.setNumAtributos(data[0].size());
     par_10.setRestricciones(const_10);
 
+
     par_20.setInstancias(data); 
     par_20.setNumInstancias(data.size());
     par_20.setNumAtributos(data[0].size());
     par_20.setRestricciones(const_20);
 
+    cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
+    greedyCOPKM(par_10);
+
+    
     
 }
+
+
+// Código complementario
+//Calculamos maximos y minimos del fichero 
+    // RESULTADOS DE EJECUTAR EL CÓDIGO DE ABAJO CON CADA ARCHIVO:
+    //      Zoo: máximos={1,1,1,...(16)...,1}, mínimos={0,0,0,...(16)...,0}
+    //      Glass: máximos={1,1,1,...(9)...,1}, mínimos={0,0,0,...(9)...,0}
+    //      Bupa: máximos={1,1,1,1,1}, mínimos={0,0,0,0,0}
+    /*   
+    cout << "Los elementos más grandes por posición de " << filestring << " son: [";
+    
+    for(int j=0; j<data[0].size(); j++){
+        double max=-1000000;
+        for(int i=0; i<data.size(); i++){
+            if(data[i][j]>max){
+                max=data[i][j];
+            }   
+        }
+        cout << max << ",";
+    }
+    cout << "]" <<endl <<endl;
+
+    cout << "Los elementos más pequeños por posición de " << filestring << " son: [";
+    
+    for(int j=0; j<data[0].size(); j++){
+        double min=1000000;
+        for(int i=0; i<data.size(); i++){
+            if(data[i][j]<min){
+                min=data[i][j];
+            }   
+        }
+        cout << min << ",";
+    }
+    cout << "]" <<endl <<endl;
+    */

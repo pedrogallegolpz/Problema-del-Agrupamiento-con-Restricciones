@@ -1,10 +1,39 @@
 #include <iostream>
 #include <vector>
-#include <math.h>  
+#include <math.h> 
+#include "../include/random.h" 
 #include "../include/par.h"
 
 
 using namespace std;
+
+
+/////////////////////
+// MÉTODOS PRIVADOS
+/////////////////////
+
+/*
+    Creamos los vectores ML y CL
+*/
+void PAR::generarRestricciones(){
+    for(int i=0; i< num_instancias; i++){
+        for(int j=i+1; j<num_instancias; j++){
+
+            if(restricciones[i][j]==1){
+                vector<int> v;
+                v.push_back(i);
+                v.push_back(j);
+                ML.push_back(v);
+            }else if(restricciones[i][j]==-1){
+                vector<int> v;
+                v.push_back(i);
+                v.push_back(j);
+                CL.push_back(v);
+            }
+        }
+    }
+}
+
 
 
 ///////////////////
@@ -26,25 +55,41 @@ PAR::PAR(int num_instancias_source, int num_atributos_source, int num_clases_sou
     num_atributos = num_atributos_source;
     num_clases = num_clases_source;
     instancias = instancias_source;
+    for(int i=0; i<instancias.size();i++){
+        indices.push_back(i);
+    }
+
+    generarRestricciones();
 }
 
 /*
     Constructor copia
 */
-PAR::PAR(const PAR &cluster_source){
-    num_instancias = cluster_source.getNumInstancias();
-    num_atributos = cluster_source.getNumAtributos();
-    num_clases = cluster_source.getNumClases();
-    instancias = cluster_source.getInstancias();
-    centroides = cluster_source.getCentroides();
-    clusters = cluster_source.getClusters();
-    restricciones = cluster_source.getRestricciones();
+PAR::PAR(const PAR &par_source){
+    num_instancias = par_source.getNumInstancias();
+    num_atributos = par_source.getNumAtributos();
+    num_clases = par_source.getNumClases();
+    instancias = par_source.getInstancias();
+    centroides = par_source.getCentroides();
+    clusters = par_source.getClusters();
+    restricciones = par_source.getRestricciones();
+    indices = par_source.getIndices();
+
+    generarRestricciones();
 }
 
 
 //////////////////
 // MÉTODOS
 //////////////////
+
+ /*
+    Barajar indices
+*/
+void PAR::shuffleInstances(){
+    indices = ShuffleIndices(num_instancias);
+}
+
 
 /*
     Calcula la distancia euclídea entre dos puntos de Rn
@@ -132,12 +177,58 @@ double PAR::desviacionParticiom(vector<vector<vector<double>>> C){
     return distancia;
 }
 
+/*
+    Definimos ℎ𝐶(∙) como la función que dada una instancia xi
+    devuelve la etiqueta j asociada al cluster cj al que xi pertenece
+    según la partición C. getClusterFromInstance hace esta función
+*/ 
+int getClusterFromInstance(int i){
+
+    // COMPLETARRRRRRRR
+
+    return 0;
+}
+
+
 
 /*
-        Calcula el número de restricciones violadas. COMPLETAR
-    */
-    int PAR::infeasibility(){
-        int restricciones_violadas=0; 
+    Calcula el número de restricciones violadas. COMPLETAR
+*/
+int PAR::infeasibility(){
+    int restricciones_violadas=0; 
 
-        return restricciones_violadas;
+    for(int i=0; i<ML.size(); i++){
+        if( getClusterFromInstance(ML[i][0])!=getClusterFromInstance(ML[i][1]) ){
+            restricciones_violadas++;
+        }
     }
+    for(int i=0; i<CL.size(); i++){
+        if( getClusterFromInstance(CL[i][0])==getClusterFromInstance(CL[i][1]) ){
+            restricciones_violadas++;
+        }
+    }
+
+    return restricciones_violadas;
+}
+
+
+/*
+    Asigna instancia al cluster más cercano y que cumpla las restricciones
+*/
+void PAR::asignarInstanciasAClustersCercanos(){
+    for(int i=0; i<instancias.size(); i++){
+        vector<double> distancias;      // distancias a centroides
+
+        for(int c=0; c<centroides.size(); c++){
+            int dist = distanciaEntreDosPuntos(instancias[i],centroides[c]);
+            distancias.push_back(dist);   
+        }
+
+        //COMPLETARRRRRRRR
+
+        vector<int> restricciones_incumplidas;       // restricciones violadas con los cluster
+        //ACORDARME DE LIMPIAR EL VECTOR DE DISTANCIAS
+    }
+
+
+}

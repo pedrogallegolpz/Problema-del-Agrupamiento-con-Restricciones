@@ -15,9 +15,22 @@ private:
     int num_atributos;
     int num_clases;
     vector<vector<double>> instancias;
-    vector<vector<double>> centroides;  // contiene los $num_clases centroides. Uno de cada cluster
+    vector<vector<double>> centroides;  // Contiene los $num_clases centroides. Uno de cada cluster
     vector<vector<vector<double>>> clusters;
+    
+    //Restricciones
     vector<vector<double>> restricciones;
+    vector<vector<int>> ML;             // Restricciones Must-Link (ML). La instancia ML[i,0] tiene que tener relación con ML[i,1]
+    vector<vector<int>> CL;             // Restricciones Must-Link (ML). La instancia ML[i,0] no puede tener relación con ML[i,1]
+                                        // NOTA en la posición M[i] hay dos índices que hacen referencia directa a instancias (No a indices)
+
+    // Seguiremos el orden según estos índices
+    vector<int> indices;                // Nos dice cómo recorremos las instancias
+
+    /*
+        Creamos los vectores ML y CL
+    */
+    void generarRestricciones();
 
 public:
     /*
@@ -34,6 +47,11 @@ public:
         Constructor copia
     */
     PAR(const PAR &par_source);    
+
+    /*
+        Barajar indices
+    */
+    void shuffleInstances();
 
     /*
         Calcula la distancia euclídea entre dos puntos de Rn
@@ -58,11 +76,21 @@ public:
     double desviacionParticiom(vector<vector<vector<double>>> C);
 
     /*
+        Definimos ℎ𝐶(∙) como la función que dada una instancia xi
+        devuelve la etiqueta j asociada al cluster cj al que xi pertenece
+        según la partición C. getClusterFromInstance hace esta función
+    */ 
+    int getClusterFromInstance(int i);
+
+    /*
         Calcula el número de restricciones violadas
     */
     int infeasibility();
 
-
+    /*
+        Asigna instancia al cluster más cercano y que cumpla las restricciones
+    */
+    void asignarInstanciasAClustersCercanos();
 
 
 
@@ -118,6 +146,13 @@ public:
     }
     void setRestricciones(vector<vector<double>> new_restricciones){
         restricciones = new_restricciones;
+    }
+
+    vector<int> getIndices() const{
+        return indices;
+    }
+    void setIndices(vector<int> ind){
+        indices = ind;
     }
     
 
