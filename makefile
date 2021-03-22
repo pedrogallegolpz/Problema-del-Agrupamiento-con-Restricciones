@@ -9,7 +9,7 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++11 -g -I./$(INC) -O3
 
 # Archivos del proyecto
-SOURCES := random.cpp par.cpp readfiles.cpp greedyCOPKM.cpp 
+SOURCES := random.cpp par.cpp readfiles.cpp greedyCOPKM.cpp busqlocal.cpp
 INCLUDES := $(addprefix $(INC)/, $(SOURCES:.cpp=.h))
 OBJECTS := $(addprefix $(OBJ)/, $(SOURCES:.cpp=.o))
 SOURCES := $(addprefix $(SRC)/, $(SOURCES))

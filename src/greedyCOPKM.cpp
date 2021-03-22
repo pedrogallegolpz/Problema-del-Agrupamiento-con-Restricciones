@@ -10,12 +10,12 @@ using namespace std;
 /*
     Ejecuta el algoritmo COPKM entero sobre un problema PAR
 */
-void greedyCOPKM(PAR par){
+void greedyCOPKM(PAR par, int seed){
     // Generamos los centroides de forma aleatoria
     vector<vector<double>> centroides;
     vector<double> centroide_aux;
 
-    Set_random(1231);
+    Set_random(seed);
 
     for(int i=0; i<par.getNumClases(); i++){
         //cout << "Centroide " << i << " tiene de coordenadas:"<< endl;         // Mostrar centroides

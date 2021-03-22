@@ -11,9 +11,13 @@ using namespace std;
 
 class PAR{
 private:
+    double GREATER_DIST;
+    int SEED;
+
     int num_instancias;
     int num_atributos;
     int num_clases;
+    
 
     /*
         Todas las variables vector que hacen referencia a las instancias
@@ -59,7 +63,7 @@ public:
     /*
         Inicializa el número de clases y los datos del problema.
     */
-    PAR(int num_instancias_source, int num_atributos_source, int num_clases_source, vector<vector<double>> instancias_source);
+    PAR(int num_atributos_source, int num_clases_source, vector<vector<double>> instancias_source, vector<vector<double>> restricciones_source, int seed_source);
 
     /*
         Constructor copia
@@ -81,22 +85,10 @@ public:
     */
     vector<double> calcularCentroide(int ci);
 
-
     /*
-        Calcula la distancia media intra-cluster de un cluster[ci]
+        Actualiza los centroides
     */
-    double distanciaIntraCluster(int ci);
-
-    /*
-        Calcula la desviación general de la partición C={c1​, c2​,...,cn} definida
-        como la media de las desviaciones intra-cluster de cada grupo o cluster
-    */
-    double desviacionParticion();
-
-    /*
-        Calcula el número de restricciones violadas
-    */
-    int infeasibility();
+    bool updateCentroides();
 
     /*
         Calcula el número de restricciones violadas con una instancia concreta
@@ -116,13 +108,13 @@ public:
     int incrementoInfeasibility(int instancia, int c1, int c2);
     
 
-    /*
-        Actualiza los centroides
-    */
-    bool updateCentroides();
-    
+    ////////////////////////////////////////////////////////////////
+    //      Métodos principales para las distintas Metaheurísticas
+    ////////////////////////////////////////////////////////////////
     
     /*
+        USADO PARA LA METAHEURÍSTICA GREEDY COPKM PARA CADA ITERACIÓN
+
         Asigna cada instancia a su clúster más cercano teniendo que respetar
         las restricciones fuertes y teniendo en cuenta de que cada instancia
         tiene que escoger el clúster con el que incumpla menos restricciones
@@ -132,6 +124,61 @@ public:
         en los centroides.
     */
     bool asignarInstanciasAClustersCercanos();
+
+    /*
+        USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL EL PRIMERO MEJOR
+
+        Asigna clústers a las instancia de forma aleatoria respetando
+        las restricciones fuertes del problema.
+
+        Devuelve true si ha sido exitosa la operación. 
+        En otro caso devuelve false.
+    */
+    bool asignarInstanciasAleatoriamente();
+
+    /*
+        USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL EL PRIMERO MEJOR
+
+        Nos devuelve verdadero si cambia el cluster. Solo hace el cambio si mejora
+        la solución al problema.
+    */
+    bool cambioClusterMejor(int instancia, int cluster);
+
+    /*
+        USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL EL PRIMERO MEJOR
+
+        Nos devuelve True en caso de haber encontrado un vecino mejor. En otro caso
+        estamos ante la solución óptima y nos dará False
+    */
+    bool buscarPrimerVecinoMejor();
+    
+
+    
+    /////////////////////////////////////////////////////////////
+    //    Métodos que nos dicen cómo de buena es la solución
+    /////////////////////////////////////////////////////////////
+
+    /*
+        Calcula la distancia media intra-cluster de un cluster[ci]
+    */
+    double distanciaIntraCluster(int ci);
+
+    /*
+        Calcula la desviación general de la partición C={c1​, c2​,...,cn} definida
+        como la media de las desviaciones intra-cluster de cada grupo o cluster
+    */
+    double desviacionParticion();
+
+    /*
+        Función objetivo. Será la función que buscaremos minimizar y nos dirá 
+        cómo de buena es nuestra solución actual
+    */
+    double  fitnessFunction();
+
+    /*
+        Calcula el número de restricciones violadas
+    */
+    int infeasibility();
 
 
 
@@ -161,6 +208,21 @@ public:
     //    Setters and Getters
     //////////////////////////////////
 
+
+    double getGreaterDist() const{
+        return GREATER_DIST;
+    }
+    void setGreaterDist(int dist){
+        GREATER_DIST = dist;
+    }
+
+    double getSeed() const{
+        return SEED;
+    }
+    void setSeed(int seed){
+        SEED = seed;
+    }
+
     int getNumInstancias() const{
         return num_instancias;
     }
@@ -168,7 +230,9 @@ public:
         num_instancias = ninstancias;
 
         // Asignamos ningún clúster a todos
-        inst_belong.clear();
+        if(!inst_belong.empty()){
+            inst_belong.clear();
+        }
         for(int i=0; i<num_instancias; i++){
             inst_belong.push_back(-1);
         }
@@ -186,15 +250,40 @@ public:
     }
     void setNumClases(int nclases){
         num_clases = nclases;
-        centroides.resize(num_clases);
+
+        clusters.clear();
         clusters.resize(num_clases);
     }
+
 
     vector<vector<double>> getInstancias() const{
         return instancias;
     }
     void setInstancias(vector<vector<double>> new_instancias){
+        // Inicializamos todas las variables que dependen de las instancias
         instancias = new_instancias;
+        num_instancias = new_instancias.size();
+
+        if(!inst_belong.empty()){
+            inst_belong.clear();
+        }
+        for(int i=0; i<num_instancias; i++){
+           inst_belong.push_back(-1);
+        }
+
+        ShuffleIndices(num_instancias);
+
+        // Calculamos la distancia más grande
+        GREATER_DIST = 0;
+        for(int i=0; i<instancias.size(); i++){
+            for(int j=i+1; j<instancias.size(); j++){
+                double dist_actual = distanciaEntreDosPuntos(instancias[i], instancias[j]);
+                if(dist_actual > GREATER_DIST){
+                    GREATER_DIST = dist_actual;
+                }
+            }
+        }
+
     }
 
     vector<vector<double>> getCentroides() const{
@@ -223,6 +312,7 @@ public:
     }
     void setRestricciones(vector<vector<double>> new_restricciones){
         restricciones = new_restricciones;
+        generarRestricciones();
     }
 
     vector<int> getIndices() const{

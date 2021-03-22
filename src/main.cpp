@@ -19,6 +19,7 @@
 #include "par.h"
 #include "readfiles.h"
 #include "greedyCOPKM.h"
+#include "busqlocal.h"
 
 using namespace std;
 
@@ -54,7 +55,8 @@ int main(int argc, char * argv[]) {
         clases=4;
     }
 
-
+    // SEMILLA
+    int seed = 3;
 
     // Estructuras para la lectura
     vector<vector<double> > data;
@@ -76,19 +78,30 @@ int main(int argc, char * argv[]) {
     par_10.setNumAtributos(data[0].size());
     par_10.setRestricciones(const_10);
     par_10.setNumClases(clases);
-   
+    par_10.setSeed(seed);
+
+    /*
     par_20.setInstancias(data); 
     par_20.setNumInstancias(data.size());
     par_20.setNumAtributos(data[0].size());
     par_20.setRestricciones(const_20);
     par_20.setNumClases(clases);
+    par_20.setSeed(seed);
+
+    
+    cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
+    greedyCOPKM(par_10, seed);
 
     cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
-    greedyCOPKM(par_10);
+    greedyCOPKM(par_20, seed);
+    */
 
-    cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
-    greedyCOPKM(par_20);
-     
+    cout << "\nEjecutamos el problema PAR_CONST_10 con Búsqueda Local" << endl;
+    busquedaLocalPAR(par_10, seed);
+
+    cout << "\nEjecutamos el problema PAR_CONST_10 con Búsqueda Local" << endl;
+    //busquedaLocalPAR(par_20, seed);
+    
     
 }
 

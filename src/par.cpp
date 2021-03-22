@@ -60,32 +60,24 @@ void PAR::resetClusters(){
         Pone el num_clases a 0, por lo tanto no hay nada que hacer.
 */
 PAR::PAR(){
+    GREATER_DIST = 0;
     num_clases = 0;
     num_atributos = 0;
     num_instancias = 0;
+    SEED = 0;
     
-   resetClusters();
+    resetClusters();
 }
 
 /*
     Inicializa el número de clases y los datos del problema.
 */
-PAR::PAR(int num_instancias_source, int num_atributos_source, int num_clases_source, vector<vector<double>> instancias_source){
-    num_instancias = num_instancias_source;
-    num_atributos = num_atributos_source;
-    num_clases = num_clases_source;
-    instancias = instancias_source;
-
-    centroides.resize(num_clases);
-    inst_belong.resize(num_instancias);
-    clusters.resize(num_clases);
-
-    for(int i=0; i<num_instancias; i++){
-        indices.push_back(i);
-    }
-
-    generarRestricciones();
-    resetClusters();
+PAR::PAR(int num_atributos_source, int num_clases_source, vector<vector<double>> instancias_source, vector<vector<double>> restricciones_source, int seed_source){
+    setNumAtributos(num_atributos_source);
+    setNumClases(num_clases_source);
+    setInstancias(instancias_source);
+    setRestricciones(restricciones_source);
+    setSeed(seed_source);
 }
 
 /*
@@ -101,6 +93,8 @@ PAR::PAR(const PAR &par_source){
     clusters = par_source.getClusters();
     restricciones = par_source.getRestricciones();
     indices = par_source.getIndices();
+    GREATER_DIST = par_source.getGreaterDist();
+    SEED = par_source.getSeed();
 
     generarRestricciones();
 }
@@ -166,59 +160,31 @@ vector<double> PAR::calcularCentroide(int ci){
 }
 
 
-/*
-    Calcula la distancia media intra-cluster de un cluster cluster
-*/
-double PAR::distanciaIntraCluster(int cluster){
-    int size_c = clusters[cluster].size();
-    double distancia = 0;
-
-    vector<double> centroide = calcularCentroide(cluster);
-
-    // Calculamos la distancia
-    for(int i=0; i<size_c; i++){
-        distancia += distanciaEntreDosPuntos(instancias[clusters[cluster][i]],centroides[cluster]);
-    }   
-    distancia /= size_c;
-
-    return distancia;
-}
-
 
 /*
-    Calcula la desviación general de la partición C={c1​, c2​,...,cn} definida
-    como la media de las desviaciones intra-cluster de cada grupo o cluster
+    Actualiza los centroides
 */
-double PAR::desviacionParticion(){
-    double distancia = 0;
+bool PAR::updateCentroides(){
+    bool hay_cambio=false;
 
-    for(int c=0; c<num_clases; c++){
-        distancia += distanciaIntraCluster(c);
+    // Reseteamos los centroides
+    centroides.clear();
+    centroides.resize(num_instancias);
+    for(int c=0; c<num_instancias; c++){
+        centroides[c].resize(num_atributos);
     }
-    distancia /= num_clases;
 
-    return distancia;
-}
+    for(int c=0; c<num_clases; c++){    // Para cada centroide
+        vector<double> c_old = centroides[c];
 
+        centroides[c] = calcularCentroide(c);
 
-/*
-    Calcula el número de restricciones violadas. COMPLETAR
-*/
-int PAR::infeasibility(){
-    int restricciones_violadas=0; 
-
-    for(int i=0; i<ML.size(); i++){
-        if( inst_belong[ML[i][0]]!=inst_belong[ML[i][1]] ){     // Incumple una restricción MustLink
-            restricciones_violadas++;
-        }
-    }
-    for(int i=0; i<CL.size(); i++){
-        if( inst_belong[CL[i][0]]==inst_belong[CL[i][1]]){      // Incumple una restricción CannotLink
-            restricciones_violadas++;
+        if(distanciaEntreDosPuntos(centroides[c], c_old) !=0){  // distancia=0 -> es el mismo centroide que antes
+            hay_cambio=true;
         }
     }
 
-    return restricciones_violadas;
+    return hay_cambio;
 }
 
 
@@ -282,36 +248,23 @@ int PAR::incrementoInfeasibility(int instancia, int c1, int c2){
 
 
 
+
+
+////////////////////////////////////////////////////////////////
+//      Métodos principales para las distintas Metaheurísticas
+////////////////////////////////////////////////////////////////
+
 /*
-    Actualiza los centroides
+    USADA PARA LA METAHEURÍSTICA GREEDY COPKM PARA CADA ITERACIÓN
+
+    Asigna cada instancia a su clúster más cercano teniendo que respetar
+    las restricciones fuertes y teniendo en cuenta de que cada instancia
+    tiene que escoger el clúster con el que incumpla menos restricciones
+    débiles.
+
+    Devuelve un bool que nos dice si el método ha provocado algún cambio
+    en los centroides.
 */
-bool PAR::updateCentroides(){
-    bool hay_cambio=false;
-
-    for(int c=0; c<num_clases; c++){    // Para cada centroide
-        vector<double> c_old = centroides[c];
-
-        centroides[c] = calcularCentroide(c);
-
-        if(distanciaEntreDosPuntos(centroides[c], c_old) !=0){  // distancia=0 -> es el mismo centroide que antes
-            hay_cambio=true;
-        }
-    }
-
-    return hay_cambio;
-}
-
-
-
-/*
-        Asigna cada instancia a su clúster más cercano teniendo que respetar
-        las restricciones fuertes y teniendo en cuenta de que cada instancia
-        tiene que escoger el clúster con el que incumpla menos restricciones
-        débiles.
-
-        Devuelve un bool que nos dice si el método ha provocado algún cambio
-        en los centroides.
-    */
 bool PAR::asignarInstanciasAClustersCercanos(){
     // Limpiamos la asignación de clusters que hubiese
     for(int c=0; c<num_clases; c++){
@@ -409,6 +362,244 @@ bool PAR::asignarInstanciasAClustersCercanos(){
 
 
 
+/*
+    USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL EL PRIMERO MEJOR
+
+    Asigna clústers a las instancia de forma aleatoria respetando
+    las restricciones fuertes del problema.
+
+    Devuelve true si ha sido exitosa la operación. 
+    En otro caso devuelve false.
+*/
+bool PAR::asignarInstanciasAleatoriamente(){
+    bool exito_inicializando=true;
+    // Reseteamos la información que haya
+    resetClusters();
+
+    // Asignamos a cada instancia un clúster aleatorio sin tener en cuenta restricciones
+    for(int i=0; i<num_instancias; i++){
+        // Generamos el cluster aleatorio
+        int cluster_aleatorio = Randint(0, num_clases-1);
+
+        // Asignamos el cluster a la instancia i
+        inst_belong[i] = cluster_aleatorio;
+        clusters[cluster_aleatorio].push_back(i);
+    }
+
+    // Arreglamos las restricciones fuertes que se incumplan
+    shuffleInstances();
+    for(int c=0; c<num_clases; c++){    // Para cada clúster comprobamos que no esté vacío
+
+        if(clusters[c].size() == 0){    // Si está vacío
+
+            for(int i=0; i<indices.size(); i++){    // Para cada instancia comprobamos si se puede cambiar
+                
+                int c_old = inst_belong[indices[i]];
+                if(clusters[c_old].size()>1){              // Si se puede cambiar cambiamos
+
+                    // Hacemos la modificación
+                    inst_belong[indices[i]]=c;      // Añadimos al nuevo cluster
+                    clusters[c].push_back(i);
+                    for(int i=0; i<clusters[c_old].size(); i++){
+                        if(clusters[c_old][i]==indices[i]){
+                            clusters[c_old].erase(clusters[c_old].begin()+i);   // eliminamos del anterior cluster
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for(int c=0; c<num_clases; c++){
+        if(clusters[c].size()==0){
+            exito_inicializando=false;
+            cout << "Error al asignar instancias aleatoriamente: No se ha conseguido hacer respetando todas las restricciones fuertes." << endl;
+        }
+    }
+
+    // Actualizamos los centroides
+    updateCentroides();
+
+    return exito_inicializando;
+}
+
+
+
+/*
+    USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL EL PRIMERO MEJOR
+
+    Nos devuelve verdadero si cambia el cluster. Solo hace el cambio si mejora
+    la solución al problema.
+*/
+bool PAR::cambioClusterMejor(int instancia, int cluster){
+    // Probamos el cambio
+    int c_old = inst_belong[instancia];     // Guardamos los datos anteriores
+    double fitness_old = fitnessFunction();
+
+    /* 
+        lambda 0.000267988
+        desv 0.253649
+        inf 1142
+    */
+
+    /*
+        Función= 0.477723
+        Función= 0.477629
+        Función= 0.477579
+        Función= 0.476888
+        Función= 0.477156
+    */  
+
+    inst_belong[instancia]=cluster;         // cambiamos
+    clusters[cluster].push_back(instancia);
+    for(int i=0; i<clusters[c_old].size(); i++){
+        if(clusters[c_old][i]==instancia){
+            clusters[c_old].erase(clusters[c_old].begin()+i);
+        }
+    }
+    updateCentroides();
+    
+
+    bool mejora=true;
+    if(fitnessFunction() >= fitness_old){ 
+        mejora=false;
+   
+        // Recuperamos los datos que teníamos anteriormente
+        inst_belong[instancia]=c_old;                       // asignamos
+        clusters[c_old].push_back(instancia);
+
+        for(int i=0; i<clusters[cluster].size(); i++){      // borramos el cambio
+            if(clusters[cluster][i]==instancia){
+                clusters[cluster].erase(clusters[cluster].begin()+i);
+            }
+        }
+
+        updateCentroides();
+
+
+    }
+
+    return mejora;
+}
+
+
+/*
+    USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL EL PRIMERO MEJOR
+
+    Nos devuelve True en caso de haber encontrado un vecino mejor. En otro caso
+    estamos ante la solución óptima y nos dará False
+*/
+bool PAR::buscarPrimerVecinoMejor(){
+    
+    bool hay_cambio=false;          // Nos dice si hemos encontrado un vecino mejor
+    shuffleInstances();             // Añadimos aleatoriedad
+
+    // Añadimos aleatoriedad a la selección de clusters
+    for(int i=0; i<indices.size() and !hay_cambio; i++){
+        int ii = indices[i];
+        int cc = inst_belong[ii];
+
+        if(clusters[cc].size()>1){
+            int cluster_nuevo = Randint(0,num_clases-2);    // Restamos 2: 1 por el tamaño y 1 porque el clúster actual no vale
+
+            if(cluster_nuevo >= cc){    // Desplazamos un número para no tener en cuenta el clúster en el que ya está
+                cluster_nuevo++;
+            }
+
+            hay_cambio = cambioClusterMejor(ii, cluster_nuevo);
+            if(hay_cambio){
+               // cout << "Función= " << fitnessFunction() << endl;
+            }
+        }
+    }
+
+    return hay_cambio;
+}
+
+
+
+
+    
+/////////////////////////////////////////////////////////////
+//    Métodos que nos dicen cómo de buena es la solución
+/////////////////////////////////////////////////////////////
+
+
+/*
+    Calcula la distancia media intra-cluster de un cluster cluster
+*/
+double PAR::distanciaIntraCluster(int cluster){
+    int size_c = clusters[cluster].size();
+    double distancia = 0;
+
+    vector<double> centroide = calcularCentroide(cluster);
+
+    // Calculamos la distancia
+    for(int i=0; i<size_c; i++){
+        distancia += distanciaEntreDosPuntos(instancias[clusters[cluster][i]],centroides[cluster]);
+    }   
+    distancia /= size_c;
+
+    return distancia;
+}
+
+
+/*
+    Calcula la desviación general de la partición C={c1​, c2​,...,cn} definida
+    como la media de las desviaciones intra-cluster de cada grupo o cluster
+*/
+double PAR::desviacionParticion(){
+    double distancia = 0;
+
+    for(int c=0; c<num_clases; c++){
+        distancia += distanciaIntraCluster(c);
+    }
+    distancia /= num_clases;
+
+    return distancia;
+}
+
+
+/*
+    Función objetivo. Será la función que buscaremos minimizar y nos dirá 
+    cómo de buena es nuestra solución actual
+*/
+double  PAR::fitnessFunction(){
+    /*
+        Se escoge el lamda como [D]/|R| donde:
+            -[D]   es la mayor distancia que existe entre dos instancias
+            -|R|   es el número de restricciones totales que hay
+
+        para coger una especie de frecuencia relativa haciendo que ambas
+        medidas ponderen de igual forma a nuestra función objetivo
+    */
+
+    double lambda = GREATER_DIST / (ML.size() + CL.size());
+
+    return desviacionParticion() + lambda*infeasibility();
+}
+
+
+/*
+    Calcula el número de restricciones violadas. COMPLETAR
+*/
+int PAR::infeasibility(){
+    int restricciones_violadas=0; 
+
+    for(int i=0; i<ML.size(); i++){
+        if( inst_belong[ML[i][0]]!=inst_belong[ML[i][1]] ){     // Incumple una restricción MustLink
+            restricciones_violadas++;
+        }
+    }
+    for(int i=0; i<CL.size(); i++){
+        if( inst_belong[CL[i][0]]==inst_belong[CL[i][1]]){      // Incumple una restricción CannotLink
+            restricciones_violadas++;
+        }
+    }
+
+    return restricciones_violadas;
+}
+
 
 //////////////////////////////////
 //    Mostrar Info por Pantalla
@@ -425,26 +616,21 @@ bool PAR::asignarInstanciasAClustersCercanos(){
         -Distancia media intra clúster del problema
 */
 void PAR::mostrarEstado(){
-    cout << "--------------- ESTADO DEL PROBLEMA PAR ---------------" << endl;
+    cout << "\n\n--------------------------- ESTADO DEL PROBLEMA PAR ---------------------------" << endl << endl;
     cout << "Nº Clases (clusters):\t\t" << num_clases << endl;
     cout << "Nº de instancias:\t\t" << num_instancias << endl;
     cout << "Nº de atributos por instancia:\t" << num_atributos << endl << endl;
 
-    cout << "Desviación: " << desviacionParticion() << endl;
-    cout << "Infeasibility: " << infeasibility() << endl << endl;
+    cout << "Desviación:\t\t" << desviacionParticion() << endl;
+    cout << "Infeasibility:\t\t" << infeasibility() << endl;
+    cout << "Función objetivo:\t" << fitnessFunction() << endl << endl;
 
 
     cout << "CLUSTERS ---" << endl;
     for(int c=0; c<num_clases; c++){
         cout << "\tCluster " << c << ":" << endl;
-        cout << "\t\tCentroide: (";
-        for(int i=0; i<num_atributos; i++){
-            if(i<num_atributos-1){
-                cout << centroides[c][i] << ", ";
-            }else{
-                cout << centroides[c][i] << ")" << endl;
-            }
-        }
+        cout << "\t\tCentroide: ";
+        mostrarPunto(centroides[c]);
         cout << "\t\tNº instancias: " << clusters[c].size() << endl;
         cout << "\t\tDistancia intra-cluster: " << distanciaIntraCluster(c) << endl;
     }
