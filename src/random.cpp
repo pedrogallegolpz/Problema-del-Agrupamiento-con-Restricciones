@@ -1,5 +1,6 @@
 #include <math.h>
 #include <vector>
+#include <iostream>
 #include "../include/random.h"
 
 
@@ -58,7 +59,7 @@ Barajar un vector*/
     vector<int> indices_shuffled;
     int i=0;
     while(i<indices.size()){
-        int j=Randint(0,indices.size());
+        int j=Randint(0,indices.size()-1);
 
         // Insertamos el índice
         indices_shuffled.push_back(indices[j]);

@@ -12,24 +12,34 @@ using namespace std;
 */
 void greedyCOPKM(PAR par){
     // Generamos los centroides de forma aleatoria
-    Set_random(1);
     vector<vector<double>> centroides;
     vector<double> centroide_aux;
 
+    Set_random(1231);
+
     for(int i=0; i<par.getNumClases(); i++){
+        //cout << "Centroide " << i << " tiene de coordenadas:"<< endl;         // Mostrar centroides
+
         for(int j=0; j<par.getNumAtributos(); j++){
             centroide_aux.push_back(Rand());
+            //cout << centroide_aux[j] << " ";                                  // Mostrar centroides
         }
+        // cout << endl << endl;                                                // Mostrar centroides
         centroides.push_back(centroide_aux);
+        centroide_aux.clear();
     }
+
+    par.setCentroides(centroides);
 
     // Desordenamos nuestras instancias
     par.shuffleInstances();
 
-    bool hay_cambio=true;
-    while(hay_cambio){
-        // Asignamos
-        
+    // Ejecutamos el algoritmo
+    int i=0;
+    while(par.asignarInstanciasAClustersCercanos()){
+        i++;
     }
+    cout << "\nFin del algoritmo Greedy en " << i << " iteraciones" << endl;
 
+    par.mostrarEstado(); 
 }

@@ -34,7 +34,7 @@ int main(int argc, char * argv[]) {
 
     string filestring(argv[1]);
 
-    if(filestring!="./data/bupa_set" && filestring!="./data/zoo_set" && filestring!="./data/glass_set"){
+    if(filestring!="./data/bupa_set" && filestring!="./data/zoo_set" && filestring!="./data/glass_set" && filestring!="./data/prueba"){
         cout << "No existe ese archivo. Por favor introduzca uno de los siguientes:" << endl;
         cout << " - ./data/bupa_set" << endl << " - ./data/zoo_set" << endl << " - ./data/glass_set" << endl << endl;
 
@@ -50,7 +50,10 @@ int main(int argc, char * argv[]) {
         clases=7;
     }else if(filestring=="./data/glass_set"){
         clases=7;
+    }else if(filestring=="./data/prueba"){
+        clases=4;
     }
+
 
 
     // Estructuras para la lectura
@@ -58,9 +61,10 @@ int main(int argc, char * argv[]) {
     vector<vector<double> > const_10;
     vector<vector<double> > const_20;
 
+    
     // Estructuras PAR
-    PAR par_10;
-    PAR par_20;
+    PAR par_10 = PAR();
+    PAR par_20 = PAR();
 
     // Leemos los ficheros
     read_dat(argv[1],data);//leemos el fichero.dat
@@ -72,8 +76,7 @@ int main(int argc, char * argv[]) {
     par_10.setNumAtributos(data[0].size());
     par_10.setRestricciones(const_10);
     par_10.setNumClases(clases);
-
-
+   
     par_20.setInstancias(data); 
     par_20.setNumInstancias(data.size());
     par_20.setNumAtributos(data[0].size());
@@ -83,7 +86,9 @@ int main(int argc, char * argv[]) {
     cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
     greedyCOPKM(par_10);
 
-    
+    cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
+    greedyCOPKM(par_20);
+     
     
 }
 
