@@ -436,19 +436,6 @@ bool PAR::cambioClusterMejor(int instancia, int cluster){
     int c_old = inst_belong[instancia];     // Guardamos los datos anteriores
     double fitness_old = fitnessFunction();
 
-    /* 
-        lambda 0.000267988
-        desv 0.253649
-        inf 1142
-    */
-
-    /*
-        Función= 0.477723
-        Función= 0.477629
-        Función= 0.477579
-        Función= 0.476888
-        Función= 0.477156
-    */  
 
     inst_belong[instancia]=cluster;         // cambiamos
     clusters[cluster].push_back(instancia);
@@ -498,17 +485,14 @@ bool PAR::buscarPrimerVecinoMejor(){
     for(int i=0; i<indices.size() and !hay_cambio; i++){
         int ii = indices[i];
         int cc = inst_belong[ii];
-
+    
+        vector<int> ind_clust = ShuffleIndices(num_clases);  // Damos aleatoriedad a los clústers
         if(clusters[cc].size()>1){
-            int cluster_nuevo = Randint(0,num_clases-2);    // Restamos 2: 1 por el tamaño y 1 porque el clúster actual no vale
-
-            if(cluster_nuevo >= cc){    // Desplazamos un número para no tener en cuenta el clúster en el que ya está
-                cluster_nuevo++;
-            }
-
-            hay_cambio = cambioClusterMejor(ii, cluster_nuevo);
-            if(hay_cambio){
-               // cout << "Función= " << fitnessFunction() << endl;
+            for(int c=0; c<num_clases and !hay_cambio; c++){
+                if(ind_clust[c] != cc){    // Desplazamos un número para no tener en cuenta el clúster en el que ya está
+                    hay_cambio = cambioClusterMejor(ii, ind_clust[c]);
+                }
+                
             }
         }
     }
@@ -576,7 +560,7 @@ double  PAR::fitnessFunction(){
 
     double lambda = GREATER_DIST / (ML.size() + CL.size());
 
-    return desviacionParticion() + lambda*infeasibility();
+    return desviacionParticion()+ lambda*infeasibility();
 }
 
 
