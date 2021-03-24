@@ -479,22 +479,29 @@ bool PAR::cambioClusterMejor(int instancia, int cluster){
 bool PAR::buscarPrimerVecinoMejor(){
     
     bool hay_cambio=false;          // Nos dice si hemos encontrado un vecino mejor
-    shuffleInstances();             // Añadimos aleatoriedad
 
-    // Añadimos aleatoriedad a la selección de clusters
-    for(int i=0; i<indices.size() and !hay_cambio; i++){
-        int ii = indices[i];
-        int cc = inst_belong[ii];
-    
-        vector<int> ind_clust = ShuffleIndices(num_clases);  // Damos aleatoriedad a los clústers
-        if(clusters[cc].size()>1){
-            for(int c=0; c<num_clases and !hay_cambio; c++){
-                if(ind_clust[c] != cc){    // Desplazamos un número para no tener en cuenta el clúster en el que ya está
-                    hay_cambio = cambioClusterMejor(ii, ind_clust[c]);
-                }
-                
+    // Generamos el vecindario virtual:
+    // Un vecino virtual tendrá la forma {i, c} donde
+    //      -i      instancia a reasignar clúster
+    //      -c      nuevo clúster
+    vector<vector<int>> vec_virtual;
+    for(int i=0; i<num_instancias; i++){    // para cada instancia
+        for(int c=0; c<num_clases; c++){    // para cada clúster
+            // Comprobamos que el clúster nuevo no es el actual de la instancia
+            // y que no dejamos vacío el clúster antiguo
+            if(inst_belong[i]!=c && clusters[inst_belong[i]].size()>1){
+                vector<int> vecino;
+                vecino.push_back(i);
+                vecino.push_back(c);
+                vec_virtual.push_back(vecino);
             }
         }
+    }
+
+    vector<int> ind_vec = ShuffleIndices(vec_virtual.size());      // Metemos aleatoriedad
+
+    for(int i=0; i<ind_vec.size() and !hay_cambio; i++){
+        hay_cambio = cambioClusterMejor(vec_virtual[ind_vec[i]][0], vec_virtual[ind_vec[i]][1]);
     }
 
     return hay_cambio;

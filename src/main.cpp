@@ -55,52 +55,57 @@ int main(int argc, char * argv[]) {
         clases=4;
     }
 
-    // SEMILLA
-    int seed = 3;
+
+    int NUM_PRUEBAS =1;
 
     // Estructuras para la lectura
     vector<vector<double> > data;
     vector<vector<double> > const_10;
     vector<vector<double> > const_20;
 
-    
-    // Estructuras PAR
-    PAR par_10 = PAR();
-    PAR par_20 = PAR();
 
-    // Leemos los ficheros
-    read_dat(argv[1],data);//leemos el fichero.dat
-    read_const(argv[1],const_10,const_20);//leemos ficheros.const
+    for(int i=0; i<NUM_PRUEBAS; i++){
+        // SEMILLA
+        int seed = i;
+        
+        // Estructuras PAR
+        PAR par_10 = PAR();
+        PAR par_20 = PAR();
 
-    // Inificalizamos las estructuras info con la informacion leida
-    par_10.setInstancias(data); 
-    par_10.setNumInstancias(data.size());
-    par_10.setNumAtributos(data[0].size());
-    par_10.setRestricciones(const_10);
-    par_10.setNumClases(clases);
-    par_10.setSeed(seed);
+        // Leemos los ficheros
+        read_dat(argv[1],data);//leemos el fichero.dat
+        read_const(argv[1],const_10,const_20);//leemos ficheros.const
 
-    /*
-    par_20.setInstancias(data); 
-    par_20.setNumInstancias(data.size());
-    par_20.setNumAtributos(data[0].size());
-    par_20.setRestricciones(const_20);
-    par_20.setNumClases(clases);
-    par_20.setSeed(seed);
+        // Inificalizamos las estructuras info con la informacion leida
+        par_10.setInstancias(data); 
+        par_10.setNumInstancias(data.size());
+        par_10.setNumAtributos(data[0].size());
+        par_10.setRestricciones(const_10);
+        par_10.setNumClases(clases);
+        par_10.setSeed(seed);
 
-    
-    cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
-    greedyCOPKM(par_10, seed);
+        
+        par_20.setInstancias(data); 
+        par_20.setNumInstancias(data.size());
+        par_20.setNumAtributos(data[0].size());
+        par_20.setRestricciones(const_20);
+        par_20.setNumClases(clases);
+        par_20.setSeed(seed);
 
-    cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
-    greedyCOPKM(par_20, seed);
-    */
+        
+        cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
+        //greedyCOPKM(par_10, seed);
 
-    cout << "\nEjecutamos el problema PAR_CONST_10 con Búsqueda Local" << endl;
-    busquedaLocalPAR(par_10, seed);
+        cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
+        //greedyCOPKM(par_20, seed);
+        
 
-    cout << "\nEjecutamos el problema PAR_CONST_10 con Búsqueda Local" << endl;
-    //busquedaLocalPAR(par_20, seed);
+        cout << "\nEjecutamos el problema PAR_CONST_10 con Búsqueda Local" << endl;
+        busquedaLocalPAR(par_10, seed);
+
+        cout << "\nEjecutamos el problema PAR_CONST_10 con Búsqueda Local" << endl;
+        //busquedaLocalPAR(par_20, seed);
+    }
     
     
 }
