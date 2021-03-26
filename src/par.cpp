@@ -65,6 +65,8 @@ PAR::PAR(){
     num_atributos = 0;
     num_instancias = 0;
     SEED = 0;
+    funcion_objetivo = 10000000;
+    iterations_BL = 0;
     
     resetClusters();
 }
@@ -191,7 +193,7 @@ bool PAR::updateCentroides(){
 /*
     Calcula el número de restricciones violadas con una instancia concreta
     antes de ser asignada
-        -imstancia  índice directamente sobre el vector de instancias
+        -instancia  índice directamente sobre el vector de instancias
         -clúster    cluster al que se pretende asignar
 */
 int PAR::restriccionesConInstancia(int instancia, int cluster){
@@ -370,7 +372,8 @@ bool PAR::asignarInstanciasAClustersCercanos(){
     En otro caso devuelve false.
 */
 bool PAR::asignarInstanciasAleatoriamente(){
-    bool exito_inicializando=true;
+    bool exito_inicializando=true;      // Nos dirá si se queda algún clúter vacío
+
     // Reseteamos la información que haya
     resetClusters();
 
@@ -386,10 +389,10 @@ bool PAR::asignarInstanciasAleatoriamente(){
 
     // Arreglamos las restricciones fuertes que se incumplan
     shuffleInstances();
-    for(int c=0; c<num_clases; c++){    // Para cada clúster comprobamos que no esté vacío
+    for(int c=0; c<num_clases and exito_inicializando; c++){    // Para cada clúster comprobamos que no esté vacío
 
         if(clusters[c].size() == 0){    // Si está vacío
-
+            exito_inicializando = false;
             for(int i=0; i<indices.size(); i++){    // Para cada instancia comprobamos si se puede cambiar
                 
                 int c_old = inst_belong[indices[i]];
@@ -403,20 +406,20 @@ bool PAR::asignarInstanciasAleatoriamente(){
                             clusters[c_old].erase(clusters[c_old].begin()+i);   // eliminamos del anterior cluster
                         }
                     }
+                    exito_inicializando = true;
                 }
             }
         }
     }
     
-    for(int c=0; c<num_clases; c++){
-        if(clusters[c].size()==0){
-            exito_inicializando=false;
-            cout << "Error al asignar instancias aleatoriamente: No se ha conseguido hacer respetando todas las restricciones fuertes." << endl;
-        }
+    if(!exito_inicializando){
+        cout << "Error al asignar instancias aleatoriamente: No se ha conseguido hacer respetando todas las restricciones fuertes." << endl;
     }
 
-    // Actualizamos los centroides
+
+    // Actualizamos los centroides y función objetivo
     updateCentroides();
+    fitnessFunction();
 
     return exito_inicializando;
 }
@@ -432,7 +435,7 @@ bool PAR::asignarInstanciasAleatoriamente(){
 bool PAR::cambioClusterMejor(int instancia, int cluster){
     // Probamos el cambio
     int c_old = inst_belong[instancia];     // Guardamos los datos anteriores
-    double fitness_old = fitnessFunction();
+    double fitness_old = funcion_objetivo;
 
 
     inst_belong[instancia]=cluster;         // cambiamos
@@ -448,8 +451,10 @@ bool PAR::cambioClusterMejor(int instancia, int cluster){
     bool mejora=true;
     if(fitnessFunction() >= fitness_old){ 
         mejora=false;
-   
+
         // Recuperamos los datos que teníamos anteriormente
+        funcion_objetivo = fitness_old;
+        
         inst_belong[instancia]=c_old;                       // asignamos
         clusters[c_old].push_back(instancia);
 
@@ -463,7 +468,10 @@ bool PAR::cambioClusterMejor(int instancia, int cluster){
 
 
     }
+    
+    iterations_BL++;
 
+    
     return mejora;
 }
 
@@ -498,8 +506,12 @@ bool PAR::buscarPrimerVecinoMejor(){
 
     vector<int> ind_vec = ShuffleIndices(vec_virtual.size());      // Metemos aleatoriedad
 
-    for(int i=0; i<ind_vec.size() and !hay_cambio; i++){
+    for(int i=0; i<ind_vec.size() and !hay_cambio and iterations_BL<=100000; i++){
         hay_cambio = cambioClusterMejor(vec_virtual[ind_vec[i]][0], vec_virtual[ind_vec[i]][1]);
+    }
+
+    if(iterations_BL>=100000){
+        hay_cambio = false;     // Forzamos salir
     }
 
     return hay_cambio;
@@ -565,7 +577,9 @@ double  PAR::fitnessFunction(){
 
     double lambda = GREATER_DIST / (ML.size() + CL.size());
 
-    return desviacionParticion()+ lambda*infeasibility();
+    funcion_objetivo = desviacionParticion()+ lambda*infeasibility();
+
+    return funcion_objetivo;
 }
 
 

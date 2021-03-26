@@ -1,0 +1,38 @@
+--------------------------------------------------------------------------
+Reading: ./data/glass_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/glass_set_const_10.const ,./data/glass_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 1						Time 	FitFunc 	Infeas 	Desviacion
+./data/glass_set_CONST_10. Problema COPKM (seed 1):	14ms	0.393281	4	0.389345
+./data/glass_set_CONST_20. Problema COPKM (seed 1):	21ms	0.355634	0	0.355634
+./data/glass_set_CONST_10. Problema BL (seed 1):   	931ms	0.266504	19	0.247807
+./data/glass_set_CONST_20. Problema BL (seed 1):   	883ms	0.273575	46	0.249627
+
+SEMILLA 2						Time 	FitFunc 	Infeas 	Desviacion
+./data/glass_set_CONST_10. Problema COPKM (seed 2):	14ms	0.391737	1	0.390753
+./data/glass_set_CONST_20. Problema COPKM (seed 2):	12ms	0.311382	0	0.311382
+./data/glass_set_CONST_10. Problema BL (seed 2):   	683ms	0.250911	41	0.210565
+./data/glass_set_CONST_20. Problema BL (seed 2):   	900ms	0.276985	131	0.208785
+
+SEMILLA 3						Time 	FitFunc 	Infeas 	Desviacion
+./data/glass_set_CONST_10. Problema COPKM (seed 3):	14ms	0.398504	3	0.395552
+./data/glass_set_CONST_20. Problema COPKM (seed 3):	14ms	0.316662	3	0.3151
+./data/glass_set_CONST_10. Problema BL (seed 3):   	990ms	0.267675	38	0.230281
+./data/glass_set_CONST_20. Problema BL (seed 3):   	916ms	0.274014	47	0.249546
+
+SEMILLA 4						Time 	FitFunc 	Infeas 	Desviacion
+./data/glass_set_CONST_10. Problema COPKM (seed 4):	14ms	0.407836	7	0.400947
+./data/glass_set_CONST_20. Problema COPKM (seed 4):	14ms	0.322348	19	0.312456
+./data/glass_set_CONST_10. Problema BL (seed 4):   	873ms	0.262398	15	0.247637
+./data/glass_set_CONST_20. Problema BL (seed 4):   	617ms	0.266497	30	0.250879
+
+SEMILLA 5						Time 	FitFunc 	Infeas 	Desviacion
+./data/glass_set_CONST_10. Problema COPKM (seed 5):	16ms	0.3185	0	0.3185
+./data/glass_set_CONST_20. Problema COPKM (seed 5):	11ms	0.349455	0	0.349455
+./data/glass_set_CONST_10. Problema BL (seed 5):   	744ms	0.246017	56	0.190911
+./data/glass_set_CONST_20. Problema BL (seed 5):   	1269ms	0.267765	43	0.245379

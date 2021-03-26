@@ -23,30 +23,25 @@ void busquedaLocalPAR(PAR par, int seed){
 
     
     // Buscamos mejores vecinos hasta llegar al mejor
-    //int i=0;
+    int i=0;
+    par.setIterationsBL(0);
     while(par.buscarPrimerVecinoMejor()){
-        //i++;
+        i++;
     }
 
     auto end = chrono::high_resolution_clock::now();
     auto elapsed = chrono::duration_cast<std::chrono::milliseconds>(end - begin);
 
-    /*
-    cout << "Problema BL (seed " << seed<< "):" << endl;
-    cout << "\tTime: " << elapsed.count() << " ms" << endl;
-    cout << "\tFit function: " << par.fitnessFunction() << endl;
-    cout << "\tInfeasibility: " << par.infeasibility() << endl;
-    cout << "\tDesviación: " << par.desviacionParticion() << endl;
-    */
 
-    cout << "Problema BL (seed " << seed<< "):\t";
+    cout << "Problema BL (seed " << seed<< "):   ";
     cout << "\t" << elapsed.count() << "ms";
     cout << "\t" << par.fitnessFunction();
     cout << "\t" << par.infeasibility();
-    cout << "\t" << par.desviacionParticion() << endl;
+    cout << "\t" << par.desviacionParticion();
+    cout << "\tIteracionesBL: " << par.getIterationsBL() << endl;
 
     /*
-    cout << "\nFin del algoritmo Búsqueda Local en " << i << " iteraciones" << endl;
+    cout << "\nFin del algoritmo Búsqueda Local en " << par.getIterationsBL() << " iteraciones" << endl;
     par.mostrarEstado(); 
     */
 }

@@ -45,13 +45,6 @@ void greedyCOPKM(PAR par, int seed){
     }
     auto end = chrono::high_resolution_clock::now();
     auto elapsed = chrono::duration_cast<std::chrono::milliseconds>(end - begin);
-/*
-    cout << "Problema COPKM (seed " << seed<< "):" << endl;
-    cout << "\tTime: " << elapsed.count() << " ms" << endl;
-    cout << "\tFit function: " << par.fitnessFunction() << endl;
-    cout << "\tInfeasibility: " << par.infeasibility() << endl;
-    cout << "\tDesviación: " << par.desviacionParticion() << endl;
-    */
 
     cout << "Problema COPKM (seed " << seed<< "):";
     cout << "\t" << elapsed.count() << "ms";

@@ -18,7 +18,10 @@ private:
     int num_instancias;
     int num_atributos;
     int num_clases;
+
+    double funcion_objetivo;        // En esta variable se guardará el valor actual de la función objetivo cuando haga falta
     
+    int iterations_BL;
 
     /*
         Todas las variables vector que hacen referencia a las instancias
@@ -237,6 +240,7 @@ public:
         for(int i=0; i<num_instancias; i++){
             inst_belong.push_back(-1);
         }
+
     }
     
     int getNumAtributos() const{
@@ -363,7 +367,13 @@ public:
             cout << "ERROR. Los índices que se han intentado asignar no contiene el mismo número de índices que instancias el problema." << endl;
         }
     }
-    
+
+    int getIterationsBL() const{
+        return iterations_BL;
+    }
+    void setIterationsBL(int it){
+        iterations_BL = it;
+    }
 
 
 };
