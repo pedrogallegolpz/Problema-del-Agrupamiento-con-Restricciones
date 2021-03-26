@@ -5,6 +5,7 @@
 #ifndef __PAR_H
 #define __PAR_H
 
+#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -243,6 +244,14 @@ public:
     }
     void setNumAtributos(int natributos){
         num_atributos = natributos;
+        if(num_clases>0){       // Podemos inicializar los centroides
+            centroides.clear();
+            centroides.resize(num_clases);
+            for(int c=0; c<num_clases; c++){
+                centroides[c].resize(num_atributos);
+            }
+
+        }
     }
 
     int getNumClases() const{
@@ -253,6 +262,14 @@ public:
 
         clusters.clear();
         clusters.resize(num_clases);
+
+        if(num_atributos>0){       // Podemos inicializar los centroides
+            centroides.clear();
+            centroides.resize(num_clases);
+            for(int c=0; c<num_clases; c++){
+                centroides[c].resize(num_atributos);
+            }
+        }
     }
 
 
@@ -290,21 +307,42 @@ public:
         return centroides;
     }; 
     void setCentroides(vector<vector<double>> new_centroides){
-        centroides = new_centroides;
+        bool correct_size=true;
+        if(new_centroides.size() == num_clases){
+            for(int c =0; c<num_clases; c++){
+                if(new_centroides[c].size() != num_atributos){
+                    correct_size = false;
+                    cout << "ERROR. Tamaño de los centroides erróneo. El número de atributos de los centroides no coincide con el de las instancias." << endl;
+                }
+            }
+            if(correct_size){
+                centroides = new_centroides;
+            }
+        }else{
+            cout << "ERROR. Tamaño de los centroides erróneo. Hay distinto número de centroides que de clases." << endl;
+        }
     }
 
     vector<int> getInstBelong() const{
         return inst_belong;
     }
     void getInstBelong(vector<int> new_inst_belong){
-        inst_belong = new_inst_belong;
+        if(new_inst_belong.size()==num_instancias){
+            inst_belong = new_inst_belong;
+        }else{
+            cout << "ERROR. Inst_belong asignado de distinto tamaño con respecto el número de instancias." << endl;
+        }
     }
     
     vector<vector<int>> getClusters() const{
         return clusters;
     }
     void setClusters(vector<vector<int>> new_clusters){
-        clusters = new_clusters;
+        if(new_clusters.size() == num_clases){
+            clusters = new_clusters;
+        }else{
+            cout << "ERROR. Se ha intentado asignar un número de clústers distintos al número de clases real." << endl;
+        }
     }
     
     vector<vector<double>> getRestricciones() const{
@@ -319,7 +357,11 @@ public:
         return indices;
     }
     void setIndices(vector<int> ind){
-        indices = ind;
+        if(ind.size() == num_instancias){
+            indices = ind;
+        }else{
+            cout << "ERROR. Los índices que se han intentado asignar no contiene el mismo número de índices que instancias el problema." << endl;
+        }
     }
     
 

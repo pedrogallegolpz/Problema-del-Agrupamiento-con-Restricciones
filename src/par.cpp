@@ -167,20 +167,16 @@ vector<double> PAR::calcularCentroide(int ci){
 bool PAR::updateCentroides(){
     bool hay_cambio=false;
 
-    // Reseteamos los centroides
-    centroides.clear();
-    centroides.resize(num_instancias);
-    for(int c=0; c<num_instancias; c++){
-        centroides[c].resize(num_atributos);
-    }
+    vector<vector<double>> c_old (centroides);
 
     for(int c=0; c<num_clases; c++){    // Para cada centroide
-        vector<double> c_old = centroides[c];
-
         centroides[c] = calcularCentroide(c);
 
-        if(distanciaEntreDosPuntos(centroides[c], c_old) !=0){  // distancia=0 -> es el mismo centroide que antes
-            hay_cambio=true;
+        // Comprobamos si el nuevo centroide ha cambiado
+        for(int i=0; i<centroides[c].size() and !hay_cambio; i++){
+            if(centroides[c][i]!= c_old[c][i]){
+                hay_cambio=true;
+            }
         }
     }
 
@@ -300,7 +296,7 @@ bool PAR::asignarInstanciasAClustersCercanos(){
         // Comprobamos que centroide está mas cerca a nuestra instancia[indices[i]]
         double menor_distancia = distanciaEntreDosPuntos(instancias[indices[i]],centroides[candidatos[0]]);
         int cluster_cercano = candidatos[0];
-
+        
         for(int c=1; c<candidatos.size(); c++){
 
             double distancia_actual = distanciaEntreDosPuntos(instancias[indices[i]],centroides[candidatos[c]]);
@@ -314,6 +310,8 @@ bool PAR::asignarInstanciasAClustersCercanos(){
         inst_belong[indices[i]] = cluster_cercano;
         clusters[cluster_cercano].push_back(indices[i]);
     }
+
+    
 
     // SEGUNDO PASO Comprobamos las restricciones fuertes
     for(int c=0; c<clusters.size(); c++){
@@ -409,7 +407,7 @@ bool PAR::asignarInstanciasAleatoriamente(){
             }
         }
     }
-
+    
     for(int c=0; c<num_clases; c++){
         if(clusters[c].size()==0){
             exito_inicializando=false;

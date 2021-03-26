@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <math.h>  
-#include <algorithm>
+#include <chrono>
 #include "../include/random.h"
 #include "../include/greedyCOPKM.h"
 
@@ -11,12 +11,16 @@ using namespace std;
     Ejecuta el algoritmo COPKM entero sobre un problema PAR
 */
 void greedyCOPKM(PAR par, int seed){
+    // Asignamos semilla aleatoria
+    Set_random(seed);
+    
     // Generamos los centroides de forma aleatoria
     vector<vector<double>> centroides;
     vector<double> centroide_aux;
 
     Set_random(seed);
 
+    auto begin = chrono::high_resolution_clock::now();
     for(int i=0; i<par.getNumClases(); i++){
         //cout << "Centroide " << i << " tiene de coordenadas:"<< endl;         // Mostrar centroides
 
@@ -35,11 +39,28 @@ void greedyCOPKM(PAR par, int seed){
     par.shuffleInstances();
 
     // Ejecutamos el algoritmo
-    int i=0;
+    //int i=0;
     while(par.asignarInstanciasAClustersCercanos()){
-        i++;
+        //i++;
     }
-    cout << "\nFin del algoritmo Greedy en " << i << " iteraciones" << endl;
+    auto end = chrono::high_resolution_clock::now();
+    auto elapsed = chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+/*
+    cout << "Problema COPKM (seed " << seed<< "):" << endl;
+    cout << "\tTime: " << elapsed.count() << " ms" << endl;
+    cout << "\tFit function: " << par.fitnessFunction() << endl;
+    cout << "\tInfeasibility: " << par.infeasibility() << endl;
+    cout << "\tDesviación: " << par.desviacionParticion() << endl;
+    */
 
+    cout << "Problema COPKM (seed " << seed<< "):";
+    cout << "\t" << elapsed.count() << "ms";
+    cout << "\t" << par.fitnessFunction();
+    cout << "\t" << par.infeasibility();
+    cout << "\t" << par.desviacionParticion() << endl;
+    
+    /*
+    cout << "\nFin del algoritmo Greedy en " << i << " iteraciones" << endl;
     par.mostrarEstado(); 
+    */
 }

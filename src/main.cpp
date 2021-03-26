@@ -56,25 +56,24 @@ int main(int argc, char * argv[]) {
     }
 
 
-    int NUM_PRUEBAS =1;
+    int NUM_PRUEBAS =5;
 
     // Estructuras para la lectura
     vector<vector<double> > data;
     vector<vector<double> > const_10;
     vector<vector<double> > const_20;
 
+    // Leemos los ficheros
+    read_dat(argv[1],data);//leemos el fichero.dat
+    read_const(argv[1],const_10,const_20);//leemos ficheros.const
 
     for(int i=0; i<NUM_PRUEBAS; i++){
         // SEMILLA
-        int seed = i;
+        int seed = i+1;
         
         // Estructuras PAR
         PAR par_10 = PAR();
         PAR par_20 = PAR();
-
-        // Leemos los ficheros
-        read_dat(argv[1],data);//leemos el fichero.dat
-        read_const(argv[1],const_10,const_20);//leemos ficheros.const
 
         // Inificalizamos las estructuras info con la informacion leida
         par_10.setInstancias(data); 
@@ -92,19 +91,20 @@ int main(int argc, char * argv[]) {
         par_20.setNumClases(clases);
         par_20.setSeed(seed);
 
-        
-        cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
-        //greedyCOPKM(par_10, seed);
+        cout << "\nSEMILLA "<< seed << "\t\t\t\t\t\tTime \tFitFunc \tInfeas \tDesviacion" << endl;
 
-        cout << "Ejecutamos el problema PAR_CONST_10 con COPKM" << endl;
-        //greedyCOPKM(par_20, seed);
+        cout << filestring << "_CONST_10. ";
+        greedyCOPKM(par_10, seed);
+
+        cout << filestring << "_CONST_20. ";
+        greedyCOPKM(par_20, seed);
         
 
-        cout << "\nEjecutamos el problema PAR_CONST_10 con Búsqueda Local" << endl;
+        cout << filestring << "_CONST_10. ";
         busquedaLocalPAR(par_10, seed);
 
-        cout << "\nEjecutamos el problema PAR_CONST_10 con Búsqueda Local" << endl;
-        //busquedaLocalPAR(par_20, seed);
+        cout << filestring << "_CONST_20. ";
+        busquedaLocalPAR(par_20, seed);
     }
     
     
