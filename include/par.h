@@ -19,6 +19,8 @@ private:
     int num_atributos;
     int num_clases;
 
+    bool necesidad_actualizar_centroides;       // Nos dirá si hace falta actualizar los centroides
+
     double funcion_objetivo;        // En esta variable se guardará el valor actual de la función objetivo cuando haga falta
     
     int iterations_BL;
@@ -174,16 +176,15 @@ public:
     double desviacionParticion();
 
     /*
-        Función objetivo. Será la función que buscaremos minimizar y nos dirá 
-        cómo de buena es nuestra solución actual
-    */
-    double  fitnessFunction();
-
-    /*
         Calcula el número de restricciones violadas
     */
     int infeasibility();
 
+    /*
+        Función objetivo. Será la función que buscaremos minimizar y nos dirá 
+        cómo de buena es nuestra solución actual
+    */
+    double  fitnessFunction();
 
 
     //////////////////////////////////
@@ -197,6 +198,7 @@ public:
         Además del problema general como es:
             -Infeasibility
             -Distancia media intra clúster del problema
+            -Función objetivo
     */
     void mostrarEstado();
 
@@ -254,7 +256,7 @@ public:
             for(int c=0; c<num_clases; c++){
                 centroides[c].resize(num_atributos);
             }
-
+            necesidad_actualizar_centroides=true;
         }
     }
 
@@ -273,6 +275,7 @@ public:
             for(int c=0; c<num_clases; c++){
                 centroides[c].resize(num_atributos);
             }
+            necesidad_actualizar_centroides=true;
         }
     }
 

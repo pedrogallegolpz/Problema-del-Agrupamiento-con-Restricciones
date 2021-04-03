@@ -356,6 +356,7 @@ bool PAR::asignarInstanciasAClustersCercanos(){
 
     //  TERCER PASO Actualizamos centroides
     bool hay_cambio = updateCentroides();
+    necesidad_actualizar_centroides=false;
 
     return hay_cambio;
 }
@@ -397,6 +398,7 @@ bool PAR::asignarInstanciasAleatoriamente(){
                 
                 int c_old = inst_belong[indices[i]];
                 if(clusters[c_old].size()>1){              // Si se puede cambiar cambiamos
+                    necesidad_actualizar_centroides=true;
 
                     // Hacemos la modificación
                     inst_belong[indices[i]]=c;      // Añadimos al nuevo cluster
@@ -418,7 +420,10 @@ bool PAR::asignarInstanciasAleatoriamente(){
 
 
     // Actualizamos los centroides y función objetivo
-    updateCentroides();
+    if(necesidad_actualizar_centroides){
+        updateCentroides();
+        necesidad_actualizar_centroides=false;
+    }
     fitnessFunction();
 
     return exito_inicializando;
@@ -446,6 +451,7 @@ bool PAR::cambioClusterMejor(int instancia, int cluster){
         }
     }
     updateCentroides();
+    necesidad_actualizar_centroides=false;
     
 
     bool mejora=true;
@@ -465,6 +471,7 @@ bool PAR::cambioClusterMejor(int instancia, int cluster){
         }
 
         updateCentroides();
+        necesidad_actualizar_centroides=false;
 
 
     }
@@ -510,11 +517,8 @@ bool PAR::buscarPrimerVecinoMejor(){
         hay_cambio = cambioClusterMejor(vec_virtual[ind_vec[i]][0], vec_virtual[ind_vec[i]][1]);
     }
 
-    if(iterations_BL>=100000){
-        hay_cambio = false;     // Forzamos salir
-    }
 
-    return hay_cambio;
+    return hay_cambio and iterations_BL<100000;
 }
 
 
@@ -533,8 +537,10 @@ double PAR::distanciaIntraCluster(int cluster){
     int size_c = clusters[cluster].size();
     double distancia = 0;
 
-    vector<double> centroide = calcularCentroide(cluster);
-
+    if(necesidad_actualizar_centroides){
+        necesidad_actualizar_centroides=false;
+        updateCentroides();
+    }
     // Calculamos la distancia
     for(int i=0; i<size_c; i++){
         distancia += distanciaEntreDosPuntos(instancias[clusters[cluster][i]],centroides[cluster]);
@@ -550,14 +556,35 @@ double PAR::distanciaIntraCluster(int cluster){
     como la media de las desviaciones intra-cluster de cada grupo o cluster
 */
 double PAR::desviacionParticion(){
-    double distancia = 0;
+    double desviacion = 0;
 
     for(int c=0; c<num_clases; c++){
-        distancia += distanciaIntraCluster(c);
+        desviacion += distanciaIntraCluster(c);
     }
-    distancia /= num_clases;
+    desviacion /= num_clases;
 
-    return distancia;
+    return desviacion;
+}
+
+
+/*
+    Calcula el número de restricciones violadas. COMPLETAR
+*/
+int PAR::infeasibility(){
+    int restricciones_violadas=0; 
+
+    for(int i=0; i<ML.size(); i++){
+        if( inst_belong[ML[i][0]]!=inst_belong[ML[i][1]] ){     // Incumple una restricción MustLink
+            restricciones_violadas++;
+        }
+    }
+    for(int i=0; i<CL.size(); i++){
+        if( inst_belong[CL[i][0]]==inst_belong[CL[i][1]]){      // Incumple una restricción CannotLink
+            restricciones_violadas++;
+        }
+    }
+
+    return restricciones_violadas;
 }
 
 
@@ -583,26 +610,6 @@ double  PAR::fitnessFunction(){
 }
 
 
-/*
-    Calcula el número de restricciones violadas. COMPLETAR
-*/
-int PAR::infeasibility(){
-    int restricciones_violadas=0; 
-
-    for(int i=0; i<ML.size(); i++){
-        if( inst_belong[ML[i][0]]!=inst_belong[ML[i][1]] ){     // Incumple una restricción MustLink
-            restricciones_violadas++;
-        }
-    }
-    for(int i=0; i<CL.size(); i++){
-        if( inst_belong[CL[i][0]]==inst_belong[CL[i][1]]){      // Incumple una restricción CannotLink
-            restricciones_violadas++;
-        }
-    }
-
-    return restricciones_violadas;
-}
-
 
 //////////////////////////////////
 //    Mostrar Info por Pantalla
@@ -617,6 +624,7 @@ int PAR::infeasibility(){
     Además del problema general como es:
         -Infeasibility
         -Distancia media intra clúster del problema
+        -Función Objetivo
 */
 void PAR::mostrarEstado(){
     cout << "\n\n--------------------------- ESTADO DEL PROBLEMA PAR ---------------------------" << endl << endl;

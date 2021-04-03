@@ -1,0 +1,38 @@
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set_const_10.const ,./data/zoo_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 1						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema COPKM (seed 1):	4ms	1.05182	2	1.03667
+./data/zoo_set_CONST_20. Problema COPKM (seed 1):	5ms	0.9048	0	0.9048
+./data/zoo_set_CONST_10. Problema BL (seed 1):   	108ms	0.694087	11	0.610733	IteracionesBL: 5242
+./data/zoo_set_CONST_20. Problema BL (seed 1):   	86ms	0.811086	23	0.71821	IteracionesBL: 4052
+
+SEMILLA 2						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema COPKM (seed 2):	5ms	0.92574	0	0.92574
+./data/zoo_set_CONST_20. Problema COPKM (seed 2):	4ms	0.971574	1	0.967536
+./data/zoo_set_CONST_10. Problema BL (seed 2):   	146ms	0.712902	13	0.614392	IteracionesBL: 8034
+./data/zoo_set_CONST_20. Problema BL (seed 2):   	94ms	0.793808	12	0.745351	IteracionesBL: 4331
+
+SEMILLA 3						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema COPKM (seed 3):	4ms	1.01459	1	1.00701
+./data/zoo_set_CONST_20. Problema COPKM (seed 3):	4ms	0.9048	0	0.9048
+./data/zoo_set_CONST_10. Problema BL (seed 3):   	94ms	0.735747	15	0.622082	IteracionesBL: 4670
+./data/zoo_set_CONST_20. Problema BL (seed 3):   	102ms	0.847589	33	0.714332	IteracionesBL: 3790
+
+SEMILLA 4						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema COPKM (seed 4):	6ms	1.03957	6	0.994104
+./data/zoo_set_CONST_20. Problema COPKM (seed 4):	6ms	0.969286	2	0.96121
+./data/zoo_set_CONST_10. Problema BL (seed 4):   	88ms	0.720591	13	0.622082	IteracionesBL: 3761
+./data/zoo_set_CONST_20. Problema BL (seed 4):   	109ms	0.839179	30	0.718036	IteracionesBL: 5105
+
+SEMILLA 5						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema COPKM (seed 5):	4ms	1.0714	2	1.05624
+./data/zoo_set_CONST_20. Problema COPKM (seed 5):	3ms	1.05446	5	1.03427
+./data/zoo_set_CONST_10. Problema BL (seed 5):   	93ms	0.728582	14	0.622495	IteracionesBL: 4721
+./data/zoo_set_CONST_20. Problema BL (seed 5):   	134ms	0.789876	14	0.733343	IteracionesBL: 6714
