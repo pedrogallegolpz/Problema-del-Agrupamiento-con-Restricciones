@@ -20,6 +20,7 @@
 #include "readfiles.h"
 #include "greedyCOPKM.h"
 #include "busqlocal.h"
+#include <sstream>
 
 using namespace std;
 
@@ -28,8 +29,8 @@ int main(int argc, char * argv[]) {
 
     
 
-    if(argc != 2){
-        cout << "Uso: " << argv[0] << " ./data/<filename> " << endl << "No hay que poner el .dat en el archivo por parámetro." << endl << endl;
+    if(argc < 2){
+        cout << "Uso: " << argv[0] << " ./data/<filename>  [semilla]" << endl << "No hay que poner el .dat en el archivo por parámetro." << endl << endl;
         return 1;
     }
 
@@ -66,10 +67,19 @@ int main(int argc, char * argv[]) {
     // Leemos los ficheros
     read_dat(argv[1],data);//leemos el fichero.dat
     read_const(argv[1],const_10,const_20);//leemos ficheros.const
+    
+    int seed=0;
+    if(argc==3){
+        stringstream ss;
+        string aux(argv[2]);
+        ss << aux;
+        ss >> seed;
+    }
 
     for(int i=0; i<NUM_PRUEBAS; i++){
         // SEMILLA
-        int seed = i+1;
+        seed++;
+        
         
         // Estructuras PAR
         PAR par_10 = PAR();
@@ -93,6 +103,7 @@ int main(int argc, char * argv[]) {
 
         cout << "\nSEMILLA "<< seed << "\t\t\t\t\t\tTime \tFitFunc \tInfeas \tDesviacion" << endl;
 
+        /*
         cout << filestring << "_CONST_10. ";
         greedyCOPKM(par_10, seed);
 
@@ -105,6 +116,7 @@ int main(int argc, char * argv[]) {
 
         cout << filestring << "_CONST_20. ";
         busquedaLocalPAR(par_20, seed);
+        */
     }
     
     

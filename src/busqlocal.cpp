@@ -28,7 +28,7 @@ void busquedaLocalPAR(PAR par, int seed){
     while(par.buscarPrimerVecinoMejor()){
         i++;
     }
-
+    
     auto end = chrono::high_resolution_clock::now();
     auto elapsed = chrono::duration_cast<std::chrono::milliseconds>(end - begin);
 
@@ -39,9 +39,11 @@ void busquedaLocalPAR(PAR par, int seed){
     cout << "\t" << par.infeasibility();
     cout << "\t" << par.desviacionParticion();
     cout << "\tIteracionesBL: " << par.getIterationsBL() << endl;
+    
 
-    /*
+
+    
     cout << "\nFin del algoritmo Búsqueda Local en " << par.getIterationsBL() << " iteraciones" << endl;
     par.mostrarEstado(); 
-    */
+    
 }
