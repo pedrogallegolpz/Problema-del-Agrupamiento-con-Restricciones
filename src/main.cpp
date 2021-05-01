@@ -21,6 +21,7 @@
 #include "greedyCOPKM.h"
 #include "busqlocal.h"
 #include "genetico.h"
+#include "memetico.h"
 #include <sstream>
 
 using namespace std;
@@ -62,7 +63,7 @@ int main(int argc, char * argv[]) {
 
     const int NUM_PRUEBAS = 1;
     const int TAM_POBLACION_GENETICO = 50;
-    const int TAM_POBLACION_MEMETICO = 10;
+    const int TAM_POBLACION_MEMETICO = 50;
 
     // Estructuras para la lectura
     vector<vector<double> > data;
@@ -109,6 +110,7 @@ int main(int argc, char * argv[]) {
 
         cout << "\nSEMILLA "<< seed << "\t\t\t\t\t\tTime \tFitFunc \tInfeas \tDesviacion" << endl;
 
+        
         ////////////////////////////////////
         //          GREEDY
         ////////////////////////////////////
@@ -133,35 +135,42 @@ int main(int argc, char * argv[]) {
         //          GENÉTICO
         ////////////////////////////////////
         cout << filestring << "_CONST_10. ";
-        genetico(par_10, TAM_POBLACION_GENETICO, 1, 1, seed, false);
+        //genetico(par_10, TAM_POBLACION_GENETICO, 1, 1, seed, false);
         
         cout << filestring << "_CONST_20. ";
-        genetico(par_20, TAM_POBLACION_GENETICO, 1, 1, seed, false);
+        //genetico(par_20, TAM_POBLACION_GENETICO, 1, 1, seed, false);
 
         cout << filestring << "_CONST_10. ";
-        genetico(par_10, TAM_POBLACION_GENETICO, 1, 2, seed, false);
+        //genetico(par_10, TAM_POBLACION_GENETICO, 1, 2, seed, false);
         
         cout << filestring << "_CONST_20. ";
-        genetico(par_20, TAM_POBLACION_GENETICO, 1, 2, seed, false);
+        //genetico(par_20, TAM_POBLACION_GENETICO, 1, 2, seed, false);
 
         cout << filestring << "_CONST_10. ";
-        genetico(par_10, TAM_POBLACION_GENETICO, 2, 1, seed, false);
+        //genetico(par_10, TAM_POBLACION_GENETICO, 2, 1, seed, false);
         
         cout << filestring << "_CONST_20. ";
-        genetico(par_20, TAM_POBLACION_GENETICO, 2, 1, seed, false);
+        //genetico(par_20, TAM_POBLACION_GENETICO, 2, 1, seed, false);
 
         cout << filestring << "_CONST_10. ";
-        genetico(par_10, TAM_POBLACION_GENETICO, 2, 2, seed, false);
+        //genetico(par_10, TAM_POBLACION_GENETICO, 2, 2, seed, false);
         
         cout << filestring << "_CONST_20. ";
-        genetico(par_20, TAM_POBLACION_GENETICO, 2, 2, seed, false);
-
+        //genetico(par_20, TAM_POBLACION_GENETICO, 2, 2, seed, false);
+        
 
         ////////////////////////////////////
         //          MEMÉTICO
         ////////////////////////////////////
-        //genetico(par_10,2, 2, 7, false);
+        //memetico(PAR par, int tam, int bls, double prob, bool best, int cruce, int seed, bool mostrarEstado);
 
+        cout << endl << filestring << "_CONST_10. ";
+        memetico(par_10, TAM_POBLACION_MEMETICO, 10, 1.0, false, 2, seed, false);
+        memetico(par_10, TAM_POBLACION_MEMETICO, 10, 0.1, false, 2, seed, false);
+        memetico(par_10, TAM_POBLACION_MEMETICO, 10, 0.1, true, 2, seed, false);
+        
+        cout << filestring << "_CONST_20. ";
+        //memetico(par_20, TAM_POBLACION_MEMETICO, 10, 1.0, false, 2, seed, false);
     }
 
 }

@@ -25,25 +25,22 @@ void memetico(PAR par, int tam, int bls, double prob, bool best, int cruce, int 
     par.setTamPoblacion(tam);
     par.setIterationsFF(0);
     
+    int valoraciones_funcion_objetivo=100000;    
+
     auto begin = chrono::high_resolution_clock::now();
     // Inicializamos aleatoriamente la población
     if(!par.crearPoblacionAleatoria()){
         cout << "Error al crear población aleatoria en el algoritmo genético Local en PAR." << endl;
     }
     
-    int tam_pob;
-    if(tipo==1){
-        tam_pob=2;
-    }else{
-        tam_pob=par.getTamPoblacion();
-    }
-    int valoraciones_funcion_objetivo=100000;    
-    int iteraciones = valoraciones_funcion_objetivo/tam_pob;
     
     // Buscamos mejores vecinos hasta llegar al mejor
-    for(int i=0; i<iteraciones; i++){
-        par.runEpoch(tipo,cruce,bls,prob,best);
+    int borrar=0;
+    while(par.getIterationsFF()<valoraciones_funcion_objetivo){
+        par.runEpoch(2,cruce,bls,prob,best);
+        borrar++;
     }
+    cout<< "\nITERACIONES = " << borrar << endl;
     
     
     // Finalizamos el algoritmo y nos quedamos con el mejor
@@ -54,11 +51,7 @@ void memetico(PAR par, int tam, int bls, double prob, bool best, int cruce, int 
     
     string t;
     string c;
-    if(tipo == 1){
-        t="E";
-    }else{
-        t="G";
-    }
+    
 
     if(cruce==1){
         c="U";
@@ -66,7 +59,7 @@ void memetico(PAR par, int tam, int bls, double prob, bool best, int cruce, int 
         c="SF";
     }
 
-    string name = "AG"+t+c;
+    string name = "M.AGG"+c;
 
     cout << "Problema "+name+" (seed " << seed<< "):   ";
     cout << "\t" << elapsed.count() << "ms";

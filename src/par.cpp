@@ -381,8 +381,9 @@ bool PAR::asignarInstanciasAleatoriamente(vector<int> &solucion){
     return exito_inicializando;
 }
 
+
 /*
-    Simula una solución: calcula función fitness, 
+    Simula una solución. Actualiza clústers, centroides y función objetivo
 */
 bool PAR::simularSolucion(vector<double> &solucion){
     bool exito=true;
@@ -422,11 +423,6 @@ bool PAR::simularSolucion(vector<double> &solucion){
         }
     }
     
-    if(!exito){
-        cout<< "ERROR PAR::simularSolucion. No ha habido exito al cumplir restricciones.\n";
-        string exit;
-        cin >> exit;
-    }
 
     updateCentroides();
     necesidad_actualizar_centroides=false;
@@ -685,26 +681,67 @@ bool PAR::buscarPrimerVecinoMejor(){
     Nos devuelve True en caso de haber encontrado un vecino mejor. En otro caso
     estamos ante la solución óptima y nos dará False
 */
-bool PAR::busquedaLocalSuave(vector<int> &solucion, int fallos){
-
-}
-
-/*
-    Sobrecarga, con vector<double> se reconvierte a enteros
-*/
 bool PAR::busquedaLocalSuave(vector<double> &solucion, int fallos){
-    vector<int> new_solucion;
-    for(int i=0; i<num_instancias; i++){
-        new_solucion.push_back(solucion[i]);
-    }
+    bool exito = true;
 
-    bool exito = busquedaLocalSuave(new_solucion,fallos);
-
-    for(int i=0; i<num_instancias; i++){
-        solucion[i]=new_solucion[i];
-    }
+    shuffleInstances();
+    
+    // Simulamos la solución de primeras
+    simularSolucion(solucion);
     solucion[solucion.size()-2]=epoca;
     solucion[solucion.size()-1]=funcion_objetivo;
+    iterations_ff++;
+
+    int f = 0;  // Cuenta de fallos
+    bool mejora = true;
+    int i = 0;
+    vector<double> mejor_solucion=solucion;
+    
+    while((mejora || f<fallos) && i<num_instancias){
+        mejora = false;
+
+        int cluster_de_partida = solucion[indices[i]];   
+        int mejor_cluster = cluster_de_partida;
+        double f_objetivo_mejor = mejor_solucion[mejor_solucion.size()-1];
+
+        // Si podemos sacarlo de ese cluster 
+        if(clusters[solucion[indices[i]]].size()>1){
+
+            // Buscamos el mejor clúster
+            for(int c=0; c<num_clases; c++){
+                if(c!=cluster_de_partida){
+                    solucion[indices[i]]=c;
+
+                    // Simulamos
+                    simularSolucion(solucion);
+                    solucion[solucion.size()-2]=epoca;
+                    solucion[solucion.size()-1]=funcion_objetivo;
+
+                    // Actualizamos iteraciones
+                    iterations_ff++;
+
+                    // Si mejoran los resultados
+                    if(funcion_objetivo < f_objetivo_mejor){
+                        mejor_cluster = c;
+                        f_objetivo_mejor = funcion_objetivo;
+                        mejor_solucion = solucion;
+                    }
+                }
+            }
+
+            // Nos quedamos la mejor solución
+            solucion = mejor_solucion;
+
+            // Actualizamos las variables dependiendo si se ha mejorado la solución en esta iteración o no
+            if(mejor_cluster!=cluster_de_partida){
+                mejora=true;
+            }else{
+                f++;
+            }
+        }
+        // Avanzamos con el índice
+        i++;
+    }
 
     return exito;
 }
@@ -989,8 +1026,9 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
             for(int i=0; i<poblacion_hijos.size(); i++){
                 insertPoblacion(poblacion_hijos[i], poblacion_aux);
             }
+            poblacion_hijos=poblacion_aux;
         }
-        poblacion_hijos=poblacion_aux;
+        
 
         // Ejecutamos BLS
         for(int i=0; i<num_soluciones_bls; i++){
@@ -1052,7 +1090,7 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
     }
     */
 
-    iterations_ff++;
+    iterations_ff+=TAM_POBLACION;
     epoca++;
 }
 

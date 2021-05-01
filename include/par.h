@@ -47,21 +47,19 @@ private:
     vector<vector<int>> CL;                     // Restricciones Must-Link (ML). La instancia ML[i,0] no puede tener relación con ML[i,1]
                                                 // NOTA en la posición M[i] hay dos índices que hacen referencia directa a instancias (No a indices)
 
-    // Seguiremos el orden según estos índices
-    vector<int> indices;                        // Nos dice cómo recorremos las instancias
-
-    // Atributos para los algoritmos genéticos y meméticos
+    // Atributos genéticos y meméticos
+    vector<double> mejor_solucion;              // Guarda la mejor solución
+    bool actualizar_mejorsolucion;              // Nos avisa si hay que actualizar la mejor solución
+    const double PROB_CRUCE = 0.7;              // Probabilidad de que de cruce en una época genética
+    const double PROB_MUT_GEN = 0.1;            // Probabilidad de mutación genética
     int TAM_POBLACION;                          // Nos dice el tamaño de la población
     int epoca;                                  // Época poblacional por la que vamos
     vector<vector<double>> poblacion;           // Vector de 50 vectores soluciones. Estas soluciones son de tipo double, pero aún así las 
-                                                // instancias son enteros. Su penúltima componente será la época en la que se generó. Su 
-                                                // última componente si que es un double haciendo referencia al  valor de su función objetivo.
+                                                //  instancias son enteros. Su penúltima componente será la época en la que se generó. Su 
+                                                //  última componente si que es un double haciendo referencia al  valor de su función objetivo.
 
-    vector<double> mejor_solucion;              // Guarda la mejor solución
-    bool actualizar_mejorsolucion;              // Nos avisa si hay que actualizar la mejor solución
-    const double PROB_CRUCE = 0.7;
-    const double PROB_MUT_GEN = 0.1;
-
+    // Seguiremos el orden según estos índices
+    vector<int> indices;                        // Nos dice cómo recorremos las instancias
 
     /*
         Creamos los vectores ML y CL
@@ -143,7 +141,7 @@ public:
 
 
     /*
-        Simula una solución
+        Simula una solución. Actualiza clústers, centroides y función objetivo
     */
     bool simularSolucion(vector<double> &solucion);
 
@@ -212,12 +210,6 @@ public:
 
         Nos devuelve True en caso de haber encontrado un vecino mejor. En otro caso
         estamos ante la solución óptima y nos dará False
-    */
-    bool busquedaLocalSuave(vector<int> &solucion, int fallos);
-
-
-    /*
-        Sobrecarga, con vector<double> se reconvierte a enteros
     */
     bool busquedaLocalSuave(vector<double> &solucion, int fallos);
 

@@ -21,13 +21,7 @@ void genetico(PAR par, int tam, int tipo, int cruce, int seed, bool mostrarEstad
 
     // Asignamos el tamaño de la población
     par.setTamPoblacion(tam);
-    
-    auto begin = chrono::high_resolution_clock::now();
-    // Inicializamos aleatoriamente la población
-    if(!par.crearPoblacionAleatoria()){
-        cout << "Error al crear población aleatoria en el algoritmo genético Local en PAR." << endl;
-    }
-    
+
     int tam_pob;
     if(tipo==1){
         tam_pob=2;
@@ -36,6 +30,13 @@ void genetico(PAR par, int tam, int tipo, int cruce, int seed, bool mostrarEstad
     }
     int valoraciones_funcion_objetivo=100000;    
     int iteraciones = valoraciones_funcion_objetivo/tam_pob;
+    
+    auto begin = chrono::high_resolution_clock::now();
+    // Inicializamos aleatoriamente la población
+    if(!par.crearPoblacionAleatoria()){
+        cout << "Error al crear población aleatoria en el algoritmo genético Local en PAR." << endl;
+    }
+    
     
     // Buscamos mejores vecinos hasta llegar al mejor
     for(int i=0; i<iteraciones; i++){
