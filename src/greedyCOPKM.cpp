@@ -10,7 +10,7 @@ using namespace std;
 /*
     Ejecuta el algoritmo COPKM entero sobre un problema PAR
 */
-void greedyCOPKM(PAR par, int seed){
+void greedyCOPKM(PAR par, int seed, bool mostrarEstado){
     // Asignamos semilla aleatoria
     Set_random(seed);
     
@@ -39,9 +39,9 @@ void greedyCOPKM(PAR par, int seed){
     par.shuffleInstances();
 
     // Ejecutamos el algoritmo
-    //int i=0;
+    int i=0;
     while(par.asignarInstanciasAClustersCercanos()){
-        //i++;
+        i++;
     }
     auto end = chrono::high_resolution_clock::now();
     auto elapsed = chrono::duration_cast<std::chrono::milliseconds>(end - begin);
@@ -55,6 +55,7 @@ void greedyCOPKM(PAR par, int seed){
     
     
     cout << "\nFin del algoritmo Greedy en " << i << " iteraciones" << endl;
-    par.mostrarEstado(); 
-    
+    if(mostrarEstado){
+            par.mostrarEstado(); 
+    }
 }

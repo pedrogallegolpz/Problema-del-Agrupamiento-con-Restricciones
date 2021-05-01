@@ -20,9 +20,12 @@
 #include "readfiles.h"
 #include "greedyCOPKM.h"
 #include "busqlocal.h"
+#include "genetico.h"
 #include <sstream>
 
 using namespace std;
+
+
 
 
 int main(int argc, char * argv[]) {
@@ -57,7 +60,9 @@ int main(int argc, char * argv[]) {
     }
 
 
-    int NUM_PRUEBAS =5;
+    const int NUM_PRUEBAS = 1;
+    const int TAM_POBLACION_GENETICO = 50;
+    const int TAM_POBLACION_MEMETICO = 10;
 
     // Estructuras para la lectura
     vector<vector<double> > data;
@@ -75,6 +80,7 @@ int main(int argc, char * argv[]) {
         ss << aux;
         ss >> seed;
     }
+
 
     for(int i=0; i<NUM_PRUEBAS; i++){
         // SEMILLA
@@ -103,23 +109,61 @@ int main(int argc, char * argv[]) {
 
         cout << "\nSEMILLA "<< seed << "\t\t\t\t\t\tTime \tFitFunc \tInfeas \tDesviacion" << endl;
 
-        /*
+        ////////////////////////////////////
+        //          GREEDY
+        ////////////////////////////////////
         cout << filestring << "_CONST_10. ";
-        greedyCOPKM(par_10, seed);
+        //greedyCOPKM(par_10, seed,false);
 
         cout << filestring << "_CONST_20. ";
-        greedyCOPKM(par_20, seed);
+        //greedyCOPKM(par_20, seed,false);
         
 
+        ////////////////////////////////////
+        //       BÚSQUEDA LOCAL
+        ////////////////////////////////////
         cout << filestring << "_CONST_10. ";
-        busquedaLocalPAR(par_10, seed);
+        //busquedaLocalPAR(par_10, seed, false);
 
         cout << filestring << "_CONST_20. ";
-        busquedaLocalPAR(par_20, seed);
-        */
+        //busquedaLocalPAR(par_20, seed, false);
+
+
+        ////////////////////////////////////
+        //          GENÉTICO
+        ////////////////////////////////////
+        cout << filestring << "_CONST_10. ";
+        genetico(par_10, TAM_POBLACION_GENETICO, 1, 1, seed, false);
+        
+        cout << filestring << "_CONST_20. ";
+        genetico(par_20, TAM_POBLACION_GENETICO, 1, 1, seed, false);
+
+        cout << filestring << "_CONST_10. ";
+        genetico(par_10, TAM_POBLACION_GENETICO, 1, 2, seed, false);
+        
+        cout << filestring << "_CONST_20. ";
+        genetico(par_20, TAM_POBLACION_GENETICO, 1, 2, seed, false);
+
+        cout << filestring << "_CONST_10. ";
+        genetico(par_10, TAM_POBLACION_GENETICO, 2, 1, seed, false);
+        
+        cout << filestring << "_CONST_20. ";
+        genetico(par_20, TAM_POBLACION_GENETICO, 2, 1, seed, false);
+
+        cout << filestring << "_CONST_10. ";
+        genetico(par_10, TAM_POBLACION_GENETICO, 2, 2, seed, false);
+        
+        cout << filestring << "_CONST_20. ";
+        genetico(par_20, TAM_POBLACION_GENETICO, 2, 2, seed, false);
+
+
+        ////////////////////////////////////
+        //          MEMÉTICO
+        ////////////////////////////////////
+        //genetico(par_10,2, 2, 7, false);
+
     }
-    
-    
+
 }
 
 

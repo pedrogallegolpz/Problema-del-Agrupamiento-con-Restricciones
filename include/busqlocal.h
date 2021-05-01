@@ -16,7 +16,7 @@ using namespace std;
     Ejecuta el algoritmo de búsqueda local el primer mejor
     en un problema PAR
 */
-void busquedaLocalPAR(PAR par, int seed);
+void busquedaLocalPAR(PAR par, int seed, bool mostrarEstado);
 
 
 #endif

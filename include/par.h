@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <vector>
+#include "../include/random.h" 
 
 using namespace std;
 
@@ -21,9 +22,9 @@ private:
 
     bool necesidad_actualizar_centroides;       // Nos dirá si hace falta actualizar los centroides
 
-    double funcion_objetivo;        // En esta variable se guardará el valor actual de la función objetivo cuando haga falta
+    double funcion_objetivo;                    // En esta variable se guardará el valor actual de la función objetivo cuando haga falta
     
-    int iterations_BL;
+    int iterations_ff;                          // Cuenta las veces que se usa la función objetivo de manera útil
 
     /*
         Todas las variables vector que hacen referencia a las instancias
@@ -49,6 +50,19 @@ private:
     // Seguiremos el orden según estos índices
     vector<int> indices;                        // Nos dice cómo recorremos las instancias
 
+    // Atributos para los algoritmos genéticos y meméticos
+    int TAM_POBLACION;                          // Nos dice el tamaño de la población
+    int epoca;                                  // Época poblacional por la que vamos
+    vector<vector<double>> poblacion;           // Vector de 50 vectores soluciones. Estas soluciones son de tipo double, pero aún así las 
+                                                // instancias son enteros. Su penúltima componente será la época en la que se generó. Su 
+                                                // última componente si que es un double haciendo referencia al  valor de su función objetivo.
+
+    vector<double> mejor_solucion;              // Guarda la mejor solución
+    bool actualizar_mejorsolucion;              // Nos avisa si hay que actualizar la mejor solución
+    const double PROB_CRUCE = 0.7;
+    const double PROB_MUT_GEN = 0.1;
+
+
     /*
         Creamos los vectores ML y CL
     */
@@ -60,6 +74,13 @@ private:
     */
     void resetClusters();
 
+    /*
+        Añade a un elemento a 'poblacion' ordenada según la función
+        objetivo de cada solución (posición 0 la mejor). Si 'pob'
+        tiene ya TAM_POBLACION elementos entonces borramos el peor.
+    */
+    void insertPoblacion(vector<double> &elemento, vector<vector<double>> &pob);
+
 public:
     /*
         Pone el num_clases a 0, por lo tanto no hay nada que hacer.
@@ -69,7 +90,7 @@ public:
     /*
         Inicializa el número de clases y los datos del problema.
     */
-    PAR(int num_atributos_source, int num_clases_source, vector<vector<double>> instancias_source, vector<vector<double>> restricciones_source, int seed_source);
+    PAR(int num_atributos_source, int num_clases_source, vector<vector<double>> instancias_source, vector<vector<double>> restricciones_source, int seed_source, int tam_pob);
 
     /*
         Constructor copia
@@ -112,12 +133,31 @@ public:
             -c2         cluster al que se pretende asignar
     */
     int incrementoInfeasibility(int instancia, int c1, int c2);
-    
+
+
+    /*
+        Crea solución aleatoria. Devuelve el éxito de la operación
+    */
+    bool asignarInstanciasAleatoriamente(vector<int> &solucion);
+
+
+
+    /*
+        Simula una solución
+    */
+    bool simularSolucion(vector<double> &solucion);
+
 
     ////////////////////////////////////////////////////////////////
+    //
     //      Métodos principales para las distintas Metaheurísticas
+    //
     ////////////////////////////////////////////////////////////////
-    
+
+
+    /////////////////////
+    //  GREEDY
+    /////////////////////
     /*
         USADO PARA LA METAHEURÍSTICA GREEDY COPKM PARA CADA ITERACIÓN
 
@@ -131,6 +171,12 @@ public:
     */
     bool asignarInstanciasAClustersCercanos();
 
+    
+
+
+    /////////////////////
+    //  BÚSQUEDA LOCAL
+    /////////////////////
     /*
         USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL EL PRIMERO MEJOR
 
@@ -140,7 +186,7 @@ public:
         Devuelve true si ha sido exitosa la operación. 
         En otro caso devuelve false.
     */
-    bool asignarInstanciasAleatoriamente();
+    bool crearSolucionAleatoria();
 
     /*
         USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL EL PRIMERO MEJOR
@@ -157,11 +203,115 @@ public:
         estamos ante la solución óptima y nos dará False
     */
     bool buscarPrimerVecinoMejor();
+
+
+    /*
+        USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL SUAVE Y MEMÉTICO 
+
+        Actúa sobre la solución pasada por parámetro. Se permiten #fallos en el algoritmo
+
+        Nos devuelve True en caso de haber encontrado un vecino mejor. En otro caso
+        estamos ante la solución óptima y nos dará False
+    */
+    bool busquedaLocalSuave(vector<int> &solucion, int fallos);
+
+
+    /*
+        Sobrecarga, con vector<double> se reconvierte a enteros
+    */
+    bool busquedaLocalSuave(vector<double> &solucion, int fallos);
+
+    
+
+
+    ////////////////////////////
+    //  GENÉTICOS Y MEMÉTICOS
+    ////////////////////////////
+    /*
+        USADO PARA LA METAHEURÍSTICA GENÉTICA
+
+        Crea un conjunto de TAM_POBLACION soluciones y se guardan en poblacion
+
+        Devuelve true si ha sido exitosa la operación. 
+        En otro caso devuelve false.
+    */
+    bool crearPoblacionAleatoria();
+
+    /*
+        USADO PARA LAS METAHEURÍSTICAS GENÉTICAS
+
+        Lleva a cabo el operador de cruce uniforme. Se pasan por referencia los dos padres
+        y el vector resultante.
+
+        Devuelve true si ha sido exitosa la operación.
+        En otro caso devuelve false.
+    */
+    bool operadorCruceUniforme(vector<double> &padre1, vector<double> &padre2, vector<double> &hijo);
+
+    /*
+        USADO PARA LAS METAHEURÍSTICAS GENÉTICAS
+
+        Lleva a cabo el operador de cruce por segmento fijo. Se pasan por referencia los dos
+        padres y el vector resultante.
+
+        Devuelve true si ha sido exitosa la operación.
+        En otro caso devuelve false.
+    */
+    bool operadorCruceSegmentoFijo(vector<double> &padre1, vector<double> &padre2, vector<double> &hijo);
+
+    /*
+        USADO PARA LAS METAHEURÍSTICAS GENÉTICAS
+
+        Lleva a cabo el operador de mutación. Se pasan por referencia la población.
+        Además se pasará el número de genes a modificar.
+
+        Devuelve true si ha sido exitosa la operación.
+        En otro caso devuelve false.
+    */
+    bool operadorMutacion(vector<vector<double>> &pob, double ngenes);
+
+    /*
+        USADO PARA LAS METAHEURÍSTICAS GENÉTICAS
+
+        Se contemplan las metaheurísticas genéticas tanto estacionarias como generacional
+        y los operadores de cruce 'uniforme' y 'segmento fijo'. Ejecuta una época completa
+        sobre la población
+
+        params:
+            -tipo:      entero que determina si el algoritmo es estacionario(1) o generacional(2)
+            -cruce:     entero que determina el tipo de cruce: 'uniforme'(1) o 'segmento fijo'(2)   
+            -bls:       entero que determina que cada #bls épocas se haga una BúsquedaLocalSuave
+                        si es 0 se ejecutará una época conforme a un algoritmo genético. Si es >0
+                        se ejecutará una época conforme a un algoritmo memético.
+            -prob:      probabilidad de que se modifique un cromosoma (bls>0)
+            -best:      booleano: se cogen solo los prob*tam mejores si true (bls>0 and prob!=1)
+        Nos devuelve True si se ha realizado con éxito el proceso de búsqueda de solución.
+        Nos devuelve False en caso contrario.
+    */
+    bool runEpoch(int tipo, int cruce, int bls, double prob, bool best);
+
+
+    /*
+        USADO PARA LAS METAHEURÍSTICAS GENÉTICAS
+
+        Hace como función de mostrar los resultados de la evolución genética de cualquiera de las
+        metaheurísticas genéticas. Se coge la mejor solución de la población y la establece como
+        solución al problema representado por la clase.
+
+        RECOMENDABLE: Ejecutar antes varias épocas con 'runGenetico'. Si no se ha ejecutado ninguna
+        se ejecutará por defecto una época de tipo estacionario y segmento uniforme.
+
+        Nos devuelve True si se ha realizado con éxito el proceso de búsqueda de solución.
+        Nos devuelve False en caso contrario.
+    */
+    bool finishEpochs();
     
 
     
     /////////////////////////////////////////////////////////////
+    //
     //    Métodos que nos dicen cómo de buena es la solución
+    //
     /////////////////////////////////////////////////////////////
 
     /*
@@ -371,11 +521,25 @@ public:
         }
     }
 
-    int getIterationsBL() const{
-        return iterations_BL;
+    int getIterationsFF() const{
+        return iterations_ff;
     }
-    void setIterationsBL(int it){
-        iterations_BL = it;
+    void setIterationsFF(int it){
+        iterations_ff = it;
+    }
+
+    int getTamPoblacion() const{
+        return TAM_POBLACION;
+    }
+    void setTamPoblacion(int tam){
+        TAM_POBLACION = tam;
+    }
+
+    int getEpoca() const{
+        return epoca;
+    }
+    int setEpoca(int t){
+        epoca = t;
     }
 
 

@@ -50,6 +50,89 @@ void PAR::resetClusters(){
 }
 
 
+/*
+    Añade a un elemento a 'poblacion' ordenada según la función
+    objetivo de cada solución (posición 0 la mejor). Si 'pob'
+    tiene ya TAM_POBLACION elementos entonces borramos el peor.
+*/
+void PAR::insertPoblacion(vector<double> &elemento, vector<vector<double>> &pob){
+    // Si la población está vacía añadimos
+
+    if(pob.empty() && TAM_POBLACION>0){
+        pob.push_back(elemento);
+        actualizar_mejorsolucion=true;
+
+    }else if(TAM_POBLACION>0){
+        double movimiento = ((double)(pob.size()-1))/2;
+        double elemento_medio = movimiento;
+        bool insertado = false;
+
+        // Insertamos de forma ordenada
+        while(!insertado){
+            int it = elemento_medio;
+
+            if(movimiento<1){
+                // Comparamos las funciones objetivo
+                if(elemento[elemento.size()-1] < pob[it][pob[it].size()-1]){
+                    // Recorremos hacia la izquierda hasta encontrar uno que elemento se mayor que él
+                    for(int i=it; i>=0 && !insertado; i--){
+                        if(elemento[elemento.size()-1] > pob[i][pob[i].size()-1]){
+                            pob.insert(pob.begin()+i+1, elemento);
+                            insertado=true;
+                        }
+                    }
+                    // Si no se ha insertado es porque es el más pequeño
+                    if(!insertado){
+                        pob.insert(pob.begin(),elemento);
+                        insertado=true;
+
+                        // Tenemos mejor solución, hay que actualizarla
+                        actualizar_mejorsolucion=true;
+                    }
+                }else if(elemento[elemento.size()-1] > pob[it][pob[it].size()-1]){
+                    // Recorremos hacia la derecha hasta encontrar uno que elemento sea menor que el
+                    for(int i=it; i<pob.size() && !insertado; i++){
+                        if(elemento[elemento.size()-1] <= pob[i][pob[i].size()-1]){
+                            pob.insert(pob.begin()+i, elemento);
+                            insertado=true;
+                        }
+                    } 
+                    // Si no se ha insertado es porque es el más grande
+                    if(!insertado){
+                        pob.insert(pob.end(),elemento);
+                        insertado=true;
+                    }         
+                }else{
+                    pob.insert(pob.begin()+it,elemento);
+                    insertado=true;               
+                }            
+            }else{
+                movimiento = movimiento/2;  // Lo que nos vamos a desplazar para encontrar la posición
+
+                // Comparamos las funciones objetivo
+                if(elemento[elemento.size()-1] < pob[it][pob[it].size()-1]){
+                    elemento_medio -= movimiento;
+                }else if(elemento[elemento.size()-1] > pob[it][pob[it].size()-1]){
+                    elemento_medio += movimiento;
+                }else{
+                    pob.insert(pob.begin()+it,elemento);
+                    insertado=true; 
+                    if(it==0){
+                        // Tenemos mejor solución, hay que actualizarla
+                        actualizar_mejorsolucion=true;
+                    }          
+                }
+            }
+        }
+        if(pob.size()>TAM_POBLACION){
+            pob.erase(pob.end()-1);
+        }
+
+    }else{
+        cout << "ERROR: vector poblacion can only be empty becouse TAM_POBLACION=0" << endl;
+    }
+}
+
 
 
 ///////////////////
@@ -66,7 +149,9 @@ PAR::PAR(){
     num_instancias = 0;
     SEED = 0;
     funcion_objetivo = 10000000;
-    iterations_BL = 0;
+    iterations_ff = 0;
+    TAM_POBLACION = 0;
+    epoca = 0;
     
     resetClusters();
 }
@@ -74,12 +159,14 @@ PAR::PAR(){
 /*
     Inicializa el número de clases y los datos del problema.
 */
-PAR::PAR(int num_atributos_source, int num_clases_source, vector<vector<double>> instancias_source, vector<vector<double>> restricciones_source, int seed_source){
+PAR::PAR(int num_atributos_source, int num_clases_source, vector<vector<double>> instancias_source, vector<vector<double>> restricciones_source, int seed_source, int tam_pob){
     setNumAtributos(num_atributos_source);
     setNumClases(num_clases_source);
     setInstancias(instancias_source);
     setRestricciones(restricciones_source);
     setSeed(seed_source);
+    setTamPoblacion(tam_pob);
+    setEpoca(0);
 }
 
 /*
@@ -97,6 +184,8 @@ PAR::PAR(const PAR &par_source){
     indices = par_source.getIndices();
     GREATER_DIST = par_source.getGreaterDist();
     SEED = par_source.getSeed();
+    TAM_POBLACION = par_source.getTamPoblacion();
+    epoca = par_source.getEpoca();
 
     generarRestricciones();
 }
@@ -244,14 +333,120 @@ int PAR::incrementoInfeasibility(int instancia, int c1, int c2){
 }
 
 
+/*
+    Crea solución aleatoria y la devuelve
+*/
+bool PAR::asignarInstanciasAleatoriamente(vector<int> &solucion){
+    bool exito_inicializando=true;      // Nos dirá si se queda algún clúter vacío
 
 
+    // Reseteamos la información que haya
+    resetClusters();
+
+    // Asignamos a cada instancia un clúster aleatorio sin tener en cuenta restricciones
+    for(int i=0; i<num_instancias; i++){
+        // Generamos el cluster aleatorio
+        int cluster_aleatorio = Randint(0, num_clases-1);
+
+        // Asignamos el cluster a la instancia i
+        solucion[i] = cluster_aleatorio;
+        clusters[cluster_aleatorio].push_back(i);
+    }
+
+    // Arreglamos las restricciones fuertes que se incumplan
+    shuffleInstances();
+    for(int c=0; c<num_clases and exito_inicializando; c++){    // Para cada clúster comprobamos que no esté vacío
+
+        if(clusters[c].size() == 0){    // Si está vacío
+            exito_inicializando = false;
+            for(int i=0; i<indices.size(); i++){    // Para cada instancia comprobamos si se puede cambiar
+                
+                int c_old = solucion[indices[i]];
+                if(clusters[c_old].size()>1){              // Si se puede cambiar cambiamos
+                    necesidad_actualizar_centroides=true;
+
+                    // Hacemos la modificación
+                    solucion[indices[i]]=c;      // Añadimos al nuevo cluster
+                    clusters[c].push_back(indices[i]);
+                    for(int k=0; k<clusters[c_old].size(); k++){
+                        if(clusters[c_old][k]==indices[i]){
+                            clusters[c_old].erase(clusters[c_old].begin()+k);   // eliminamos del anterior cluster
+                        }
+                    }
+                    exito_inicializando = true;
+                }
+            }
+        }
+    }
+    return exito_inicializando;
+}
+
+/*
+    Simula una solución: calcula función fitness, 
+*/
+bool PAR::simularSolucion(vector<double> &solucion){
+    bool exito=true;
+
+    inst_belong.resize(num_instancias);
+    resetClusters();
+    for(int i=0; i<num_instancias; i++){
+        inst_belong[i]=solucion[i];
+        clusters[solucion[i]].push_back(i);
+    }
+    int num=0;
+    
+    // Arreglamos las restricciones fuertes que se incumplan
+    shuffleInstances();
+    for(int c=0; c<num_clases and exito; c++){    // Para cada clúster comprobamos que no esté vacío
+
+        if(clusters[c].size() == 0){    // Si está vacío
+            exito = false;
+            for(int i=0; i<indices.size(); i++){    // Para cada instancia comprobamos si se puede cambiar
+                
+                int c_old = inst_belong[indices[i]];
+                if(clusters[c_old].size()>1){              // Si se puede cambiar cambiamos
+                    necesidad_actualizar_centroides=true;
+
+                    // Hacemos la modificación
+                    inst_belong[indices[i]]=c;      // Añadimos al nuevo cluster
+                    solucion[indices[i]]=c;         // Actualizamos el vector original
+                    clusters[c].push_back(indices[i]);
+                    for(int k=0; k<clusters[c_old].size(); k++){
+                        if(clusters[c_old][k]==indices[i]){
+                            clusters[c_old].erase(clusters[c_old].begin()+k);   // eliminamos del anterior cluster
+                        }
+                    }
+                    exito = true;
+                }
+            }
+        }
+    }
+    
+    if(!exito){
+        cout<< "ERROR PAR::simularSolucion. No ha habido exito al cumplir restricciones.\n";
+        string exit;
+        cin >> exit;
+    }
+
+    updateCentroides();
+    necesidad_actualizar_centroides=false;
+    
+    fitnessFunction();
+
+    return exito;
+}
 
 
 ////////////////////////////////////////////////////////////////
+//
 //      Métodos principales para las distintas Metaheurísticas
+//
 ////////////////////////////////////////////////////////////////
 
+
+/////////////////////
+//  GREEDY
+/////////////////////
 /*
     USADA PARA LA METAHEURÍSTICA GREEDY COPKM PARA CADA ITERACIÓN
 
@@ -362,7 +557,9 @@ bool PAR::asignarInstanciasAClustersCercanos(){
 }
 
 
-
+/////////////////////
+//  BÚSQUEDA LOCAL
+/////////////////////
 /*
     USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL EL PRIMERO MEJOR
 
@@ -372,52 +569,12 @@ bool PAR::asignarInstanciasAClustersCercanos(){
     Devuelve true si ha sido exitosa la operación. 
     En otro caso devuelve false.
 */
-bool PAR::asignarInstanciasAleatoriamente(){
-    bool exito_inicializando=true;      // Nos dirá si se queda algún clúter vacío
-
-    // Reseteamos la información que haya
-    resetClusters();
-
-    // Asignamos a cada instancia un clúster aleatorio sin tener en cuenta restricciones
-    for(int i=0; i<num_instancias; i++){
-        // Generamos el cluster aleatorio
-        int cluster_aleatorio = Randint(0, num_clases-1);
-
-        // Asignamos el cluster a la instancia i
-        inst_belong[i] = cluster_aleatorio;
-        clusters[cluster_aleatorio].push_back(i);
-    }
-
-    // Arreglamos las restricciones fuertes que se incumplan
-    shuffleInstances();
-    for(int c=0; c<num_clases and exito_inicializando; c++){    // Para cada clúster comprobamos que no esté vacío
-
-        if(clusters[c].size() == 0){    // Si está vacío
-            exito_inicializando = false;
-            for(int i=0; i<indices.size(); i++){    // Para cada instancia comprobamos si se puede cambiar
-                
-                int c_old = inst_belong[indices[i]];
-                if(clusters[c_old].size()>1){              // Si se puede cambiar cambiamos
-                    necesidad_actualizar_centroides=true;
-
-                    // Hacemos la modificación
-                    inst_belong[indices[i]]=c;      // Añadimos al nuevo cluster
-                    clusters[c].push_back(i);
-                    for(int i=0; i<clusters[c_old].size(); i++){
-                        if(clusters[c_old][i]==indices[i]){
-                            clusters[c_old].erase(clusters[c_old].begin()+i);   // eliminamos del anterior cluster
-                        }
-                    }
-                    exito_inicializando = true;
-                }
-            }
-        }
-    }
+bool PAR::crearSolucionAleatoria(){
+    bool exito_inicializando = asignarInstanciasAleatoriamente(inst_belong);      // Nos dirá si se queda algún clúter vacío    
     
     if(!exito_inicializando){
         cout << "Error al asignar instancias aleatoriamente: No se ha conseguido hacer respetando todas las restricciones fuertes." << endl;
     }
-
 
     // Actualizamos los centroides y función objetivo
     if(necesidad_actualizar_centroides){
@@ -428,8 +585,6 @@ bool PAR::asignarInstanciasAleatoriamente(){
 
     return exito_inicializando;
 }
-
-
 
 /*
     USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL EL PRIMERO MEJOR
@@ -476,7 +631,7 @@ bool PAR::cambioClusterMejor(int instancia, int cluster){
 
     }
     
-    iterations_BL++;
+    iterations_ff++;
 
     
     return mejora;
@@ -513,22 +668,449 @@ bool PAR::buscarPrimerVecinoMejor(){
 
     vector<int> ind_vec = ShuffleIndices(vec_virtual.size());      // Metemos aleatoriedad
 
-    for(int i=0; i<ind_vec.size() and !hay_cambio and iterations_BL<=100000; i++){
+    for(int i=0; i<ind_vec.size() and !hay_cambio and iterations_ff<=100000; i++){
         hay_cambio = cambioClusterMejor(vec_virtual[ind_vec[i]][0], vec_virtual[ind_vec[i]][1]);
     }
 
 
-    return hay_cambio and iterations_BL<100000;
+    return hay_cambio and iterations_ff<100000;
+}
+
+
+/*
+    USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL SUAVE Y MEMÉTICO 
+
+    Actúa sobre la solución pasada por parámetro. Se permiten #fallos en el algoritmo
+
+    Nos devuelve True en caso de haber encontrado un vecino mejor. En otro caso
+    estamos ante la solución óptima y nos dará False
+*/
+bool PAR::busquedaLocalSuave(vector<int> &solucion, int fallos){
+
+}
+
+/*
+    Sobrecarga, con vector<double> se reconvierte a enteros
+*/
+bool PAR::busquedaLocalSuave(vector<double> &solucion, int fallos){
+    vector<int> new_solucion;
+    for(int i=0; i<num_instancias; i++){
+        new_solucion.push_back(solucion[i]);
+    }
+
+    bool exito = busquedaLocalSuave(new_solucion,fallos);
+
+    for(int i=0; i<num_instancias; i++){
+        solucion[i]=new_solucion[i];
+    }
+    solucion[solucion.size()-2]=epoca;
+    solucion[solucion.size()-1]=funcion_objetivo;
+
+    return exito;
 }
 
 
 
 
-    
-/////////////////////////////////////////////////////////////
-//    Métodos que nos dicen cómo de buena es la solución
-/////////////////////////////////////////////////////////////
+////////////////////////////
+//  GENÉTICOS Y MEMÉTICOS
+////////////////////////////
+/*
+    USADO PARA LA METAHEURÍSTICA GENÉTICA
 
+    Crea un conjunto de TAM_POBLACION soluciones y se guardan en poblacion
+
+    Devuelve true si ha sido exitosa la operación. 
+    En otro caso devuelve false.
+*/
+bool PAR::crearPoblacionAleatoria(){
+    bool exito=true;
+    for(int i=0; i<TAM_POBLACION && exito; i++){
+        // Creamos solución
+        exito = crearSolucionAleatoria();
+
+
+        // Transcribimos la solución en términos de elementos de 'poblacion'
+        vector<double> aux;
+        for(int j=0; j<inst_belong.size(); j++){
+            aux.push_back(inst_belong[j]);
+        }
+        aux.push_back(epoca);
+        aux.push_back(funcion_objetivo);
+
+
+        
+        // Guardamos en la poblacion
+        insertPoblacion(aux, poblacion);
+    }
+
+    if(actualizar_mejorsolucion){
+        mejor_solucion.clear();
+        for(int i=0; i<poblacion[0].size();i++){
+            mejor_solucion.push_back(poblacion[0][i]);
+        }
+    }
+
+    return exito;
+}
+
+ /*
+    USADO PARA LAS METAHEURÍSTICAS GENÉTICAS
+
+    Lleva a cabo el operador de cruce uniforme. Se pasan por referencia los dos padres
+    y el vector resultante.
+
+    Devuelve true si ha sido exitosa la operación.
+    En otro caso devuelve false.
+*/
+bool PAR::operadorCruceUniforme(vector<double> &padre1, vector<double> &padre2, vector<double> &hijo){
+    vector<int> inds = ShuffleIndices(num_instancias);
+
+    hijo.resize(num_instancias);
+    for(int i=0;i<num_instancias;i++){
+        if(i<num_instancias/2){
+            hijo[inds[i]]=padre1[inds[i]];
+        }else{
+            hijo[inds[i]]=padre2[inds[i]];
+        }
+    }
+    bool exito = simularSolucion(hijo);
+    
+    hijo.push_back(epoca);
+    hijo.push_back(funcion_objetivo);
+
+    return true;
+}
+
+
+/*
+    USADO PARA LAS METAHEURÍSTICAS GENÉTICAS
+
+    Lleva a cabo el operador de cruce por segmento fijo. Se pasan por referencia los dos
+    padres y el vector resultante.
+
+    Devuelve true si ha sido exitosa la operación.
+    En otro caso devuelve false.
+*/
+bool PAR::operadorCruceSegmentoFijo(vector<double> &padre1, vector<double> &padre2, vector<double> &hijo){
+    // Generamos el tamaño y la posición inicial
+    int tam = Randint(1,num_instancias);
+    int pos_ini = Randint(0,num_instancias-1);
+
+    // Generamos los índices para el cruce uniforme
+    vector<int> indx = ShuffleIndices(num_instancias-tam);
+
+    hijo.resize(num_instancias);
+
+    // Cruzamos
+    // Asignamos al padre1
+    for(int i=0; i<tam; i++){
+        int pos = (i+pos_ini)%num_instancias;
+        hijo[pos] = padre1[pos];
+    }
+
+    // Asignamos uniformemente
+    for(int i=0; i<num_instancias-tam;i++){
+        int pos = (i+tam+pos_ini)%num_instancias;
+        if(i<(num_instancias-tam)/2){
+            hijo[pos] = padre1[pos];
+        }else{
+            hijo[pos] = padre2[pos];
+        }
+    }
+
+
+    bool exito = simularSolucion(hijo);
+    hijo.push_back(epoca);
+    hijo.push_back(funcion_objetivo);
+
+    return exito;
+}
+
+
+/*
+    USADO PARA LAS METAHEURÍSTICAS GENÉTICAS
+
+    Lleva a cabo el operador de mutación. Se pasan por referencia la población.
+    Además se pasará el número de genes a modificar.
+
+    Devuelve true si ha sido exitosa la operación.
+    En otro caso devuelve false.
+*/
+bool PAR::operadorMutacion(vector<vector<double>> &pob, double ngenes){
+    bool exito = true;
+    int total_genes = pob.size()*num_instancias;
+    bool mutacion_en_esta_epoca = false;
+    int epoca_mutacion=1;
+    int num_genes_a_mutar = ngenes;
+    
+    
+    if(ngenes<1 && ngenes>0){
+        epoca_mutacion = 1/ngenes;
+    }
+
+    if(epoca%epoca_mutacion==0){
+        mutacion_en_esta_epoca=true;
+    }    
+        
+    if(mutacion_en_esta_epoca){
+        for(int it=0; it<ngenes; it++){
+           
+            int gen = Randint(0, total_genes-1);
+            int i = gen/num_instancias;
+            int j = gen%num_instancias;
+            
+            int old_cluster = pob[i][j];
+            do{
+                // Mutamos el gen[i][j]
+                int new_cluster = Randint(0,num_clases-2);
+
+                if(new_cluster >= old_cluster){
+                    new_cluster++;
+                }
+
+                pob[i][j]=new_cluster;
+    
+                bool exito = simularSolucion(pob[i]);
+                
+    
+            }while(pob[i][j]==old_cluster);
+            
+            
+
+            // Actualizamos función fitness
+            pob[i][pob[i].size()-1]=funcion_objetivo;
+        }
+    }
+
+}
+
+
+/*
+    USADO PARA LAS METAHEURÍSTICAS GENÉTICAS
+
+    Se contemplan las metaheurísticas genéticas tanto estacionarias como generacional
+    y los operadores de cruce 'uniforme' y 'segmento fijo'. Ejecuta una época completa
+    sobre la población
+
+    params:
+        -tipo:      entero que determina si el algoritmo es estacionario(1) o generacional(2)
+        -cruce:     entero que determina el tipo de cruce: 'uniforme'(1) o 'segmento fijo'(2)    
+        -bls:       entero que determina que cada #bls épocas se haga una BúsquedaLocalSuave
+                    si es 0 se ejecutará una época conforme a un algoritmo genético. Si es >0
+                    se ejecutará una época conforme a un algoritmo memético.  
+        -prob:      probabilidad de que se modifique un cromosoma (bls>0)
+        -best:      booleano: se cogen solo los prob*tam mejores si true (bls>0 and prob!=1)
+    Nos devuelve True si se ha realizado con éxito el proceso de búsqueda de solución.
+    Nos devuelve False en caso contrario.
+*/
+bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
+    // Si no hay población hacemos un inicio aleatorio de población de tamaño TAM_POBLACION
+    if(poblacion.size()<TAM_POBLACION){
+        bool poblacion_creada = crearPoblacionAleatoria();  
+        if(!poblacion_creada){
+            cout << "ERROR at PAR::runGenetico. 'poblacion' doesn't create."<< endl;
+        }
+    }
+
+
+
+    int tam_pob = 0;
+    if(tipo == 1){
+        // Estacionario
+        tam_pob = 2;
+    }else{
+        tam_pob = TAM_POBLACION;
+    }
+
+    // EJECUTAMOS UNA ÉPOCA
+    
+    // Proceso de selección de Padres
+    vector<vector<double>> poblacion_padres = vector<vector<double>>();
+    for(int i=0; i<tam_pob; i++){
+        int mejorrand = Randint(0,TAM_POBLACION-1);
+        int rand2 = Randint(0,TAM_POBLACION-1);
+        
+        // Me quedo con el mejor
+        if(rand2 <= mejorrand){
+            mejorrand = rand2;
+        }
+        
+        poblacion_padres.push_back(poblacion[mejorrand]);
+    }
+
+
+    
+    // Proceso de cruce
+    vector<vector<double>> poblacion_hijos;
+    int padres_a_cruzar = 36; // 50*PROB_CRUCE=50*0.7
+    if(tipo == 1){
+        padres_a_cruzar = 2;  
+    }
+
+    for(int it1=0; it1<padres_a_cruzar/2; it1++){
+        for(int it2=0; it2<2; it2++){
+            vector<double> hijo;
+            if(cruce==1){
+                // Cruce uniforme
+                operadorCruceUniforme(poblacion_padres[2*it1], poblacion_padres[2*it1+1], hijo);
+            }else{
+                // Cruce segmento fijo
+                operadorCruceSegmentoFijo(poblacion_padres[2*it1], poblacion_padres[2*it1+1], hijo);
+            }
+            // Añadimos a la población
+            poblacion_hijos.push_back(hijo);
+        }
+    }
+
+    // Si es de tipo generacional metemos el resto de la población (no se han cruzado)
+    if(tipo != 1){
+        for(int it1=padres_a_cruzar; it1<tam_pob; it1++){
+            poblacion_hijos.push_back(poblacion_padres[it1]);
+        }
+    }
+    
+    // Proceso mutación 
+    double num_total_genes = tam_pob * num_instancias;
+    double genes_a_mutar = PROB_MUT_GEN*tam_pob;
+    
+
+    operadorMutacion(poblacion_hijos, genes_a_mutar);
+
+   
+    // Si hay que aplicar Búsqueda Local Suave en esta época
+    if(bls>0 && epoca%bls==0){
+        int num_soluciones_bls = prob * tam_pob;
+        int fallos = num_instancias*0.1;
+
+        // Si hay que coger los mejores
+        vector<vector<double>> poblacion_aux;
+        if(best && prob<1){
+            for(int i=0; i<poblacion_hijos.size(); i++){
+                insertPoblacion(poblacion_hijos[i], poblacion_aux);
+            }
+        }
+        poblacion_hijos=poblacion_aux;
+
+        // Ejecutamos BLS
+        for(int i=0; i<num_soluciones_bls; i++){
+            busquedaLocalSuave(poblacion_hijos[i], fallos);
+        }
+    }
+
+    
+
+    // Reemplazamiento
+    if(tipo==1){
+        // Estacionario
+        for(int i=0; i<poblacion_hijos.size(); i++){
+            insertPoblacion(poblacion_hijos[i], poblacion);
+        }
+    }else{
+        // Generacional
+        vector<double> mejor_padre = poblacion[0];
+        poblacion = vector<vector<double>> ();
+        
+        for(int i=0; i<poblacion_hijos.size(); i++){
+            insertPoblacion(poblacion_hijos[i], poblacion);
+        }
+        poblacion.erase(poblacion.end()-poblacion.size()/2);
+        insertPoblacion(mejor_padre, poblacion);
+    }
+    
+    /*
+    if(epoca%50==0 && epoca>1750){
+        cout << "\n\nEpoca " << epoca << endl; 
+
+        cout << "PADRES: \n";
+        for(int i=0; i<tam_pob; i++){
+            cout << "\n[ ";
+            for(int j=0; j<poblacion_padres[i].size(); j++){
+                cout << poblacion_padres[i][j] << ", " ;
+            }
+            cout << "]\n";
+        }
+
+        cout << "\n\nHIJOS: \n";
+        for(int i=0; i<tam_pob; i++){
+            cout << "\n[ ";
+            for(int j=0; j<poblacion_hijos[i].size(); j++){
+                cout << poblacion_hijos[i][j] << ", " ;
+            }
+            cout << "]\n";
+        }
+
+        cout << "\n\nPOBLACION: \n";
+        for(int i=0; i<TAM_POBLACION; i++){
+            cout << "\n[ ";
+            for(int j=0; j<poblacion[i].size(); j++){
+                cout << poblacion[i][j] << ", " ;
+            }
+            cout << "]\n";
+        }
+
+    }
+    */
+
+    iterations_ff++;
+    epoca++;
+}
+
+    
+/*
+    USADO PARA LAS METAHEURÍSTICAS GENÉTICAS
+
+    Hace como función de mostrar los resultados de la evolución genética de cualquiera de las
+    metaheurísticas genéticas. Se coge la mejor solución de la población y la establece como
+    solución al problema representado por la clase.
+    
+    RECOMENDABLE: Ejecutar antes varias épocas con 'runGenetico'. Si no se ha ejecutado ninguna
+    se ejecutará por defecto una época de tipo estacionario y segmento uniforme.
+
+    Nos devuelve True si se ha realizado con éxito el proceso de búsqueda de solución.
+    Nos devuelve False en caso contrario.
+*/
+bool PAR::finishEpochs(){
+    bool exito = true;
+    
+    // Si no hay población hacemos un inicio aleatorio de población de tamaño TAM_POBLACION
+    if(poblacion.size()<TAM_POBLACION){
+        exito = runEpoch(1,1,0,0,false);
+    }
+
+    /*
+    for(int i=0; i<TAM_POBLACION; i++){
+        cout << "[ ";
+        for(int j=0; j<poblacion[i].size(); j++){
+            cout << poblacion[i][j] << ", " ;
+        }
+        cout << "]\n";
+    }
+    */
+    
+
+    if(!exito){
+        cout << "Error PAR::endGenetico(). No se ha ejecutado la época bien.\n";
+    }
+
+    exito = simularSolucion(poblacion[0]);
+
+    if(!exito){
+        cout << "Error PAR::endGenetico(). Solución no válida.\n";
+    }
+
+    return exito;
+}
+
+
+
+
+
+/////////////////////////////////////////////////////////////
+//
+//    Métodos que nos dicen cómo de buena es la solución
+//
+/////////////////////////////////////////////////////////////
 
 /*
     Calcula la distancia media intra-cluster de un cluster cluster

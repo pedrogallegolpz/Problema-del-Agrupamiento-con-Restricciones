@@ -15,7 +15,7 @@ using namespace std;
 /*
     Ejecuta el algoritmo COPKM entero sobre un problema PAR
 */
-void greedyCOPKM(PAR par, int seed);
+void greedyCOPKM(PAR par, int seed, bool mostrarEstado);
 
 
 #endif

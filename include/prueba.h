@@ -7,11 +7,6 @@
 
 using namespace std;
 
-class B{
-private:
-    int hola;
-public:
-    B();
-    void borrar();
-};
+void insertar(vector<double> &poblacion, double elemento);
+
 #endif
