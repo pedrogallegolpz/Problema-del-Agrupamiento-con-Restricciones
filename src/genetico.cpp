@@ -29,8 +29,10 @@ void genetico(PAR par, int tam, int tipo, int cruce, int seed, bool mostrarEstad
         tam_pob=par.getTamPoblacion();
     }
     int valoraciones_funcion_objetivo=100000;    
-    int iteraciones = valoraciones_funcion_objetivo/tam_pob;
     
+    // Ponemos las iteraciones a 0
+    par.setIterationsFF(0);
+
     auto begin = chrono::high_resolution_clock::now();
     // Inicializamos aleatoriamente la población
     if(!par.crearPoblacionAleatoria()){
@@ -39,7 +41,7 @@ void genetico(PAR par, int tam, int tipo, int cruce, int seed, bool mostrarEstad
     
     
     // Buscamos mejores vecinos hasta llegar al mejor
-    for(int i=0; i<iteraciones; i++){
+    while(par.getIterationsFF()<valoraciones_funcion_objetivo){
         par.runEpoch(tipo,cruce,0,0,false);
     }
     

@@ -147,7 +147,7 @@ int main(int argc, char * argv[]) {
         //genetico(par_20, TAM_POBLACION_GENETICO, 1, 2, seed, false);
 
         cout << filestring << "_CONST_10. ";
-        //genetico(par_10, TAM_POBLACION_GENETICO, 2, 1, seed, false);
+        genetico(par_10, TAM_POBLACION_GENETICO, 2, 1, seed, false);
         
         cout << filestring << "_CONST_20. ";
         //genetico(par_20, TAM_POBLACION_GENETICO, 2, 1, seed, false);
@@ -165,9 +165,9 @@ int main(int argc, char * argv[]) {
         //memetico(PAR par, int tam, int bls, double prob, bool best, int cruce, int seed, bool mostrarEstado);
 
         cout << endl << filestring << "_CONST_10. ";
-        memetico(par_10, TAM_POBLACION_MEMETICO, 10, 1.0, false, 2, seed, false);
-        memetico(par_10, TAM_POBLACION_MEMETICO, 10, 0.1, false, 2, seed, false);
-        memetico(par_10, TAM_POBLACION_MEMETICO, 10, 0.1, true, 2, seed, false);
+       // memetico(par_10, TAM_POBLACION_MEMETICO, 10, 1.0, false, 2, seed, false);
+       // memetico(par_10, TAM_POBLACION_MEMETICO, 10, 0.1, false, 2, seed, false);
+       // memetico(par_10, TAM_POBLACION_MEMETICO, 10, 0.1, true, 2, seed, false);
         
         cout << filestring << "_CONST_20. ";
         //memetico(par_20, TAM_POBLACION_MEMETICO, 10, 1.0, false, 2, seed, false);

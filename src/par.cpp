@@ -812,9 +812,11 @@ bool PAR::operadorCruceUniforme(vector<double> &padre1, vector<double> &padre2, 
         }
     }
     bool exito = simularSolucion(hijo);
-    
     hijo.push_back(epoca);
     hijo.push_back(funcion_objetivo);
+
+    // Actualizamos iteraciones
+    iterations_ff++;
 
     return true;
 }
@@ -860,6 +862,9 @@ bool PAR::operadorCruceSegmentoFijo(vector<double> &padre1, vector<double> &padr
     bool exito = simularSolucion(hijo);
     hijo.push_back(epoca);
     hijo.push_back(funcion_objetivo);
+
+    // Actualizamos iteraciones
+    iterations_ff++;
 
     return exito;
 }
@@ -909,6 +914,8 @@ bool PAR::operadorMutacion(vector<vector<double>> &pob, double ngenes){
                 pob[i][j]=new_cluster;
     
                 bool exito = simularSolucion(pob[i]);
+                // Actualizamos iteraciones
+                iterations_ff++;
                 
     
             }while(pob[i][j]==old_cluster);
@@ -1090,7 +1097,6 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
     }
     */
 
-    iterations_ff+=TAM_POBLACION;
     epoca++;
 }
 
