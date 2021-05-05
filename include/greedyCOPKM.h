@@ -14,8 +14,10 @@ using namespace std;
 
 /*
     Ejecuta el algoritmo COPKM entero sobre un problema PAR
+
+    Devuelve el tiempo que ha tardado en ejecutarse en milisegundos
 */
-void greedyCOPKM(PAR par, int seed, bool mostrarEstado);
+int greedyCOPKM(PAR &par, int seed, bool mostrarEstado);
 
 
 #endif

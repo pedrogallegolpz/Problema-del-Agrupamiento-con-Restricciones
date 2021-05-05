@@ -9,8 +9,10 @@ using namespace std;
 
 /*
     Ejecuta el algoritmo COPKM entero sobre un problema PAR
+
+    Devuelve el tiempo que ha tardado en ejecutarse en milisegundos
 */
-void greedyCOPKM(PAR par, int seed, bool mostrarEstado){
+int greedyCOPKM(PAR &par, int seed, bool mostrarEstado){
     // Asignamos semilla aleatoria
     Set_random(seed);
     
@@ -58,4 +60,6 @@ void greedyCOPKM(PAR par, int seed, bool mostrarEstado){
     if(mostrarEstado){
             par.mostrarEstado(); 
     }
+
+    return elapsed.count();
 }

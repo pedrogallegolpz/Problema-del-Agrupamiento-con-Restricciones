@@ -16,31 +16,46 @@ using namespace std;
         -best:  booleano: se cogen solo los prob*tam mejores si true (prob!=1)
         -cruce: 1 si es uniforme, 2 segmento fijo
         -mostrarEstado: muestra el estado del problema al terminar el algoritmo
+        -mostrarEvolucionFitness:   muestra en cada generación el valor de la función objetivo
+
+    Devuelve el tiempo que ha tardado en ejecutarse en milisegundos
 */
-void memetico(PAR par, int tam, int bls, double prob, bool best, int cruce, int seed, bool mostrarEstado){
+int memetico(PAR &par, int tam, int bls, double prob, bool best, int cruce, int seed, bool mostrarEstado, bool mostrarEvolucionFitness){
     // Asignamos semilla aleatoria
     Set_random(seed);
 
+    par.clear();
+    
     // Asignamos el tamaño de la población
     par.setTamPoblacion(tam);
     par.setIterationsFF(0);
     
-    int valoraciones_funcion_objetivo=100000;    
+    int valoraciones_funcion_objetivo=100000;  
+
+    // Evolución funcion objetivo
+    vector<double> fobjetivo_evol;  
 
     auto begin = chrono::high_resolution_clock::now();
     // Inicializamos aleatoriamente la población
     if(!par.crearPoblacionAleatoria()){
         cout << "Error al crear población aleatoria en el algoritmo genético Local en PAR." << endl;
     }
-    
-    
+        
+    // Si queremos mostrar la evolución de la función fitness
+    if(mostrarEvolucionFitness){
+        vector<vector<double>> p=par.getPoblacion();
+        fobjetivo_evol.push_back(p[0][p[0].size()-1]);
+    }
+
     // Buscamos mejores vecinos hasta llegar al mejor
-    int borrar=0;
     while(par.getIterationsFF()<valoraciones_funcion_objetivo){
         par.runEpoch(2,cruce,bls,prob,best);
-        borrar++;
+        // Si queremos mostrar la evolución de la función fitness
+        if(mostrarEvolucionFitness){
+            vector<vector<double>> p=par.getPoblacion();
+            fobjetivo_evol.push_back(p[0][p[0].size()-1]);
+        }
     }
-    cout<< "\nITERACIONES = " << borrar << endl;
     
     
     // Finalizamos el algoritmo y nos quedamos con el mejor
@@ -70,4 +85,14 @@ void memetico(PAR par, int tam, int bls, double prob, bool best, int cruce, int 
     if(mostrarEstado){
         par.mostrarEstado(); 
     }
+
+    if(mostrarEvolucionFitness){
+        cout << endl << "EVOLUCIÓN "+name << endl << name+"=[";
+        for(int i=0; i<fobjetivo_evol.size()-1;i++){
+            cout << fobjetivo_evol[i] << ", ";
+        }
+        cout << fobjetivo_evol[fobjetivo_evol.size()-1] <<"]\n";
+    }
+
+    return elapsed.count();
 }

@@ -1,0 +1,25 @@
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set_const_10.const ,./data/zoo_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 1						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema AGEU (seed 1):   	2160ms	0.775566	8	0.714945
+./data/zoo_set_CONST_20. Problema AGEU (seed 1):   	2163ms	0.822551	13	0.770056
+./data/zoo_set_CONST_10. Problema AGESF (seed 1):   	1921ms	0.720992	16	0.599749
+./data/zoo_set_CONST_20. Problema AGESF (seed 1):   	2029ms	0.817817	26	0.712827
+./data/zoo_set_CONST_10. Problema AGGU (seed 1):   	2106ms	0.71678		13	0.61827
+./data/zoo_set_CONST_20. Problema AGGU (seed 1):   	2264ms	0.841331	22	0.752493
+./data/zoo_set_CONST_10. Problema AGGSF (seed 1):   	2041ms	0.727872	14	0.621785
+./data/zoo_set_CONST_20. Problema AGGSF (seed 1):   	2115ms	0.772584	42	0.602985
+
+./data/zoo_set_CONST_10. Problema M.AGGSF (seed 1):   	1812ms	0.955427	31	0.72052
+./data/zoo_set_CONST_10. Problema M.AGGSF (seed 1):   	1851ms	0.84095		18	0.704552
+./data/zoo_set_CONST_10. Problema M.AGGSF (seed 1):   	1871ms	0.705436	11	0.622082
+./data/zoo_set_CONST_20. Problema M.AGGSF (seed 1):   	1883ms	0.831441	23	0.738565
+./data/zoo_set_CONST_20. Problema M.AGGSF (seed 1):   	1982ms	0.82776		36	0.682389
+./data/zoo_set_CONST_20. Problema M.AGGSF (seed 1):   	1983ms	0.830957	41	0.665396

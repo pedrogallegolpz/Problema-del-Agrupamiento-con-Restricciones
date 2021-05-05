@@ -48,8 +48,6 @@ private:
                                                 // NOTA en la posición M[i] hay dos índices que hacen referencia directa a instancias (No a indices)
 
     // Atributos genéticos y meméticos
-    vector<double> mejor_solucion;              // Guarda la mejor solución
-    bool actualizar_mejorsolucion;              // Nos avisa si hay que actualizar la mejor solución
     const double PROB_CRUCE = 0.7;              // Probabilidad de que de cruce en una época genética
     const double PROB_MUT_GEN = 0.1;            // Probabilidad de mutación genética
     int TAM_POBLACION;                          // Nos dice el tamaño de la población
@@ -93,7 +91,12 @@ public:
     /*
         Constructor copia
     */
-    PAR(const PAR &par_source);    
+    PAR(const PAR &par_source);  
+
+    /*
+        Limpia todos los cálculos hechos
+    */
+    bool clear();  
 
     /*
         Barajar indices
@@ -530,8 +533,22 @@ public:
     int getEpoca() const{
         return epoca;
     }
-    int setEpoca(int t){
+    void setEpoca(int t){
         epoca = t;
+    }
+
+    vector<vector<double>> getPoblacion() const{
+        return poblacion;
+    }
+    void setPoblacion(vector<vector<double>> pob){
+        poblacion = pob;
+    }
+
+    double getFuncionObjetivo() const{
+        return funcion_objetivo;
+    }
+    void setFuncionObjetivo(double fo){
+        funcion_objetivo=fo;
     }
 
 

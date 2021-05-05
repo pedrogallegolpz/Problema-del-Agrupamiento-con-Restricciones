@@ -60,7 +60,6 @@ void PAR::insertPoblacion(vector<double> &elemento, vector<vector<double>> &pob)
 
     if(pob.empty() && TAM_POBLACION>0){
         pob.push_back(elemento);
-        actualizar_mejorsolucion=true;
 
     }else if(TAM_POBLACION>0){
         double movimiento = ((double)(pob.size()-1))/2;
@@ -85,9 +84,6 @@ void PAR::insertPoblacion(vector<double> &elemento, vector<vector<double>> &pob)
                     if(!insertado){
                         pob.insert(pob.begin(),elemento);
                         insertado=true;
-
-                        // Tenemos mejor solución, hay que actualizarla
-                        actualizar_mejorsolucion=true;
                     }
                 }else if(elemento[elemento.size()-1] > pob[it][pob[it].size()-1]){
                     // Recorremos hacia la derecha hasta encontrar uno que elemento sea menor que el
@@ -117,10 +113,6 @@ void PAR::insertPoblacion(vector<double> &elemento, vector<vector<double>> &pob)
                 }else{
                     pob.insert(pob.begin()+it,elemento);
                     insertado=true; 
-                    if(it==0){
-                        // Tenemos mejor solución, hay que actualizarla
-                        actualizar_mejorsolucion=true;
-                    }          
                 }
             }
         }
@@ -191,6 +183,17 @@ PAR::PAR(const PAR &par_source){
 }
 
 
+/*
+    Limpia todos los cálculos hechos
+*/
+bool PAR::clear(){
+    necesidad_actualizar_centroides = false;
+    funcion_objetivo =100000;
+    iterations_ff=0;
+    resetClusters();
+    poblacion.clear();
+}
+
 //////////////////
 // MÉTODOS
 //////////////////
@@ -213,7 +216,7 @@ double PAR::distanciaEntreDosPuntos(vector<double> p1, vector<double> p2){
 
     // Verificamos que son vectores de la misma dimensión
     if(dimension!=dimension_verificar){
-        cout << "ERROR: Puntos de distintas dimensiones." << endl;
+        cout << "ERROR: Puntos de distintas dimensiones: p1.dim = " << p1.size() << ", p2.dim="<< p2.size() << endl;
         distancia = 10000000000000;
     }else{
         // Calculamos distancia
@@ -779,13 +782,6 @@ bool PAR::crearPoblacionAleatoria(){
         
         // Guardamos en la poblacion
         insertPoblacion(aux, poblacion);
-    }
-
-    if(actualizar_mejorsolucion){
-        mejor_solucion.clear();
-        for(int i=0; i<poblacion[0].size();i++){
-            mejor_solucion.push_back(poblacion[0][i]);
-        }
     }
 
     return exito;

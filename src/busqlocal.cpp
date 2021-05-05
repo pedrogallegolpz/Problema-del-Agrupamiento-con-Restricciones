@@ -10,8 +10,10 @@ using namespace std;
 /*
     Ejecuta el algoritmo de búsqueda local el primer mejor
     en un problema PAR
+
+    Devuelve el tiempo que ha tardado en ejecutarse en milisegundos
 */
-void busquedaLocalPAR(PAR par, int seed, bool mostrarEstado){
+int busquedaLocalPAR(PAR &par, int seed, bool mostrarEstado){
     // Asignamos semilla aleatoria
     Set_random(seed);
     
@@ -49,4 +51,5 @@ void busquedaLocalPAR(PAR par, int seed, bool mostrarEstado){
         par.mostrarEstado(); 
     }
     
+    return elapsed.count();
 }
