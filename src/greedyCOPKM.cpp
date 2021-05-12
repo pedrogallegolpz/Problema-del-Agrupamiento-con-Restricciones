@@ -56,7 +56,7 @@ int greedyCOPKM(PAR &par, int seed, bool mostrarEstado){
     cout << "\t" << par.desviacionParticion() << endl;
     
     
-    cout << "\nFin del algoritmo Greedy en " << i << " iteraciones" << endl;
+    //cout << "\nFin del algoritmo Greedy en " << i << " iteraciones" << endl;
     if(mostrarEstado){
             par.mostrarEstado(); 
     }

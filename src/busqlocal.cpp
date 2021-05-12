@@ -45,7 +45,7 @@ int busquedaLocalPAR(PAR &par, int seed, bool mostrarEstado){
 
 
     
-    cout << "\nFin del algoritmo Búsqueda Local en " << par.getIterationsFF() << " iteraciones" << endl;
+    //cout << "\nFin del algoritmo Búsqueda Local en " << par.getIterationsFF() << " iteraciones" << endl;
 
     if(mostrarEstado){
         par.mostrarEstado(); 

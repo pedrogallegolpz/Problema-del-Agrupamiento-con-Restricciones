@@ -12,9 +12,9 @@ using namespace std;
 */
 void read_dat(const string& filename, vector<vector<double> >& data){
 
-    cout << "--------------------------------------------------------------------------" << endl;
+    cout << "\n\n--------------------------------------------------------------------------" << endl;
     cout << "Reading: " << filename+".dat" << endl;
-    cout << "--------------------------------------------------------------------------" << endl << endl;
+    cout << "--------------------------------------------------------------------------" << endl;
 
     ifstream file(filename+".dat"); 
     string line;
@@ -43,9 +43,9 @@ void read_dat(const string& filename, vector<vector<double> >& data){
 */
 void read_const(const string& filename, vector<vector<double> >& const_10, vector<vector<double> >& const_20){
 
-    cout << "--------------------------------------------------------------------------" << endl;
+    cout << "\n--------------------------------------------------------------------------" << endl;
     cout << "Reading: " << filename+"_const_10.const ," << filename+"_const_20.const" << endl;
-    cout << "--------------------------------------------------------------------------" << endl << endl;
+    cout << "--------------------------------------------------------------------------" << endl;
 
     ifstream file_10(filename+"_const_10.const"); 
     ifstream file_20(filename+"_const_20.const"); 

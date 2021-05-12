@@ -1,9 +1,9 @@
 /******************************************************
  * 
  *      @author: Pedro Gallego López
- *      @subject: Metaheurísticas. Práctica 1
+ *      @subject: Metaheurísticas
  *      @university: Universidad de Granada
- *      @date: marzo 2021
+ *      @date: 2021
  * 
  * ***************************************************/
 
@@ -71,6 +71,10 @@ int main(int argc, char * argv[]) {
     }
 
     bool hacer_tabla_tex = false;
+    if(filestring=="--tex"){
+        hacer_tabla_tex = true;
+    }
+
     int seed=0;
     if(argc==3){
         stringstream ss;
@@ -169,27 +173,7 @@ int main(int argc, char * argv[]) {
             //PAR(int num_atributos_source, int num_clases_source, vector<vector<double>> instancias_source, vector<vector<double>> restricciones_source, int seed_source, int tam_pob);
             PAR par_10 = PAR(data[0].size(), clases[f], data, const_10, seed, TAM_POBLACION_GENETICO);
             PAR par_20 = PAR(data[0].size(), clases[f], data, const_20, seed, TAM_POBLACION_GENETICO);
-            // Estructuras PAR
-            /*
-            PAR par_10 = PAR();
-            PAR par_20 = PAR();
-
-            // Inificalizamos las estructuras info con la informacion leida
-            par_10.setInstancias(data); 
-            par_10.setNumInstancias(data.size());
-            par_10.setNumAtributos(data[0].size());
-            par_10.setRestricciones(const_10);
-            par_10.setNumClases(clases[f]);
-            par_10.setSeed(seed);
-
             
-            par_20.setInstancias(data); 
-            par_20.setNumInstancias(data.size());
-            par_20.setNumAtributos(data[0].size());
-            par_20.setRestricciones(const_20);
-            par_20.setNumClases(clases[f]);
-            par_20.setSeed(seed);
-            */
 
             cout << "\nSEMILLA "<< seed << "\t\t\t\t\t\tTime \tFitFunc \tInfeas \tDesviacion" << endl;
 
@@ -390,8 +374,10 @@ int main(int argc, char * argv[]) {
 
     tablas.push_back(mem1010_tab);
     tablas.push_back(mem1020_tab);
+
     tablas.push_back(mem0110_tab);
     tablas.push_back(mem0120_tab);
+    
     tablas.push_back(mem01best10_tab);
     tablas.push_back(mem01best20_tab);
 
@@ -441,14 +427,12 @@ int main(int argc, char * argv[]) {
     tab_name.push_back("MEM01BEST 10%");
     tab_name.push_back("MEM01BEST 20%");
 
-    cout << endl << endl << "-----------TABLAS-----------"<<endl;
-    for(int tab=0; tab<tablas.size(); tab++){
-        cout << endl << endl << tab_name[tab] << endl;
-        toTableTex(tablas[tab]);
+    if(hacer_tabla_tex){
+        cout << endl << endl << "-----------TABLAS-----------"<<endl;
+        for(int tab=0; tab<tablas.size(); tab++){
+            cout << endl << endl << tab_name[tab] << endl;
+            toTableTex(tablas[tab]);
+        }
     }
-
-    // Idea: hacer función a la que le pases una tabla y te saque por pantalla la versión en latex.
-    // Para ello crear un vector de tablas y hacer un for ejecutando esa función
-
     
 }

@@ -1,0 +1,51 @@
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set_const_10.const ,./data/bupa_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 1						Time 	FitFunc 	Infeas 	Desviacion
+./data/bupa_set_CONST_10. Problema COPKM (seed 1):	155ms	0.261028	30	0.252988
+
+Fin del algoritmo Greedy en 11 iteraciones
+./data/bupa_set_CONST_20. Problema COPKM (seed 1):	198ms	0.266181	65	0.257117
+
+Fin del algoritmo Greedy en 12 iteraciones
+./data/bupa_set_CONST_10. Problema BL (seed 1):   	5314ms	0.137408	114	0.106857	IteracionesBL: 71126
+
+Fin del algoritmo Búsqueda Local en 71126 iteraciones
+./data/bupa_set_CONST_20. Problema BL (seed 1):   	5972ms	0.145564	246	0.111261	IteracionesBL: 57669
+
+Fin del algoritmo Búsqueda Local en 57669 iteraciones
+./data/bupa_set_CONST_10. Problema AGEUN (seed 1):   	9348ms	0.339299	692	0.153851
+./data/bupa_set_CONST_20. Problema AGEUN (seed 1):   	10560ms	0.279445	957	0.146
+./data/bupa_set_CONST_10. Problema AGESF (seed 1):   	11664ms	0.300967	510	0.164293
+./data/bupa_set_CONST_20. Problema AGESF (seed 1):   	14335ms	0.326841	1266	0.150308
+./data/bupa_set_CONST_10. Problema AGGUN (seed 1):   	10008ms	0.336874	605	0.174741
+./data/bupa_set_CONST_20. Problema AGGUN (seed 1):   	10957ms	0.271588	854	0.152505
+./data/bupa_set_CONST_10. Problema AGGSF (seed 1):   	11407ms	0.329011	669	0.149727
+./data/bupa_set_CONST_20. Problema AGGSF (seed 1):   	12967ms	0.300738	1032	0.156835
+
+./data/bupa_set_CONST_10. Problema Memetico(10,1.0) (seed 1):   	105765ms	0.305963	567	0.154013	95730(epoca)
+
+EVOLUCIÓN Memetico(10,1.0)
+Memetico(10,1.0)=[0.555549, 0.54164, 0.539724, 0.538712, 0.538712, 0.538712, 0.413636, 0.413636, 0.413636, 0.413636, 0.413636, 0.413636, 0.413636, 0.413636, 0.413636, 0.413636, 0.305963]
+./data/bupa_set_CONST_20. Problema Memetico(10,1.0) (seed 1):   	123411ms	0.289416	987	0.151788	95730(epoca)
+
+EVOLUCIÓN Memetico(10,1.0)
+Memetico(10,1.0)=[0.56968, 0.539935, 0.539412, 0.537706, 0.537706, 0.537706, 0.429963, 0.429963, 0.429963, 0.429963, 0.429963, 0.429963, 0.429963, 0.429963, 0.429963, 0.429963, 0.289416]
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1) (seed 1):   	15707ms	0.14105	93	0.116127	95760(epoca)
+
+EVOLUCIÓN Memetico(10,0.1)
+Memetico(10,0.1)=[0.562053, 0.538518, 0.538518, 0.536155, 0.535076, 0.535076, 0.535076, 0.533016, 0.532952, 0.532838, 0.405787, 0.405787, 0.405787, 0.405787, 0.405787, 0.405787, 0.405787, 0.405787, 0.405787, 0.405398, 0.242925, 0.242925, 0.242925, 0.242925, 0.242925, 0.242925, 0.242925, 0.242925, 0.242925, 0.240856, 0.14105]
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1) (seed 1):   	15812ms	0.14667	180	0.121571	95760(epoca)
+
+EVOLUCIÓN Memetico(10,0.1)
+Memetico(10,0.1)=[0.56683, 0.540626, 0.540379, 0.538181, 0.538181, 0.532844, 0.532844, 0.532844, 0.532844, 0.532844, 0.430403, 0.430403, 0.430403, 0.430403, 0.430403, 0.430403, 0.430403, 0.430403, 0.430403, 0.430403, 0.274391, 0.274391, 0.274391, 0.274391, 0.274391, 0.274391, 0.274391, 0.274062, 0.274062, 0.274062, 0.14667]
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1mej) (seed 1):   	13997ms	0.148665	151	0.108199	95790(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1mej) (seed 1):   	15806ms	0.148568	230	0.116497	95790(epoca)

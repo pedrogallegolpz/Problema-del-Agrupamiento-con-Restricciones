@@ -679,6 +679,9 @@ bool PAR::buscarPrimerVecinoMejor(){
 /*
     USADO PARA LA METAHEURÍSTICA BÚSQUEDA LOCAL SUAVE Y MEMÉTICO 
 
+    Escoge el mejor vecino y actualiza la solución. Repite el proceso tantas veces como
+    #fallos en encontrar mejor vecino se produzcan, si no mejora o si recorremos todas
+    las instancias.
     Actúa sobre la solución pasada por parámetro. Se permiten #fallos en el algoritmo
 
     Nos devuelve True en caso de haber encontrado un vecino mejor. En otro caso
@@ -765,6 +768,8 @@ bool PAR::busquedaLocalSuave(vector<double> &solucion, int fallos){
 */
 bool PAR::crearPoblacionAleatoria(){
     bool exito=true;
+    recorrido_fun_objetivo.clear();
+
     for(int i=0; i<TAM_POBLACION && exito; i++){
         // Creamos solución
         exito = crearSolucionAleatoria();
@@ -784,6 +789,8 @@ bool PAR::crearPoblacionAleatoria(){
         insertPoblacion(aux, poblacion);
     }
 
+    iterations_ff+=50;
+    
     return exito;
 }
 
@@ -814,7 +821,7 @@ bool PAR::operadorCruceUniforme(vector<double> &padre1, vector<double> &padre2, 
     // Actualizamos iteraciones
     iterations_ff++;
 
-    return true;
+    return exito;
 }
 
 
@@ -907,16 +914,15 @@ bool PAR::operadorMutacion(vector<vector<double>> &pob, double ngenes){
                     new_cluster++;
                 }
 
+                // Asignamos la mutación
                 pob[i][j]=new_cluster;
-    
                 bool exito = simularSolucion(pob[i]);
+
                 // Actualizamos iteraciones
                 iterations_ff++;
                 
     
-            }while(pob[i][j]==old_cluster);
-            
-            
+            }while(pob[i][j]==old_cluster);           
 
             // Actualizamos función fitness
             pob[i][pob[i].size()-1]=funcion_objetivo;
@@ -945,6 +951,7 @@ bool PAR::operadorMutacion(vector<vector<double>> &pob, double ngenes){
     Nos devuelve False en caso contrario.
 */
 bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
+
     // Si no hay población hacemos un inicio aleatorio de población de tamaño TAM_POBLACION
     if(poblacion.size()<TAM_POBLACION){
         bool poblacion_creada = crearPoblacionAleatoria();  
@@ -953,16 +960,19 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
         }
     }
 
+    // Añadimos el mejor fitness al recorrido
+    recorrido_fun_objetivo.push_back(poblacion[0][poblacion[0].size()-1]);
 
-
-    int tam_pob = 0;
+    int tam_pob;
     if(tipo == 1){
         // Estacionario
         tam_pob = 2;
     }else{
+        // Generacional
         tam_pob = TAM_POBLACION;
     }
 
+    
     // EJECUTAMOS UNA ÉPOCA
     
     // Proceso de selección de Padres
@@ -1003,8 +1013,9 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
         }
     }
 
-    // Si es de tipo generacional metemos el resto de la población (no se han cruzado)
-    if(tipo != 1){
+   
+    if(tipo != 1){   // Si es de tipo generacional metemos el resto de la población (no se han cruzado)
+
         for(int it1=padres_a_cruzar; it1<tam_pob; it1++){
             poblacion_hijos.push_back(poblacion_padres[it1]);
         }
@@ -1018,8 +1029,8 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
     operadorMutacion(poblacion_hijos, genes_a_mutar);
 
    
-    // Si hay que aplicar Búsqueda Local Suave en esta época
-    if(bls>0 && epoca%bls==0){
+    if(bls>0 && epoca%bls==0){      // Si hay que aplicar Búsqueda Local Suave en esta época
+
         int num_soluciones_bls = prob * tam_pob;
         int fallos = num_instancias*0.1;
 
@@ -1036,6 +1047,18 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
         // Ejecutamos BLS
         for(int i=0; i<num_soluciones_bls; i++){
             busquedaLocalSuave(poblacion_hijos[i], fallos);
+
+            //Vamos a probar con la BL de la P1
+            /*simularSolucion(poblacion_hijos[i]);
+            for(int n=0; n<num_instancias; n++){
+                buscarPrimerVecinoMejor();
+            }
+            for(int n=0; n<num_instancias; n++){
+                poblacion_hijos[i][n]=inst_belong[n];
+            }
+            poblacion_hijos[i][poblacion_hijos[i].size()-2]=epoca;
+            poblacion_hijos[i][poblacion_hijos[i].size()-1]=funcion_objetivo;
+            */
         }
     }
 
@@ -1059,39 +1082,6 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
         insertPoblacion(mejor_padre, poblacion);
     }
     
-    /*
-    if(epoca%50==0 && epoca>1750){
-        cout << "\n\nEpoca " << epoca << endl; 
-
-        cout << "PADRES: \n";
-        for(int i=0; i<tam_pob; i++){
-            cout << "\n[ ";
-            for(int j=0; j<poblacion_padres[i].size(); j++){
-                cout << poblacion_padres[i][j] << ", " ;
-            }
-            cout << "]\n";
-        }
-
-        cout << "\n\nHIJOS: \n";
-        for(int i=0; i<tam_pob; i++){
-            cout << "\n[ ";
-            for(int j=0; j<poblacion_hijos[i].size(); j++){
-                cout << poblacion_hijos[i][j] << ", " ;
-            }
-            cout << "]\n";
-        }
-
-        cout << "\n\nPOBLACION: \n";
-        for(int i=0; i<TAM_POBLACION; i++){
-            cout << "\n[ ";
-            for(int j=0; j<poblacion[i].size(); j++){
-                cout << poblacion[i][j] << ", " ;
-            }
-            cout << "]\n";
-        }
-
-    }
-    */
 
     epoca++;
 }
@@ -1118,16 +1108,8 @@ bool PAR::finishEpochs(){
         exito = runEpoch(1,1,0,0,false);
     }
 
-    /*
-    for(int i=0; i<TAM_POBLACION; i++){
-        cout << "[ ";
-        for(int j=0; j<poblacion[i].size(); j++){
-            cout << poblacion[i][j] << ", " ;
-        }
-        cout << "]\n";
-    }
-    */
-    
+    // Añadimos el mejor fitness al recorrido
+    recorrido_fun_objetivo.push_back(poblacion[0][poblacion[0].size()-1]);    
 
     if(!exito){
         cout << "Error PAR::endGenetico(). No se ha ejecutado la época bien.\n";

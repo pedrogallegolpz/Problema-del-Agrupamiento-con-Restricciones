@@ -24,6 +24,7 @@ int memetico(PAR &par, int tam, int bls, double prob, bool best, int cruce, int 
     // Asignamos semilla aleatoria
     Set_random(seed);
 
+    // Limpiamos el problema
     par.clear();
     
     // Asignamos el tamaño de la población
@@ -32,29 +33,16 @@ int memetico(PAR &par, int tam, int bls, double prob, bool best, int cruce, int 
     
     int valoraciones_funcion_objetivo=100000;  
 
-    // Evolución funcion objetivo
-    vector<double> fobjetivo_evol;  
-
+    
     auto begin = chrono::high_resolution_clock::now();
     // Inicializamos aleatoriamente la población
     if(!par.crearPoblacionAleatoria()){
         cout << "Error al crear población aleatoria en el algoritmo genético Local en PAR." << endl;
     }
-        
-    // Si queremos mostrar la evolución de la función fitness
-    if(mostrarEvolucionFitness){
-        vector<vector<double>> p=par.getPoblacion();
-        fobjetivo_evol.push_back(p[0][p[0].size()-1]);
-    }
 
     // Buscamos mejores vecinos hasta llegar al mejor
     while(par.getIterationsFF()<valoraciones_funcion_objetivo){
         par.runEpoch(2,cruce,bls,prob,best);
-        // Si queremos mostrar la evolución de la función fitness
-        if(mostrarEvolucionFitness){
-            vector<vector<double>> p=par.getPoblacion();
-            fobjetivo_evol.push_back(p[0][p[0].size()-1]);
-        }
     }
     
     
@@ -68,30 +56,39 @@ int memetico(PAR &par, int tam, int bls, double prob, bool best, int cruce, int 
     string c;
     
 
-    if(cruce==1){
-        c="U";
+    if(prob==1){
+        t="1.0";
     }else{
-        c="SF";
+        t="0.1";
+    }
+    if(best){
+        c="mej";
+    }else{
+        c="";
     }
 
-    string name = "M.AGG"+c;
+    string name = "Memetico(10,"+t+c+")";
 
     cout << "Problema "+name+" (seed " << seed<< "):   ";
     cout << "\t" << elapsed.count() << "ms";
     cout << "\t" << par.fitnessFunction();
     cout << "\t" << par.infeasibility();
-    cout << "\t" << par.desviacionParticion() << endl;
+    cout << "\t" << par.desviacionParticion();
+    cout << "\t" << par.getPoblacion()[0][par.getNumInstancias()] << "(epoca)\n";
     
     if(mostrarEstado){
         par.mostrarEstado(); 
     }
 
     if(mostrarEvolucionFitness){
+        // Evolución funcion objetivo
+        vector<double> recorrido_fun_objetivo = par.getRecorridoFunObjetivo();
+
         cout << endl << "EVOLUCIÓN "+name << endl << name+"=[";
-        for(int i=0; i<fobjetivo_evol.size()-1;i++){
-            cout << fobjetivo_evol[i] << ", ";
+        for(int i=0; i<recorrido_fun_objetivo.size()-1;i++){
+            cout << recorrido_fun_objetivo[i] << ", ";
         }
-        cout << fobjetivo_evol[fobjetivo_evol.size()-1] <<"]\n";
+        cout << recorrido_fun_objetivo[recorrido_fun_objetivo.size()-1] <<"]\n";
     }
 
     return elapsed.count();

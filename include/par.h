@@ -23,6 +23,8 @@ private:
     bool necesidad_actualizar_centroides;       // Nos dirá si hace falta actualizar los centroides
 
     double funcion_objetivo;                    // En esta variable se guardará el valor actual de la función objetivo cuando haga falta
+    vector<double> recorrido_fun_objetivo;      // Guardará el recorrido de la función objetivo a lo largo del proceso
+
     
     int iterations_ff;                          // Cuenta las veces que se usa la función objetivo de manera útil
 
@@ -551,6 +553,12 @@ public:
         funcion_objetivo=fo;
     }
 
+    vector<double> getRecorridoFunObjetivo() const{
+        return recorrido_fun_objetivo;
+    }
+    void setRecorridoFunObjetivo(vector<double> r){
+        recorrido_fun_objetivo = r;
+    }
 
 };
     

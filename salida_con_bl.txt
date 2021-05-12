@@ -1,0 +1,1144 @@
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set_const_10.const ,./data/zoo_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 1						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema COPKM (seed 1):	3ms	1.05182	2	1.03667
+
+Fin del algoritmo Greedy en 5 iteraciones
+./data/zoo_set_CONST_20. Problema COPKM (seed 1):	4ms	0.9048	0	0.9048
+
+Fin del algoritmo Greedy en 6 iteraciones
+./data/zoo_set_CONST_10. Problema BL (seed 1):   	106ms	0.694087	11	0.610733	IteracionesBL: 5242
+
+Fin del algoritmo Búsqueda Local en 5242 iteraciones
+./data/zoo_set_CONST_20. Problema BL (seed 1):   	90ms	0.811086	23	0.71821	IteracionesBL: 4052
+
+Fin del algoritmo Búsqueda Local en 4052 iteraciones
+./data/zoo_set_CONST_10. Problema AGEUN (seed 1):   	2138ms	0.810637	6	0.765171
+./data/zoo_set_CONST_20. Problema AGEUN (seed 1):   	2200ms	0.787613	17	0.718965
+./data/zoo_set_CONST_10. Problema AGESF (seed 1):   	1990ms	0.693931	11	0.610577
+./data/zoo_set_CONST_20. Problema AGESF (seed 1):   	2138ms	0.810173	48	0.616345
+./data/zoo_set_CONST_10. Problema AGGUN (seed 1):   	2149ms	1.06001	20	0.908455
+./data/zoo_set_CONST_20. Problema AGGUN (seed 1):   	2270ms	0.818899	25	0.717947
+./data/zoo_set_CONST_10. Problema AGGSF (seed 1):   	2046ms	0.670065	8	0.609444
+./data/zoo_set_CONST_20. Problema AGGSF (seed 1):   	2128ms	0.828169	27	0.719141
+
+./data/zoo_set_CONST_10. Problema Memetico(10,1.0) (seed 1):   	2656ms	0.684847	10	0.609071	95660(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,1.0) (seed 1):   	2773ms	0.810788	24	0.713874	95610(epoca)
+
+./data/zoo_set_CONST_10. Problema Memetico(10,0.1) (seed 1):   	1702ms	0.709056	6	0.663591	95690(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,0.1) (seed 1):   	1751ms	0.815826	15	0.755254	95630(epoca)
+
+./data/zoo_set_CONST_10. Problema Memetico(10,0.1mej) (seed 1):   	1648ms	0.687104	10	0.611327	95710(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,0.1mej) (seed 1):   	1778ms	0.844517	44	0.666841	95650(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/glass_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/glass_set_const_10.const ,./data/glass_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 1						Time 	FitFunc 	Infeas 	Desviacion
+./data/glass_set_CONST_10. Problema COPKM (seed 1):	14ms	0.393281	4	0.389345
+
+Fin del algoritmo Greedy en 5 iteraciones
+./data/glass_set_CONST_20. Problema COPKM (seed 1):	20ms	0.355634	0	0.355634
+
+Fin del algoritmo Greedy en 6 iteraciones
+./data/glass_set_CONST_10. Problema BL (seed 1):   	431ms	0.244904	58	0.18783	IteracionesBL: 11360
+
+Fin del algoritmo Búsqueda Local en 11360 iteraciones
+./data/glass_set_CONST_20. Problema BL (seed 1):   	430ms	0.271521	41	0.250176	IteracionesBL: 9667
+
+Fin del algoritmo Búsqueda Local en 9667 iteraciones
+./data/glass_set_CONST_10. Problema AGEUN (seed 1):   	4194ms	0.261902	50	0.2127
+./data/glass_set_CONST_20. Problema AGEUN (seed 1):   	4789ms	0.266682	39	0.246378
+./data/glass_set_CONST_10. Problema AGESF (seed 1):   	4313ms	0.254102	61	0.194076
+./data/glass_set_CONST_20. Problema AGESF (seed 1):   	4493ms	0.26551	93	0.217093
+./data/glass_set_CONST_10. Problema AGGUN (seed 1):   	4212ms	0.341471	102	0.241099
+./data/glass_set_CONST_20. Problema AGGUN (seed 1):   	4781ms	0.279347	57	0.249672
+./data/glass_set_CONST_10. Problema AGGSF (seed 1):   	3919ms	0.301892	93	0.210376
+./data/glass_set_CONST_20. Problema AGGSF (seed 1):   	4511ms	0.277175	53	0.249583
+
+./data/glass_set_CONST_10. Problema Memetico(10,1.0) (seed 1):   	8437ms	0.251794	62	0.190784	95720(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,1.0) (seed 1):   	9075ms	0.265278	106	0.210093	95710(epoca)
+
+./data/glass_set_CONST_10. Problema Memetico(10,0.1) (seed 1):   	3261ms	0.267704	25	0.243103	95740(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,0.1) (seed 1):   	3785ms	0.267758	34	0.250057	95730(epoca)
+
+./data/glass_set_CONST_10. Problema Memetico(10,0.1mej) (seed 1):   	3312ms	0.244718	33	0.212244	95760(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,0.1mej) (seed 1):   	3790ms	0.270301	38	0.250518	95750(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set_const_10.const ,./data/bupa_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 1						Time 	FitFunc 	Infeas 	Desviacion
+./data/bupa_set_CONST_10. Problema COPKM (seed 1):	147ms	0.261028	30	0.252988
+
+Fin del algoritmo Greedy en 11 iteraciones
+./data/bupa_set_CONST_20. Problema COPKM (seed 1):	188ms	0.266181	65	0.257117
+
+Fin del algoritmo Greedy en 12 iteraciones
+./data/bupa_set_CONST_10. Problema BL (seed 1):   	5427ms	0.137408	114	0.106857	IteracionesBL: 71126
+
+Fin del algoritmo Búsqueda Local en 71126 iteraciones
+./data/bupa_set_CONST_20. Problema BL (seed 1):   	5616ms	0.145564	246	0.111261	IteracionesBL: 57669
+
+Fin del algoritmo Búsqueda Local en 57669 iteraciones
+./data/bupa_set_CONST_10. Problema AGEUN (seed 1):   	7638ms	0.339299	692	0.153851
+./data/bupa_set_CONST_20. Problema AGEUN (seed 1):   	9182ms	0.279445	957	0.146
+./data/bupa_set_CONST_10. Problema AGESF (seed 1):   	7017ms	0.300967	510	0.164293
+./data/bupa_set_CONST_20. Problema AGESF (seed 1):   	8585ms	0.326841	1266	0.150308
+./data/bupa_set_CONST_10. Problema AGGUN (seed 1):   	7439ms	0.336874	605	0.174741
+./data/bupa_set_CONST_20. Problema AGGUN (seed 1):   	9124ms	0.271588	854	0.152505
+./data/bupa_set_CONST_10. Problema AGGSF (seed 1):   	7135ms	0.329011	669	0.149727
+./data/bupa_set_CONST_20. Problema AGGSF (seed 1):   	8621ms	0.300738	1032	0.156835
+
+./data/bupa_set_CONST_10. Problema Memetico(10,1.0) (seed 1):   	67810ms	0.305963	567	0.154013	95730(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,1.0) (seed 1):   	69786ms	0.289416	987	0.151788	95730(epoca)
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1) (seed 1):   	13939ms	0.14105	93	0.116127	95760(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1) (seed 1):   	15574ms	0.14667	180	0.121571	95760(epoca)
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1mej) (seed 1):   	14101ms	0.148665	151	0.108199	95790(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1mej) (seed 1):   	15645ms	0.148568	230	0.116497	95790(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set_const_10.const ,./data/zoo_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 2						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema COPKM (seed 2):	4ms	0.92574	0	0.92574
+
+Fin del algoritmo Greedy en 7 iteraciones
+./data/zoo_set_CONST_20. Problema COPKM (seed 2):	4ms	0.971574	1	0.967536
+
+Fin del algoritmo Greedy en 4 iteraciones
+./data/zoo_set_CONST_10. Problema BL (seed 2):   	153ms	0.712902	13	0.614392	IteracionesBL: 8034
+
+Fin del algoritmo Búsqueda Local en 8034 iteraciones
+./data/zoo_set_CONST_20. Problema BL (seed 2):   	98ms	0.793808	12	0.745351	IteracionesBL: 4331
+
+Fin del algoritmo Búsqueda Local en 4331 iteraciones
+./data/zoo_set_CONST_10. Problema AGEUN (seed 2):   	2159ms	0.682227	9	0.614028
+./data/zoo_set_CONST_20. Problema AGEUN (seed 2):   	2218ms	0.827475	28	0.714409
+./data/zoo_set_CONST_10. Problema AGESF (seed 2):   	2067ms	0.727184	14	0.621098
+./data/zoo_set_CONST_20. Problema AGESF (seed 2):   	2103ms	0.802836	21	0.718036
+./data/zoo_set_CONST_10. Problema AGGUN (seed 2):   	2209ms	0.732781	5	0.694893
+./data/zoo_set_CONST_20. Problema AGGUN (seed 2):   	2187ms	0.767261	9	0.730918
+./data/zoo_set_CONST_10. Problema AGGSF (seed 2):   	2096ms	1.06364	29	0.843887
+./data/zoo_set_CONST_20. Problema AGGSF (seed 2):   	2088ms	0.805293	23	0.712417
+
+./data/zoo_set_CONST_10. Problema Memetico(10,1.0) (seed 2):   	2698ms	0.684997	10	0.609221	95620(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,1.0) (seed 2):   	2722ms	0.798232	16	0.733622	95620(epoca)
+
+./data/zoo_set_CONST_10. Problema Memetico(10,0.1) (seed 2):   	1710ms	0.683981	10	0.608205	95640(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,0.1) (seed 2):   	1742ms	0.805752	34	0.668458	95640(epoca)
+
+./data/zoo_set_CONST_10. Problema Memetico(10,0.1mej) (seed 2):   	1710ms	0.694208	10	0.618431	95660(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,0.1mej) (seed 2):   	1830ms	0.786961	14	0.730428	95660(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/glass_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/glass_set_const_10.const ,./data/glass_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 2						Time 	FitFunc 	Infeas 	Desviacion
+./data/glass_set_CONST_10. Problema COPKM (seed 2):	16ms	0.391737	1	0.390753
+
+Fin del algoritmo Greedy en 5 iteraciones
+./data/glass_set_CONST_20. Problema COPKM (seed 2):	13ms	0.311382	0	0.311382
+
+Fin del algoritmo Greedy en 3 iteraciones
+./data/glass_set_CONST_10. Problema BL (seed 2):   	458ms	0.244611	33	0.212138	IteracionesBL: 11833
+
+Fin del algoritmo Búsqueda Local en 11833 iteraciones
+./data/glass_set_CONST_20. Problema BL (seed 2):   	450ms	0.276985	131	0.208785	IteracionesBL: 10257
+
+Fin del algoritmo Búsqueda Local en 10257 iteraciones
+./data/glass_set_CONST_10. Problema AGEUN (seed 2):   	4724ms	0.353441	101	0.254053
+./data/glass_set_CONST_20. Problema AGEUN (seed 2):   	4805ms	0.275112	53	0.24752
+./data/glass_set_CONST_10. Problema AGESF (seed 2):   	3965ms	0.335051	89	0.247472
+./data/glass_set_CONST_20. Problema AGESF (seed 2):   	4529ms	0.282218	82	0.239528
+./data/glass_set_CONST_10. Problema AGGUN (seed 2):   	4247ms	0.268336	22	0.246688
+./data/glass_set_CONST_20. Problema AGGUN (seed 2):   	4791ms	0.264939	32	0.24828
+./data/glass_set_CONST_10. Problema AGGSF (seed 2):   	3999ms	0.247244	37	0.210835
+./data/glass_set_CONST_20. Problema AGGSF (seed 2):   	4575ms	0.270621	43	0.248235
+
+./data/glass_set_CONST_10. Problema Memetico(10,1.0) (seed 2):   	8523ms	0.262611	14	0.248834	95730(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,1.0) (seed 2):   	9084ms	0.275651	50	0.24962	95720(epoca)
+
+./data/glass_set_CONST_10. Problema Memetico(10,0.1) (seed 2):   	3264ms	0.263033	15	0.248273	95750(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,0.1) (seed 2):   	3818ms	0.268245	35	0.250023	95740(epoca)
+
+./data/glass_set_CONST_10. Problema Memetico(10,0.1mej) (seed 2):   	3504ms	0.240014	54	0.186876	95770(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,0.1mej) (seed 2):   	3838ms	0.266103	40	0.245279	95760(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set_const_10.const ,./data/bupa_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 2						Time 	FitFunc 	Infeas 	Desviacion
+./data/bupa_set_CONST_10. Problema COPKM (seed 2):	150ms	0.248667	12	0.245451
+
+Fin del algoritmo Greedy en 11 iteraciones
+./data/bupa_set_CONST_20. Problema COPKM (seed 2):	118ms	0.230513	0	0.230513
+
+Fin del algoritmo Greedy en 7 iteraciones
+./data/bupa_set_CONST_10. Problema BL (seed 2):   	5729ms	0.146664	114	0.116114	IteracionesBL: 79438
+
+Fin del algoritmo Búsqueda Local en 79438 iteraciones
+./data/bupa_set_CONST_20. Problema BL (seed 2):   	5415ms	0.146114	193	0.119201	IteracionesBL: 56699
+
+Fin del algoritmo Búsqueda Local en 56699 iteraciones
+./data/bupa_set_CONST_10. Problema AGEUN (seed 2):   	7446ms	0.324576	611	0.160835
+./data/bupa_set_CONST_20. Problema AGEUN (seed 2):   	9068ms	0.322664	1223	0.152128
+./data/bupa_set_CONST_10. Problema AGESF (seed 2):   	6950ms	0.306277	562	0.155667
+./data/bupa_set_CONST_20. Problema AGESF (seed 2):   	8558ms	0.314265	1114	0.158928
+./data/bupa_set_CONST_10. Problema AGGUN (seed 2):   	7387ms	0.263542	415	0.152327
+./data/bupa_set_CONST_20. Problema AGGUN (seed 2):   	9263ms	0.266597	818	0.152534
+./data/bupa_set_CONST_10. Problema AGGSF (seed 2):   	6905ms	0.317234	561	0.166892
+./data/bupa_set_CONST_20. Problema AGGSF (seed 2):   	9459ms	0.279802	843	0.162253
+
+./data/bupa_set_CONST_10. Problema Memetico(10,1.0) (seed 2):   	67831ms	0.334315	637	0.163606	95720(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,1.0) (seed 2):   	69565ms	0.339271	1258	0.163854	95730(epoca)
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1) (seed 2):   	13960ms	0.158025	149	0.118095	95750(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1) (seed 2):   	16492ms	0.149707	213	0.120006	95760(epoca)
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1mej) (seed 2):   	14029ms	0.163008	179	0.115038	95780(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1mej) (seed 2):   	15676ms	0.144958	259	0.108843	95790(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set_const_10.const ,./data/zoo_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 3						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema COPKM (seed 3):	3ms	1.01459	1	1.00701
+
+Fin del algoritmo Greedy en 6 iteraciones
+./data/zoo_set_CONST_20. Problema COPKM (seed 3):	4ms	0.9048	0	0.9048
+
+Fin del algoritmo Greedy en 4 iteraciones
+./data/zoo_set_CONST_10. Problema BL (seed 3):   	94ms	0.735747	15	0.622082	IteracionesBL: 4670
+
+Fin del algoritmo Búsqueda Local en 4670 iteraciones
+./data/zoo_set_CONST_20. Problema BL (seed 3):   	87ms	0.847589	33	0.714332	IteracionesBL: 3790
+
+Fin del algoritmo Búsqueda Local en 3790 iteraciones
+./data/zoo_set_CONST_10. Problema AGEUN (seed 3):   	2086ms	0.763968	18	0.627571
+./data/zoo_set_CONST_20. Problema AGEUN (seed 3):   	2161ms	0.783544	18	0.710859
+./data/zoo_set_CONST_10. Problema AGESF (seed 3):   	1964ms	0.837545	8	0.776924
+./data/zoo_set_CONST_20. Problema AGESF (seed 3):   	2061ms	0.788748	14	0.732215
+./data/zoo_set_CONST_10. Problema AGGUN (seed 3):   	2114ms	0.707589	13	0.60908
+./data/zoo_set_CONST_20. Problema AGGUN (seed 3):   	2195ms	0.808252	13	0.755757
+./data/zoo_set_CONST_10. Problema AGGSF (seed 3):   	2000ms	0.994873	15	0.881209
+./data/zoo_set_CONST_20. Problema AGGSF (seed 3):   	2138ms	0.885439	21	0.800639
+
+./data/zoo_set_CONST_10. Problema Memetico(10,1.0) (seed 3):   	2638ms	0.724854	15	0.611189	95670(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,1.0) (seed 3):   	3277ms	0.774003	10	0.733622	95650(epoca)
+
+./data/zoo_set_CONST_10. Problema Memetico(10,0.1) (seed 3):   	1652ms	0.676325	12	0.585393	95690(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,0.1) (seed 3):   	1729ms	0.774003	10	0.733622	95670(epoca)
+
+./data/zoo_set_CONST_10. Problema Memetico(10,0.1mej) (seed 3):   	1638ms	0.669039	10	0.593262	95710(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,0.1mej) (seed 3):   	1756ms	0.811449	27	0.702421	95690(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/glass_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/glass_set_const_10.const ,./data/glass_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 3						Time 	FitFunc 	Infeas 	Desviacion
+./data/glass_set_CONST_10. Problema COPKM (seed 3):	15ms	0.398504	3	0.395552
+
+Fin del algoritmo Greedy en 5 iteraciones
+./data/glass_set_CONST_20. Problema COPKM (seed 3):	14ms	0.316662	3	0.3151
+
+Fin del algoritmo Greedy en 4 iteraciones
+./data/glass_set_CONST_10. Problema BL (seed 3):   	503ms	0.240799	46	0.195533	IteracionesBL: 12278
+
+Fin del algoritmo Búsqueda Local en 12278 iteraciones
+./data/glass_set_CONST_20. Problema BL (seed 3):   	445ms	0.2648	36	0.246058	IteracionesBL: 10184
+
+Fin del algoritmo Búsqueda Local en 10184 iteraciones
+./data/glass_set_CONST_10. Problema AGEUN (seed 3):   	4226ms	0.366469	108	0.260193
+./data/glass_set_CONST_20. Problema AGEUN (seed 3):   	4933ms	0.280182	151	0.20157
+./data/glass_set_CONST_10. Problema AGESF (seed 3):   	4208ms	0.265361	79	0.187622
+./data/glass_set_CONST_20. Problema AGESF (seed 3):   	4594ms	0.279364	57	0.249689
+./data/glass_set_CONST_10. Problema AGGUN (seed 3):   	4861ms	0.241551	47	0.195301
+./data/glass_set_CONST_20. Problema AGGUN (seed 3):   	4846ms	0.283891	87	0.238598
+./data/glass_set_CONST_10. Problema AGGSF (seed 3):   	4074ms	0.255997	67	0.190066
+./data/glass_set_CONST_20. Problema AGGSF (seed 3):   	4545ms	0.291983	79	0.250855
+
+./data/glass_set_CONST_10. Problema Memetico(10,1.0) (seed 3):   	8516ms	0.249679	63	0.187684	95730(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,1.0) (seed 3):   	9670ms	0.276522	130	0.208843	95710(epoca)
+
+./data/glass_set_CONST_10. Problema Memetico(10,0.1) (seed 3):   	3611ms	0.267767	20	0.248086	95760(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,0.1) (seed 3):   	3842ms	0.271639	43	0.249253	95730(epoca)
+
+./data/glass_set_CONST_10. Problema Memetico(10,0.1mej) (seed 3):   	3325ms	0.241177	54	0.188039	95780(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,0.1mej) (seed 3):   	3934ms	0.271963	43	0.249577	95750(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set_const_10.const ,./data/bupa_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 3						Time 	FitFunc 	Infeas 	Desviacion
+./data/bupa_set_CONST_10. Problema COPKM (seed 3):	163ms	0.251272	13	0.247788
+
+Fin del algoritmo Greedy en 12 iteraciones
+./data/bupa_set_CONST_20. Problema COPKM (seed 3):	146ms	0.219861	0	0.219861
+
+Fin del algoritmo Greedy en 9 iteraciones
+./data/bupa_set_CONST_10. Problema BL (seed 3):   	4587ms	0.139883	72	0.120588	IteracionesBL: 57575
+
+Fin del algoritmo Búsqueda Local en 57575 iteraciones
+./data/bupa_set_CONST_20. Problema BL (seed 3):   	5975ms	0.144765	191	0.118132	IteracionesBL: 64039
+
+Fin del algoritmo Búsqueda Local en 64039 iteraciones
+./data/bupa_set_CONST_10. Problema AGEUN (seed 3):   	7424ms	0.328018	642	0.15597
+./data/bupa_set_CONST_20. Problema AGEUN (seed 3):   	9147ms	0.296126	1005	0.155988
+./data/bupa_set_CONST_10. Problema AGESF (seed 3):   	6935ms	0.318796	606	0.156396
+./data/bupa_set_CONST_20. Problema AGESF (seed 3):   	9023ms	0.28383	954	0.150803
+./data/bupa_set_CONST_10. Problema AGGUN (seed 3):   	7413ms	0.280714	473	0.153956
+./data/bupa_set_CONST_20. Problema AGGUN (seed 3):   	9221ms	0.281371	969	0.146252
+./data/bupa_set_CONST_10. Problema AGGSF (seed 3):   	6947ms	0.319998	608	0.157061
+./data/bupa_set_CONST_20. Problema AGGSF (seed 3):   	8610ms	0.293279	983	0.156209
+
+./data/bupa_set_CONST_10. Problema Memetico(10,1.0) (seed 3):   	68690ms	0.303957	572	0.150667	95720(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,1.0) (seed 3):   	69928ms	0.327407	1150	0.167049	95730(epoca)
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1) (seed 3):   	14391ms	0.146513	98	0.12025	95750(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1) (seed 3):   	15618ms	0.145848	211	0.116426	95760(epoca)
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1mej) (seed 3):   	14107ms	0.142416	91	0.118029	95780(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1mej) (seed 3):   	15718ms	0.145421	195	0.11823	95790(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set_const_10.const ,./data/zoo_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 4						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema COPKM (seed 4):	4ms	1.03957	6	0.994104
+
+Fin del algoritmo Greedy en 8 iteraciones
+./data/zoo_set_CONST_20. Problema COPKM (seed 4):	5ms	0.969286	2	0.96121
+
+Fin del algoritmo Greedy en 6 iteraciones
+./data/zoo_set_CONST_10. Problema BL (seed 4):   	80ms	0.720591	13	0.622082	IteracionesBL: 3761
+
+Fin del algoritmo Búsqueda Local en 3761 iteraciones
+./data/zoo_set_CONST_20. Problema BL (seed 4):   	110ms	0.839179	30	0.718036	IteracionesBL: 5105
+
+Fin del algoritmo Búsqueda Local en 5105 iteraciones
+./data/zoo_set_CONST_10. Problema AGEUN (seed 4):   	2097ms	0.71244	12	0.621508
+./data/zoo_set_CONST_20. Problema AGEUN (seed 4):   	2291ms	0.781422	29	0.664317
+./data/zoo_set_CONST_10. Problema AGESF (seed 4):   	2249ms	0.943465	25	0.754024
+./data/zoo_set_CONST_20. Problema AGESF (seed 4):   	2232ms	0.788429	18	0.715743
+./data/zoo_set_CONST_10. Problema AGGUN (seed 4):   	2269ms	0.924457	24	0.742594
+./data/zoo_set_CONST_20. Problema AGGUN (seed 4):   	2306ms	0.791272	13	0.738777
+./data/zoo_set_CONST_10. Problema AGGSF (seed 4):   	2111ms	0.706794	13	0.608285
+./data/zoo_set_CONST_20. Problema AGGSF (seed 4):   	2179ms	0.872843	31	0.747663
+
+./data/zoo_set_CONST_10. Problema Memetico(10,1.0) (seed 4):   	2644ms	0.714137	14	0.60805	95640(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,1.0) (seed 4):   	3115ms	0.722464	31	0.597283	95690(epoca)
+
+./data/zoo_set_CONST_10. Problema Memetico(10,0.1) (seed 4):   	1633ms	0.697746	11	0.614392	95660(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,0.1) (seed 4):   	1791ms	0.754379	9	0.718037	95720(epoca)
+
+./data/zoo_set_CONST_10. Problema Memetico(10,0.1mej) (seed 4):   	1650ms	0.660703	17	0.531883	95680(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,0.1mej) (seed 4):   	1738ms	0.830947	29	0.713842	95740(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/glass_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/glass_set_const_10.const ,./data/glass_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 4						Time 	FitFunc 	Infeas 	Desviacion
+./data/glass_set_CONST_10. Problema COPKM (seed 4):	13ms	0.407836	7	0.400947
+
+Fin del algoritmo Greedy en 5 iteraciones
+./data/glass_set_CONST_20. Problema COPKM (seed 4):	14ms	0.322348	19	0.312456
+
+Fin del algoritmo Greedy en 4 iteraciones
+./data/glass_set_CONST_10. Problema BL (seed 4):   	464ms	0.262398	15	0.247637	IteracionesBL: 12785
+
+Fin del algoritmo Búsqueda Local en 12785 iteraciones
+./data/glass_set_CONST_20. Problema BL (seed 4):   	529ms	0.271488	41	0.250143	IteracionesBL: 12751
+
+Fin del algoritmo Búsqueda Local en 12751 iteraciones
+./data/glass_set_CONST_10. Problema AGEUN (seed 4):   	4278ms	0.380645	116	0.266497
+./data/glass_set_CONST_20. Problema AGEUN (seed 4):   	4844ms	0.265927	35	0.247706
+./data/glass_set_CONST_10. Problema AGESF (seed 4):   	3983ms	0.266168	79	0.188428
+./data/glass_set_CONST_20. Problema AGESF (seed 4):   	4543ms	0.284282	63	0.251484
+./data/glass_set_CONST_10. Problema AGGUN (seed 4):   	4294ms	0.358512	119	0.241411
+./data/glass_set_CONST_20. Problema AGGUN (seed 4):   	4870ms	0.26902	129	0.201862
+./data/glass_set_CONST_10. Problema AGGSF (seed 4):   	3995ms	0.250587	40	0.211225
+./data/glass_set_CONST_20. Problema AGGSF (seed 4):   	4749ms	0.281206	64	0.247887
+
+./data/glass_set_CONST_10. Problema Memetico(10,1.0) (seed 4):   	8542ms	0.259772	16	0.244027	95730(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,1.0) (seed 4):   	9254ms	0.276038	51	0.249487	95730(epoca)
+
+./data/glass_set_CONST_10. Problema Memetico(10,0.1) (seed 4):   	3411ms	0.249701	56	0.194595	95750(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,0.1) (seed 4):   	4155ms	0.270544	44	0.247638	95760(epoca)
+
+./data/glass_set_CONST_10. Problema Memetico(10,0.1mej) (seed 4):   	3671ms	0.238087	50	0.188885	95770(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,0.1mej) (seed 4):   	3949ms	0.271325	135	0.201042	95780(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set_const_10.const ,./data/bupa_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 4						Time 	FitFunc 	Infeas 	Desviacion
+./data/bupa_set_CONST_10. Problema COPKM (seed 4):	185ms	0.244882	13	0.241399
+
+Fin del algoritmo Greedy en 14 iteraciones
+./data/bupa_set_CONST_20. Problema COPKM (seed 4):	103ms	0.246182	0	0.246182
+
+Fin del algoritmo Greedy en 6 iteraciones
+./data/bupa_set_CONST_10. Problema BL (seed 4):   	5535ms	0.138755	113	0.108473	IteracionesBL: 79194
+
+Fin del algoritmo Búsqueda Local en 79194 iteraciones
+./data/bupa_set_CONST_20. Problema BL (seed 4):   	7281ms	0.145356	197	0.117886	IteracionesBL: 86854
+
+Fin del algoritmo Búsqueda Local en 86854 iteraciones
+./data/bupa_set_CONST_10. Problema AGEUN (seed 4):   	7458ms	0.288898	477	0.161068
+./data/bupa_set_CONST_20. Problema AGEUN (seed 4):   	9311ms	0.304002	1047	0.158007
+./data/bupa_set_CONST_10. Problema AGESF (seed 4):   	7003ms	0.306388	534	0.163282
+./data/bupa_set_CONST_20. Problema AGESF (seed 4):   	8606ms	0.289778	966	0.155078
+./data/bupa_set_CONST_10. Problema AGGUN (seed 4):   	7438ms	0.292923	524	0.152497
+./data/bupa_set_CONST_20. Problema AGGUN (seed 4):   	9152ms	0.27506	910	0.148169
+./data/bupa_set_CONST_10. Problema AGGSF (seed 4):   	7004ms	0.308263	535	0.164889
+./data/bupa_set_CONST_20. Problema AGGSF (seed 4):   	8595ms	0.277717	908	0.151104
+
+./data/bupa_set_CONST_10. Problema Memetico(10,1.0) (seed 4):   	68340ms	0.346653	624	0.179428	95730(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,1.0) (seed 4):   	69899ms	0.282862	934	0.152624	95730(epoca)
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1) (seed 4):   	14006ms	0.168681	179	0.120712	95760(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1) (seed 4):   	15612ms	0.165932	322	0.121032	95760(epoca)
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1mej) (seed 4):   	13934ms	0.14358	127	0.109546	95790(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1mej) (seed 4):   	15995ms	0.145684	211	0.116262	95790(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/zoo_set_const_10.const ,./data/zoo_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 5						Time 	FitFunc 	Infeas 	Desviacion
+./data/zoo_set_CONST_10. Problema COPKM (seed 5):	3ms	1.0714	2	1.05624
+
+Fin del algoritmo Greedy en 6 iteraciones
+./data/zoo_set_CONST_20. Problema COPKM (seed 5):	3ms	1.05446	5	1.03427
+
+Fin del algoritmo Greedy en 4 iteraciones
+./data/zoo_set_CONST_10. Problema BL (seed 5):   	95ms	0.728582	14	0.622495	IteracionesBL: 4721
+
+Fin del algoritmo Búsqueda Local en 4721 iteraciones
+./data/zoo_set_CONST_20. Problema BL (seed 5):   	135ms	0.789876	14	0.733343	IteracionesBL: 6714
+
+Fin del algoritmo Búsqueda Local en 6714 iteraciones
+./data/zoo_set_CONST_10. Problema AGEUN (seed 5):   	2066ms	0.778678	7	0.725634
+./data/zoo_set_CONST_20. Problema AGEUN (seed 5):   	2203ms	0.78171	12	0.733253
+./data/zoo_set_CONST_10. Problema AGESF (seed 5):   	1960ms	0.827084	18	0.690686
+./data/zoo_set_CONST_20. Problema AGESF (seed 5):   	2094ms	0.77233	37	0.622921
+./data/zoo_set_CONST_10. Problema AGGUN (seed 5):   	2113ms	0.694269	10	0.618493
+./data/zoo_set_CONST_20. Problema AGGUN (seed 5):   	2255ms	0.812307	23	0.719431
+./data/zoo_set_CONST_10. Problema AGGSF (seed 5):   	1989ms	0.738209	17	0.609389
+./data/zoo_set_CONST_20. Problema AGGSF (seed 5):   	2108ms	0.82992	24	0.733006
+
+./data/zoo_set_CONST_10. Problema Memetico(10,1.0) (seed 5):   	2684ms	0.807184	9	0.738985	95600(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,1.0) (seed 5):   	2773ms	0.784348	13	0.731853	95670(epoca)
+
+./data/zoo_set_CONST_10. Problema Memetico(10,0.1) (seed 5):   	1651ms	0.696799	12	0.605868	95620(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,0.1) (seed 5):   	1763ms	0.833698	29	0.716594	95690(epoca)
+
+./data/zoo_set_CONST_10. Problema Memetico(10,0.1mej) (seed 5):   	1653ms	0.681068	10	0.605291	95640(epoca)
+./data/zoo_set_CONST_20. Problema Memetico(10,0.1mej) (seed 5):   	1754ms	0.774003	10	0.733622	95710(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/glass_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/glass_set_const_10.const ,./data/glass_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 5						Time 	FitFunc 	Infeas 	Desviacion
+./data/glass_set_CONST_10. Problema COPKM (seed 5):	16ms	0.3185	0	0.3185
+
+Fin del algoritmo Greedy en 6 iteraciones
+./data/glass_set_CONST_20. Problema COPKM (seed 5):	13ms	0.349455	0	0.349455
+
+Fin del algoritmo Greedy en 3 iteraciones
+./data/glass_set_CONST_10. Problema BL (seed 5):   	405ms	0.246017	56	0.190911	IteracionesBL: 10469
+
+Fin del algoritmo Búsqueda Local en 10469 iteraciones
+./data/glass_set_CONST_20. Problema BL (seed 5):   	427ms	0.271431	41	0.250086	IteracionesBL: 9492
+
+Fin del algoritmo Búsqueda Local en 9492 iteraciones
+./data/glass_set_CONST_10. Problema AGEUN (seed 5):   	4241ms	0.273928	58	0.216854
+./data/glass_set_CONST_20. Problema AGEUN (seed 5):   	4786ms	0.279027	65	0.245187
+./data/glass_set_CONST_10. Problema AGESF (seed 5):   	3946ms	0.269536	31	0.239031
+./data/glass_set_CONST_20. Problema AGESF (seed 5):   	4514ms	0.285823	153	0.20617
+./data/glass_set_CONST_10. Problema AGGUN (seed 5):   	4653ms	0.250701	39	0.212324
+./data/glass_set_CONST_20. Problema AGGUN (seed 5):   	4796ms	0.271835	44	0.248928
+./data/glass_set_CONST_10. Problema AGGSF (seed 5):   	3961ms	0.27828	41	0.237934
+./data/glass_set_CONST_20. Problema AGGSF (seed 5):   	4522ms	0.274985	46	0.251037
+
+./data/glass_set_CONST_10. Problema Memetico(10,1.0) (seed 5):   	8557ms	0.24598	56	0.190874	95720(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,1.0) (seed 5):   	9150ms	0.274993	55	0.246359	95720(epoca)
+
+./data/glass_set_CONST_10. Problema Memetico(10,0.1) (seed 5):   	3329ms	0.241717	48	0.194483	95740(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,0.1) (seed 5):   	3847ms	0.264074	114	0.204724	95740(epoca)
+
+./data/glass_set_CONST_10. Problema Memetico(10,0.1mej) (seed 5):   	3272ms	0.259625	11	0.248801	95760(epoca)
+./data/glass_set_CONST_20. Problema Memetico(10,0.1mej) (seed 5):   	3832ms	0.271377	41	0.250032	95760(epoca)
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set.dat
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+Reading: ./data/bupa_set_const_10.const ,./data/bupa_set_const_20.const
+--------------------------------------------------------------------------
+
+
+SEMILLA 5						Time 	FitFunc 	Infeas 	Desviacion
+./data/bupa_set_CONST_10. Problema COPKM (seed 5):	114ms	0.242837	45	0.230778
+
+Fin del algoritmo Greedy en 8 iteraciones
+./data/bupa_set_CONST_20. Problema COPKM (seed 5):	89ms	0.233939	0	0.233939
+
+Fin del algoritmo Greedy en 5 iteraciones
+./data/bupa_set_CONST_10. Problema BL (seed 5):   	6068ms	0.140535	118	0.108912	IteracionesBL: 88640
+
+Fin del algoritmo Búsqueda Local en 88640 iteraciones
+./data/bupa_set_CONST_20. Problema BL (seed 5):   	6798ms	0.145292	206	0.116568	IteracionesBL: 75947
+
+Fin del algoritmo Búsqueda Local en 75947 iteraciones
+./data/bupa_set_CONST_10. Problema AGEUN (seed 5):   	7570ms	0.332372	624	0.165148
+./data/bupa_set_CONST_20. Problema AGEUN (seed 5):   	9204ms	0.313256	1106	0.159034
+./data/bupa_set_CONST_10. Problema AGESF (seed 5):   	6975ms	0.318253	616	0.153172
+./data/bupa_set_CONST_20. Problema AGESF (seed 5):   	8643ms	0.327317	1257	0.152039
+./data/bupa_set_CONST_10. Problema AGGUN (seed 5):   	7465ms	0.302456	552	0.154527
+./data/bupa_set_CONST_20. Problema AGGUN (seed 5):   	9067ms	0.260416	808	0.147748
+./data/bupa_set_CONST_10. Problema AGGSF (seed 5):   	6944ms	0.297805	494	0.165419
+./data/bupa_set_CONST_20. Problema AGGSF (seed 5):   	8760ms	0.337711	1301	0.156298
+
+./data/bupa_set_CONST_10. Problema Memetico(10,1.0) (seed 5):   	67627ms	0.338986	672	0.158898	95720(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,1.0) (seed 5):   	69924ms	0.29927	1096	0.146443	95740(epoca)
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1) (seed 5):   	13995ms	0.139353	117	0.107998	95750(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1) (seed 5):   	15626ms	0.146624	217	0.116365	95770(epoca)
+
+./data/bupa_set_CONST_10. Problema Memetico(10,0.1mej) (seed 5):   	14222ms	0.141633	94	0.116442	95780(epoca)
+./data/bupa_set_CONST_20. Problema Memetico(10,0.1mej) (seed 5):   	15649ms	0.146355	207	0.11749	95800(epoca)
+
+
+-----------TABLAS-----------
+
+
+Greedy 10%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 2 & 1.03667 & 1.05182 & 3 & 4 & 0.389345 & 0.393281 & 14 & 30 & 0.252988 & 0.261028 & 147 \\ \hline
+
+\textbf{Ejecución 2} & 0 & 0.92574 & 0.92574 & 4 & 1 & 0.390753 & 0.391737 & 16 & 12 & 0.245451 & 0.248667 & 150 \\ \hline
+
+\textbf{Ejecución 3} & 1 & 1.00701 & 1.01459 & 3 & 3 & 0.395552 & 0.398504 & 15 & 13 & 0.247788 & 0.251272 & 163 \\ \hline
+
+\textbf{Ejecución 4} & 6 & 0.994104 & 1.03957 & 4 & 7 & 0.400947 & 0.407836 & 13 & 13 & 0.241399 & 0.244882 & 185 \\ \hline
+
+\textbf{Ejecución 5} & 2 & 1.05624 & 1.0714 & 3 & 0 & 0.3185 & 0.3185 & 16 & 45 & 0.230778 & 0.242837 & 114 \\ \hline
+
+\textbf{Media} & 2.2 & 1.00395 & 1.02062 & 3.4 & 3 & 0.379019 & 0.381972 & 14.8 & 22.6 & 0.243681 & 0.249737 & 151.8 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+Greedy 20%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 0 & 0.9048 & 0.9048 & 4 & 0 & 0.355634 & 0.355634 & 20 & 65 & 0.257117 & 0.266181 & 188 \\ \hline
+
+\textbf{Ejecución 2} & 1 & 0.967536 & 0.971574 & 4 & 0 & 0.311382 & 0.311382 & 13 & 0 & 0.230513 & 0.230513 & 118 \\ \hline
+
+\textbf{Ejecución 3} & 0 & 0.9048 & 0.9048 & 4 & 3 & 0.3151 & 0.316662 & 14 & 0 & 0.219861 & 0.219861 & 146 \\ \hline
+
+\textbf{Ejecución 4} & 2 & 0.96121 & 0.969286 & 5 & 19 & 0.312456 & 0.322348 & 14 & 0 & 0.246182 & 0.246182 & 103 \\ \hline
+
+\textbf{Ejecución 5} & 5 & 1.03427 & 1.05446 & 3 & 0 & 0.349455 & 0.349455 & 13 & 0 & 0.233939 & 0.233939 & 89 \\ \hline
+
+\textbf{Media} & 1.6 & 0.954523 & 0.960984 & 4 & 4.4 & 0.328806 & 0.331096 & 14.8 & 13 & 0.237523 & 0.239335 & 128.8 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+BL 10%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 11 & 0.610733 & 0.694087 & 106 & 58 & 0.18783 & 0.244904 & 431 & 114 & 0.106857 & 0.137408 & 5427 \\ \hline
+
+\textbf{Ejecución 2} & 13 & 0.614392 & 0.712902 & 153 & 33 & 0.212138 & 0.244611 & 458 & 114 & 0.116114 & 0.146664 & 5729 \\ \hline
+
+\textbf{Ejecución 3} & 15 & 0.622082 & 0.735747 & 94 & 46 & 0.195533 & 0.240799 & 503 & 72 & 0.120588 & 0.139883 & 4587 \\ \hline
+
+\textbf{Ejecución 4} & 13 & 0.622082 & 0.720591 & 80 & 15 & 0.247637 & 0.262398 & 464 & 113 & 0.108473 & 0.138755 & 5535 \\ \hline
+
+\textbf{Ejecución 5} & 14 & 0.622495 & 0.728582 & 95 & 56 & 0.190911 & 0.246017 & 405 & 118 & 0.108912 & 0.140535 & 6068 \\ \hline
+
+\textbf{Media} & 13.2 & 0.618357 & 0.718382 & 105.6 & 41.6 & 0.20681 & 0.247746 & 452.2 & 106.2 & 0.112189 & 0.140649 & 5469.2 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+BL 20%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 23 & 0.71821 & 0.811086 & 90 & 41 & 0.250176 & 0.271521 & 430 & 246 & 0.111261 & 0.145564 & 5616 \\ \hline
+
+\textbf{Ejecución 2} & 12 & 0.745351 & 0.793808 & 98 & 131 & 0.208785 & 0.276985 & 450 & 193 & 0.119201 & 0.146114 & 5415 \\ \hline
+
+\textbf{Ejecución 3} & 33 & 0.714332 & 0.847589 & 87 & 36 & 0.246058 & 0.2648 & 445 & 191 & 0.118132 & 0.144765 & 5975 \\ \hline
+
+\textbf{Ejecución 4} & 30 & 0.718036 & 0.839179 & 110 & 41 & 0.250143 & 0.271488 & 529 & 197 & 0.117886 & 0.145356 & 7281 \\ \hline
+
+\textbf{Ejecución 5} & 14 & 0.733343 & 0.789876 & 135 & 41 & 0.250086 & 0.271431 & 427 & 206 & 0.116568 & 0.145292 & 6798 \\ \hline
+
+\textbf{Media} & 22.4 & 0.725855 & 0.816308 & 104 & 58 & 0.24105 & 0.271245 & 456.2 & 206.6 & 0.11661 & 0.145418 & 6217 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+AGGUN 10%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 20 & 0.908455 & 1.06001 & 2149 & 102 & 0.241099 & 0.341471 & 4212 & 605 & 0.174741 & 0.336874 & 7439 \\ \hline
+
+\textbf{Ejecución 2} & 5 & 0.694893 & 0.732781 & 2209 & 22 & 0.246688 & 0.268336 & 4247 & 415 & 0.152327 & 0.263542 & 7387 \\ \hline
+
+\textbf{Ejecución 3} & 13 & 0.60908 & 0.707589 & 2114 & 47 & 0.195301 & 0.241551 & 4861 & 473 & 0.153956 & 0.280714 & 7413 \\ \hline
+
+\textbf{Ejecución 4} & 24 & 0.742594 & 0.924457 & 2269 & 119 & 0.241411 & 0.358512 & 4294 & 524 & 0.152497 & 0.292923 & 7438 \\ \hline
+
+\textbf{Ejecución 5} & 10 & 0.618493 & 0.694269 & 2113 & 39 & 0.212324 & 0.250701 & 4653 & 552 & 0.154527 & 0.302456 & 7465 \\ \hline
+
+\textbf{Media} & 14.4 & 0.714703 & 0.823821 & 2170.8 & 65.8 & 0.227364 & 0.292114 & 4453.4 & 513.8 & 0.157609 & 0.295302 & 7428.4 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+AGGUN 20%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 25 & 0.717947 & 0.818899 & 2270 & 57 & 0.249672 & 0.279347 & 4781 & 854 & 0.152505 & 0.271588 & 9124 \\ \hline
+
+\textbf{Ejecución 2} & 9 & 0.730918 & 0.767261 & 2187 & 32 & 0.24828 & 0.264939 & 4791 & 818 & 0.152534 & 0.266597 & 9263 \\ \hline
+
+\textbf{Ejecución 3} & 13 & 0.755757 & 0.808252 & 2195 & 87 & 0.238598 & 0.283891 & 4846 & 969 & 0.146252 & 0.281371 & 9221 \\ \hline
+
+\textbf{Ejecución 4} & 13 & 0.738777 & 0.791272 & 2306 & 129 & 0.201862 & 0.26902 & 4870 & 910 & 0.148169 & 0.27506 & 9152 \\ \hline
+
+\textbf{Ejecución 5} & 23 & 0.719431 & 0.812307 & 2255 & 44 & 0.248928 & 0.271835 & 4796 & 808 & 0.147748 & 0.260416 & 9067 \\ \hline
+
+\textbf{Media} & 16.6 & 0.732566 & 0.799598 & 2242.6 & 69.8 & 0.237468 & 0.273807 & 4816.8 & 871.8 & 0.149442 & 0.271006 & 9165.4 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+AGGSF 10%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 8 & 0.609444 & 0.670065 & 2046 & 93 & 0.210376 & 0.301892 & 3919 & 669 & 0.149727 & 0.329011 & 7135 \\ \hline
+
+\textbf{Ejecución 2} & 29 & 0.843887 & 1.06364 & 2096 & 37 & 0.210835 & 0.247244 & 3999 & 561 & 0.166892 & 0.317234 & 6905 \\ \hline
+
+\textbf{Ejecución 3} & 15 & 0.881209 & 0.994873 & 2000 & 67 & 0.190066 & 0.255997 & 4074 & 608 & 0.157061 & 0.319998 & 6947 \\ \hline
+
+\textbf{Ejecución 4} & 13 & 0.608285 & 0.706794 & 2111 & 40 & 0.211225 & 0.250587 & 3995 & 535 & 0.164889 & 0.308263 & 7004 \\ \hline
+
+\textbf{Ejecución 5} & 17 & 0.609389 & 0.738209 & 1989 & 41 & 0.237934 & 0.27828 & 3961 & 494 & 0.165419 & 0.297805 & 6944 \\ \hline
+
+\textbf{Media} & 16.4 & 0.710443 & 0.834716 & 2048.4 & 55.6 & 0.212087 & 0.2668 & 3989.6 & 573.4 & 0.160798 & 0.314462 & 6987 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+AGGSF 20%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 27 & 0.719141 & 0.828169 & 2128 & 53 & 0.249583 & 0.277175 & 4511 & 1032 & 0.156835 & 0.300738 & 8621 \\ \hline
+
+\textbf{Ejecución 2} & 23 & 0.712417 & 0.805293 & 2088 & 43 & 0.248235 & 0.270621 & 4575 & 843 & 0.162253 & 0.279802 & 9459 \\ \hline
+
+\textbf{Ejecución 3} & 21 & 0.800639 & 0.885439 & 2138 & 79 & 0.250855 & 0.291983 & 4545 & 983 & 0.156209 & 0.293279 & 8610 \\ \hline
+
+\textbf{Ejecución 4} & 31 & 0.747663 & 0.872843 & 2179 & 64 & 0.247887 & 0.281206 & 4749 & 908 & 0.151104 & 0.277717 & 8595 \\ \hline
+
+\textbf{Ejecución 5} & 24 & 0.733006 & 0.82992 & 2108 & 46 & 0.251037 & 0.274985 & 4522 & 1301 & 0.156298 & 0.337711 & 8760 \\ \hline
+
+\textbf{Media} & 25.2 & 0.742573 & 0.844333 & 2128.2 & 57 & 0.249519 & 0.279194 & 4580.4 & 1013.4 & 0.15654 & 0.297849 & 8809 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+AGEUN 10%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 6 & 0.765171 & 0.810637 & 2138 & 50 & 0.2127 & 0.261902 & 4194 & 692 & 0.153851 & 0.339299 & 7638 \\ \hline
+
+\textbf{Ejecución 2} & 9 & 0.614028 & 0.682227 & 2159 & 101 & 0.254053 & 0.353441 & 4724 & 611 & 0.160835 & 0.324576 & 7446 \\ \hline
+
+\textbf{Ejecución 3} & 18 & 0.627571 & 0.763968 & 2086 & 108 & 0.260193 & 0.366469 & 4226 & 642 & 0.15597 & 0.328018 & 7424 \\ \hline
+
+\textbf{Ejecución 4} & 12 & 0.621508 & 0.71244 & 2097 & 116 & 0.266497 & 0.380645 & 4278 & 477 & 0.161068 & 0.288898 & 7458 \\ \hline
+
+\textbf{Ejecución 5} & 7 & 0.725634 & 0.778678 & 2066 & 58 & 0.216854 & 0.273928 & 4241 & 624 & 0.165148 & 0.332372 & 7570 \\ \hline
+
+\textbf{Media} & 10.4 & 0.670782 & 0.74959 & 2109.2 & 86.6 & 0.242059 & 0.327277 & 4332.6 & 609.2 & 0.159374 & 0.322633 & 7507.2 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+AGEUN 20%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 17 & 0.718965 & 0.787613 & 2200 & 39 & 0.246378 & 0.266682 & 4789 & 957 & 0.146 & 0.279445 & 9182 \\ \hline
+
+\textbf{Ejecución 2} & 28 & 0.714409 & 0.827475 & 2218 & 53 & 0.24752 & 0.275112 & 4805 & 1223 & 0.152128 & 0.322664 & 9068 \\ \hline
+
+\textbf{Ejecución 3} & 18 & 0.710859 & 0.783544 & 2161 & 151 & 0.20157 & 0.280182 & 4933 & 1005 & 0.155988 & 0.296126 & 9147 \\ \hline
+
+\textbf{Ejecución 4} & 29 & 0.664317 & 0.781422 & 2291 & 35 & 0.247706 & 0.265927 & 4844 & 1047 & 0.158007 & 0.304002 & 9311 \\ \hline
+
+\textbf{Ejecución 5} & 12 & 0.733253 & 0.78171 & 2203 & 65 & 0.245187 & 0.279027 & 4786 & 1106 & 0.159034 & 0.313256 & 9204 \\ \hline
+
+\textbf{Media} & 20.8 & 0.708361 & 0.792353 & 2214.6 & 68.6 & 0.237672 & 0.273386 & 4831.4 & 1067.6 & 0.154231 & 0.303099 & 9182.4 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+AGESF 10%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 11 & 0.610577 & 0.693931 & 1990 & 61 & 0.194076 & 0.254102 & 4313 & 510 & 0.164293 & 0.300967 & 7017 \\ \hline
+
+\textbf{Ejecución 2} & 14 & 0.621098 & 0.727184 & 2067 & 89 & 0.247472 & 0.335051 & 3965 & 562 & 0.155667 & 0.306277 & 6950 \\ \hline
+
+\textbf{Ejecución 3} & 8 & 0.776924 & 0.837545 & 1964 & 79 & 0.187622 & 0.265361 & 4208 & 606 & 0.156396 & 0.318796 & 6935 \\ \hline
+
+\textbf{Ejecución 4} & 25 & 0.754024 & 0.943465 & 2249 & 79 & 0.188428 & 0.266168 & 3983 & 534 & 0.163282 & 0.306388 & 7003 \\ \hline
+
+\textbf{Ejecución 5} & 18 & 0.690686 & 0.827084 & 1960 & 31 & 0.239031 & 0.269536 & 3946 & 616 & 0.153172 & 0.318253 & 6975 \\ \hline
+
+\textbf{Media} & 15.2 & 0.690662 & 0.805842 & 2046 & 67.8 & 0.211326 & 0.278044 & 4083 & 565.6 & 0.158562 & 0.310136 & 6976 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+AGESF 20%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 48 & 0.616345 & 0.810173 & 2138 & 93 & 0.217093 & 0.26551 & 4493 & 1266 & 0.150308 & 0.326841 & 8585 \\ \hline
+
+\textbf{Ejecución 2} & 21 & 0.718036 & 0.802836 & 2103 & 82 & 0.239528 & 0.282218 & 4529 & 1114 & 0.158928 & 0.314265 & 8558 \\ \hline
+
+\textbf{Ejecución 3} & 14 & 0.732215 & 0.788748 & 2061 & 57 & 0.249689 & 0.279364 & 4594 & 954 & 0.150803 & 0.28383 & 9023 \\ \hline
+
+\textbf{Ejecución 4} & 18 & 0.715743 & 0.788429 & 2232 & 63 & 0.251484 & 0.284282 & 4543 & 966 & 0.155078 & 0.289778 & 8606 \\ \hline
+
+\textbf{Ejecución 5} & 37 & 0.622921 & 0.77233 & 2094 & 153 & 0.20617 & 0.285823 & 4514 & 1257 & 0.152039 & 0.327317 & 8643 \\ \hline
+
+\textbf{Media} & 27.6 & 0.681052 & 0.792503 & 2125.6 & 89.6 & 0.232793 & 0.279439 & 4534.6 & 1111.4 & 0.153431 & 0.308406 & 8683 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+MEM10 10%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 10 & 0.609071 & 0.684847 & 2656 & 62 & 0.190784 & 0.251794 & 8437 & 567 & 0.154013 & 0.305963 & 67810 \\ \hline
+
+\textbf{Ejecución 2} & 10 & 0.609221 & 0.684997 & 2698 & 14 & 0.248834 & 0.262611 & 8523 & 637 & 0.163606 & 0.334315 & 67831 \\ \hline
+
+\textbf{Ejecución 3} & 15 & 0.611189 & 0.724854 & 2638 & 63 & 0.187684 & 0.249679 & 8516 & 572 & 0.150667 & 0.303957 & 68690 \\ \hline
+
+\textbf{Ejecución 4} & 14 & 0.60805 & 0.714137 & 2644 & 16 & 0.244027 & 0.259772 & 8542 & 624 & 0.179428 & 0.346653 & 68340 \\ \hline
+
+\textbf{Ejecución 5} & 9 & 0.738985 & 0.807184 & 2684 & 56 & 0.190874 & 0.24598 & 8557 & 672 & 0.158898 & 0.338986 & 67627 \\ \hline
+
+\textbf{Media} & 11.6 & 0.635303 & 0.723204 & 2664 & 42.2 & 0.212441 & 0.253967 & 8515 & 614.4 & 0.161323 & 0.325975 & 68059.6 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+MEM10 20%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 24 & 0.713874 & 0.810788 & 2773 & 106 & 0.210093 & 0.265278 & 9075 & 987 & 0.151788 & 0.289416 & 69786 \\ \hline
+
+\textbf{Ejecución 2} & 16 & 0.733622 & 0.798232 & 2722 & 50 & 0.24962 & 0.275651 & 9084 & 1258 & 0.163854 & 0.339271 & 69565 \\ \hline
+
+\textbf{Ejecución 3} & 10 & 0.733622 & 0.774003 & 3277 & 130 & 0.208843 & 0.276522 & 9670 & 1150 & 0.167049 & 0.327407 & 69928 \\ \hline
+
+\textbf{Ejecución 4} & 31 & 0.597283 & 0.722464 & 3115 & 51 & 0.249487 & 0.276038 & 9254 & 934 & 0.152624 & 0.282862 & 69899 \\ \hline
+
+\textbf{Ejecución 5} & 13 & 0.731853 & 0.784348 & 2773 & 55 & 0.246359 & 0.274993 & 9150 & 1096 & 0.146443 & 0.29927 & 69924 \\ \hline
+
+\textbf{Media} & 18.8 & 0.702051 & 0.777967 & 2932 & 78.4 & 0.232881 & 0.273696 & 9246.6 & 1085 & 0.156352 & 0.307645 & 69820.4 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+MEM01 10%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 6 & 0.663591 & 0.709056 & 1702 & 25 & 0.243103 & 0.267704 & 3261 & 93 & 0.116127 & 0.14105 & 13939 \\ \hline
+
+\textbf{Ejecución 2} & 10 & 0.608205 & 0.683981 & 1710 & 15 & 0.248273 & 0.263033 & 3264 & 149 & 0.118095 & 0.158025 & 13960 \\ \hline
+
+\textbf{Ejecución 3} & 12 & 0.585393 & 0.676325 & 1652 & 20 & 0.248086 & 0.267767 & 3611 & 98 & 0.12025 & 0.146513 & 14391 \\ \hline
+
+\textbf{Ejecución 4} & 11 & 0.614392 & 0.697746 & 1633 & 56 & 0.194595 & 0.249701 & 3411 & 179 & 0.120712 & 0.168681 & 14006 \\ \hline
+
+\textbf{Ejecución 5} & 12 & 0.605868 & 0.696799 & 1651 & 48 & 0.194483 & 0.241717 & 3329 & 117 & 0.107998 & 0.139353 & 13995 \\ \hline
+
+\textbf{Media} & 10.2 & 0.61549 & 0.692782 & 1669.6 & 32.8 & 0.225708 & 0.257984 & 3375.2 & 127.2 & 0.116636 & 0.150724 & 14058.2 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+MEM01 20%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 15 & 0.755254 & 0.815826 & 1751 & 34 & 0.250057 & 0.267758 & 3785 & 180 & 0.121571 & 0.14667 & 15574 \\ \hline
+
+\textbf{Ejecución 2} & 34 & 0.668458 & 0.805752 & 1742 & 35 & 0.250023 & 0.268245 & 3818 & 213 & 0.120006 & 0.149707 & 16492 \\ \hline
+
+\textbf{Ejecución 3} & 10 & 0.733622 & 0.774003 & 1729 & 43 & 0.249253 & 0.271639 & 3842 & 211 & 0.116426 & 0.145848 & 15618 \\ \hline
+
+\textbf{Ejecución 4} & 9 & 0.718037 & 0.754379 & 1791 & 44 & 0.247638 & 0.270544 & 4155 & 322 & 0.121032 & 0.165932 & 15612 \\ \hline
+
+\textbf{Ejecución 5} & 29 & 0.716594 & 0.833698 & 1763 & 114 & 0.204724 & 0.264074 & 3847 & 217 & 0.116365 & 0.146624 & 15626 \\ \hline
+
+\textbf{Media} & 19.4 & 0.718393 & 0.796732 & 1755.2 & 54 & 0.240339 & 0.268452 & 3889.4 & 228.6 & 0.11908 & 0.150956 & 15784.4 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+MEM01BEST 10%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 10 & 0.611327 & 0.687104 & 1648 & 33 & 0.212244 & 0.244718 & 3312 & 151 & 0.108199 & 0.148665 & 14101 \\ \hline
+
+\textbf{Ejecución 2} & 10 & 0.618431 & 0.694208 & 1710 & 54 & 0.186876 & 0.240014 & 3504 & 179 & 0.115038 & 0.163008 & 14029 \\ \hline
+
+\textbf{Ejecución 3} & 10 & 0.593262 & 0.669039 & 1638 & 54 & 0.188039 & 0.241177 & 3325 & 91 & 0.118029 & 0.142416 & 14107 \\ \hline
+
+\textbf{Ejecución 4} & 17 & 0.531883 & 0.660703 & 1650 & 50 & 0.188885 & 0.238087 & 3671 & 127 & 0.109546 & 0.14358 & 13934 \\ \hline
+
+\textbf{Ejecución 5} & 10 & 0.605291 & 0.681068 & 1653 & 11 & 0.248801 & 0.259625 & 3272 & 94 & 0.116442 & 0.141633 & 14222 \\ \hline
+
+\textbf{Media} & 11.4 & 0.592039 & 0.678424 & 1659.8 & 40.4 & 0.204969 & 0.244724 & 3416.8 & 128.4 & 0.113451 & 0.14786 & 14078.6 \\ \hline
+
+\end{tabular}
+}
+\caption{}
+\label{}
+\end{table}
+
+
+MEM01BEST 20%
+
+\begin{table}[htp]
+\centering
+\resizebox{16cm}{!} {
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\multicolumn{1}{|c|}{} & \multicolumn{4}{|c|}{\textbf{Zoo}} & \multicolumn{4}{|c|}{\textbf{Glass}} & \multicolumn{4}{|c|}{\textbf{Bupa}} \\ \hline
+
+& \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} & \textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} &\textit{Tasa\_Inf} & \textit{Dist-Intra} & \textit{Agr} & \textit{T(ms)} \\ \hline
+
+\textbf{Ejecución 1} & 44 & 0.666841 & 0.844517 & 1778 & 38 & 0.250518 & 0.270301 & 3790 & 230 & 0.116497 & 0.148568 & 15645 \\ \hline
+
+\textbf{Ejecución 2} & 14 & 0.730428 & 0.786961 & 1830 & 40 & 0.245279 & 0.266103 & 3838 & 259 & 0.108843 & 0.144958 & 15676 \\ \hline
+
+\textbf{Ejecución 3} & 27 & 0.702421 & 0.811449 & 1756 & 43 & 0.249577 & 0.271963 & 3934 & 195 & 0.11823 & 0.145421 & 15718 \\ \hline
+
+\textbf{Ejecución 4} & 29 & 0.713842 & 0.830947 & 1738 & 135 & 0.201042 & 0.271325 & 3949 & 211 & 0.116262 & 0.145684 & 15995 \\ \hline
+
+\textbf{Ejecución 5} & 10 & 0.733622 & 0.774003 & 1754 & 41 & 0.250032 & 0.271377 & 3832 & 207 & 0.11749 & 0.146355 & 15649 \\ \hline
+
+\textbf{Media} & 24.8 & 0.709431 & 0.809575 & 1771.2 & 59.4 & 0.239289 & 0.270214 & 3868.6 & 220.4 & 0.115464 & 0.146197 & 15736.6 \\ \hline
+
+\end{tabular}
+}
+
