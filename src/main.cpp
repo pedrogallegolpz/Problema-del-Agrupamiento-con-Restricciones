@@ -23,6 +23,10 @@
 #include "busqlocal.h"
 #include "genetico.h"
 #include "memetico.h"
+#include "enfriamientosimulado.h"
+#include "busqmulbas.h"
+#include "busqlocreit.h"
+#include "busqlocreitES.h"
 #include <sstream>
 
 using namespace std;
@@ -90,6 +94,14 @@ int main(int argc, char * argv[]) {
     const int TAM_POBLACION_MEMETICO = 50; 
 
 
+    // booleanos para ver qué algoritmos ejecutar
+    bool greedy_run = true;
+    bool bl_run = true;
+
+    bool geneticos_run = false;
+    bool memeticos_run = false;
+
+    bool trayectorias_run = true;
     
 
 
@@ -98,6 +110,9 @@ int main(int argc, char * argv[]) {
     vector<vector<vector<double>>> tablas;
 
     // Tablas
+    vector<vector<double>> medias10_tab;
+    vector<vector<double>> medias20_tab;
+
     vector<vector<double>> greedy10_tab;
     vector<vector<double>> greedy20_tab;
 
@@ -120,6 +135,22 @@ int main(int argc, char * argv[]) {
     vector<vector<double>> mem0120_tab;
     vector<vector<double>> mem01best10_tab;
     vector<vector<double>> mem01best20_tab;
+
+
+    vector<vector<double>> es10_tab;
+    vector<vector<double>> es20_tab;
+
+    vector<vector<double>> bmb10_tab;
+    vector<vector<double>> bmb20_tab;
+
+    vector<vector<double>> ils10_tab;
+    vector<vector<double>> ils20_tab;
+    vector<vector<double>> ilses10_tab;
+    vector<vector<double>> ilses20_tab;
+
+        
+
+
 
     // Semillas
     vector<int> semillas;
@@ -158,6 +189,18 @@ int main(int argc, char * argv[]) {
         vector<double> aux_mem01best20_tab;
 
 
+        vector<double> aux_es10_tab;
+        vector<double> aux_es20_tab;
+
+        vector<double> aux_bmb10_tab;
+        vector<double> aux_bmb20_tab;
+
+        vector<double> aux_ils10_tab;
+        vector<double> aux_ils20_tab;
+        vector<double> aux_ilses10_tab;
+        vector<double> aux_ilses20_tab;
+
+
         for(int f=0; f<files.size(); f++){
             // Estructuras para la lectura
             vector<vector<double> > data;
@@ -181,205 +224,317 @@ int main(int argc, char * argv[]) {
             ////////////////////////////////////
             //          GREEDY
             ////////////////////////////////////
-            cout << files[f] << "_CONST_10. ";
-            time = greedyCOPKM(par_10, seed,false);
-            aux_greedy10_tab.push_back(par_10.infeasibility());
-            aux_greedy10_tab.push_back(par_10.desviacionParticion());
-            aux_greedy10_tab.push_back(par_10.fitnessFunction());
-            aux_greedy10_tab.push_back(time);
+            if(greedy_run){
+                cout << files[f] << "_CONST_10. ";
+                time = greedyCOPKM(par_10, seed,false);
+                aux_greedy10_tab.push_back(par_10.infeasibility());
+                aux_greedy10_tab.push_back(par_10.desviacionParticion());
+                aux_greedy10_tab.push_back(par_10.fitnessFunction());
+                aux_greedy10_tab.push_back(time);
 
-        
-            cout << files[f] << "_CONST_20. ";
-            time = greedyCOPKM(par_20, seed,false);
-            aux_greedy20_tab.push_back(par_20.infeasibility());
-            aux_greedy20_tab.push_back(par_20.desviacionParticion());
-            aux_greedy20_tab.push_back(par_20.fitnessFunction());
-            aux_greedy20_tab.push_back(time);
             
+                cout << files[f] << "_CONST_20. ";
+                time = greedyCOPKM(par_20, seed,false);
+                aux_greedy20_tab.push_back(par_20.infeasibility());
+                aux_greedy20_tab.push_back(par_20.desviacionParticion());
+                aux_greedy20_tab.push_back(par_20.fitnessFunction());
+                aux_greedy20_tab.push_back(time);
+            }
 
             ////////////////////////////////////
             //       BÚSQUEDA LOCAL
             ////////////////////////////////////
-            cout << files[f] << "_CONST_10. ";
-            time = busquedaLocalPAR(par_10, seed, false);
-            aux_bl10_tab.push_back(par_10.infeasibility());
-            aux_bl10_tab.push_back(par_10.desviacionParticion());
-            aux_bl10_tab.push_back(par_10.fitnessFunction());
-            aux_bl10_tab.push_back(time);
+            if(bl_run){
+                cout << files[f] << "_CONST_10. ";
+                time = busquedaLocalPAR(par_10, seed, false);
+                aux_bl10_tab.push_back(par_10.infeasibility());
+                aux_bl10_tab.push_back(par_10.desviacionParticion());
+                aux_bl10_tab.push_back(par_10.fitnessFunction());
+                aux_bl10_tab.push_back(time);
 
-            cout << files[f] << "_CONST_20. ";
-            time = busquedaLocalPAR(par_20, seed, false);
-            aux_bl20_tab.push_back(par_20.infeasibility());
-            aux_bl20_tab.push_back(par_20.desviacionParticion());
-            aux_bl20_tab.push_back(par_20.fitnessFunction());
-            aux_bl20_tab.push_back(time);
+                cout << files[f] << "_CONST_20. ";
+                time = busquedaLocalPAR(par_20, seed, false);
+                aux_bl20_tab.push_back(par_20.infeasibility());
+                aux_bl20_tab.push_back(par_20.desviacionParticion());
+                aux_bl20_tab.push_back(par_20.fitnessFunction());
+                aux_bl20_tab.push_back(time);
+            }
 
 
             ////////////////////////////////////
             //          GENÉTICO
             ////////////////////////////////////
-            cout << files[f] << "_CONST_10. ";
-            time = genetico(par_10, TAM_POBLACION_GENETICO, 1, 1, seed, false,false);
-            aux_ageun10_tab.push_back(par_10.infeasibility());
-            aux_ageun10_tab.push_back(par_10.desviacionParticion());
-            aux_ageun10_tab.push_back(par_10.fitnessFunction());
-            aux_ageun10_tab.push_back(time);
-            
-            cout << files[f] << "_CONST_20. ";
-            time = genetico(par_20, TAM_POBLACION_GENETICO, 1, 1, seed, false,false);
-            aux_ageun20_tab.push_back(par_20.infeasibility());
-            aux_ageun20_tab.push_back(par_20.desviacionParticion());
-            aux_ageun20_tab.push_back(par_20.fitnessFunction());
-            aux_ageun20_tab.push_back(time);
-            
+            if(geneticos_run){
+                cout << files[f] << "_CONST_10. ";
+                time = genetico(par_10, TAM_POBLACION_GENETICO, 1, 1, seed, false,false);
+                aux_ageun10_tab.push_back(par_10.infeasibility());
+                aux_ageun10_tab.push_back(par_10.desviacionParticion());
+                aux_ageun10_tab.push_back(par_10.fitnessFunction());
+                aux_ageun10_tab.push_back(time);
+                
+                cout << files[f] << "_CONST_20. ";
+                time = genetico(par_20, TAM_POBLACION_GENETICO, 1, 1, seed, false,false);
+                aux_ageun20_tab.push_back(par_20.infeasibility());
+                aux_ageun20_tab.push_back(par_20.desviacionParticion());
+                aux_ageun20_tab.push_back(par_20.fitnessFunction());
+                aux_ageun20_tab.push_back(time);
+                
 
-            cout << files[f] << "_CONST_10. ";
-            time = genetico(par_10, TAM_POBLACION_GENETICO, 1, 2, seed, false,false);
-            aux_agesf10_tab.push_back(par_10.infeasibility());
-            aux_agesf10_tab.push_back(par_10.desviacionParticion());
-            aux_agesf10_tab.push_back(par_10.fitnessFunction());
-            aux_agesf10_tab.push_back(time);
-            
-            cout << files[f] << "_CONST_20. ";
-            time = genetico(par_20, TAM_POBLACION_GENETICO, 1, 2, seed, false,false);
-            aux_agesf20_tab.push_back(par_20.infeasibility());
-            aux_agesf20_tab.push_back(par_20.desviacionParticion());
-            aux_agesf20_tab.push_back(par_20.fitnessFunction());
-            aux_agesf20_tab.push_back(time);
-
-
-            cout << files[f] << "_CONST_10. ";
-            time = genetico(par_10, TAM_POBLACION_GENETICO, 2, 1, seed, false,false);
-            aux_aggun10_tab.push_back(par_10.infeasibility());
-            aux_aggun10_tab.push_back(par_10.desviacionParticion());
-            aux_aggun10_tab.push_back(par_10.fitnessFunction());
-            aux_aggun10_tab.push_back(time);
-            
-            cout << files[f] << "_CONST_20. ";
-            time = genetico(par_20, TAM_POBLACION_GENETICO, 2, 1, seed, false,false);
-            aux_aggun20_tab.push_back(par_20.infeasibility());
-            aux_aggun20_tab.push_back(par_20.desviacionParticion());
-            aux_aggun20_tab.push_back(par_20.fitnessFunction());
-            aux_aggun20_tab.push_back(time);
+                cout << files[f] << "_CONST_10. ";
+                time = genetico(par_10, TAM_POBLACION_GENETICO, 1, 2, seed, false,false);
+                aux_agesf10_tab.push_back(par_10.infeasibility());
+                aux_agesf10_tab.push_back(par_10.desviacionParticion());
+                aux_agesf10_tab.push_back(par_10.fitnessFunction());
+                aux_agesf10_tab.push_back(time);
+                
+                cout << files[f] << "_CONST_20. ";
+                time = genetico(par_20, TAM_POBLACION_GENETICO, 1, 2, seed, false,false);
+                aux_agesf20_tab.push_back(par_20.infeasibility());
+                aux_agesf20_tab.push_back(par_20.desviacionParticion());
+                aux_agesf20_tab.push_back(par_20.fitnessFunction());
+                aux_agesf20_tab.push_back(time);
 
 
-            cout << files[f] << "_CONST_10. ";
-            time = genetico(par_10, TAM_POBLACION_GENETICO, 2, 2, seed, false,false);
-            aux_aggsf10_tab.push_back(par_10.infeasibility());
-            aux_aggsf10_tab.push_back(par_10.desviacionParticion());
-            aux_aggsf10_tab.push_back(par_10.fitnessFunction());
-            aux_aggsf10_tab.push_back(time);
-            
-            
-            cout << files[f] << "_CONST_20. ";
-            time = genetico(par_20, TAM_POBLACION_GENETICO, 2, 2, seed, false,false);
-            aux_aggsf20_tab.push_back(par_20.infeasibility());
-            aux_aggsf20_tab.push_back(par_20.desviacionParticion());
-            aux_aggsf20_tab.push_back(par_20.fitnessFunction());
-            aux_aggsf20_tab.push_back(time);
-            
+                cout << files[f] << "_CONST_10. ";
+                time = genetico(par_10, TAM_POBLACION_GENETICO, 2, 1, seed, false,false);
+                aux_aggun10_tab.push_back(par_10.infeasibility());
+                aux_aggun10_tab.push_back(par_10.desviacionParticion());
+                aux_aggun10_tab.push_back(par_10.fitnessFunction());
+                aux_aggun10_tab.push_back(time);
+                
+                cout << files[f] << "_CONST_20. ";
+                time = genetico(par_20, TAM_POBLACION_GENETICO, 2, 1, seed, false,false);
+                aux_aggun20_tab.push_back(par_20.infeasibility());
+                aux_aggun20_tab.push_back(par_20.desviacionParticion());
+                aux_aggun20_tab.push_back(par_20.fitnessFunction());
+                aux_aggun20_tab.push_back(time);
+
+
+                cout << files[f] << "_CONST_10. ";
+                time = genetico(par_10, TAM_POBLACION_GENETICO, 2, 2, seed, false,false);
+                aux_aggsf10_tab.push_back(par_10.infeasibility());
+                aux_aggsf10_tab.push_back(par_10.desviacionParticion());
+                aux_aggsf10_tab.push_back(par_10.fitnessFunction());
+                aux_aggsf10_tab.push_back(time);
+                
+                
+                cout << files[f] << "_CONST_20. ";
+                time = genetico(par_20, TAM_POBLACION_GENETICO, 2, 2, seed, false,false);
+                aux_aggsf20_tab.push_back(par_20.infeasibility());
+                aux_aggsf20_tab.push_back(par_20.desviacionParticion());
+                aux_aggsf20_tab.push_back(par_20.fitnessFunction());
+                aux_aggsf20_tab.push_back(time);
+            }
 
             ////////////////////////////////////
             //          MEMÉTICO
             ////////////////////////////////////
             //memetico(PAR par, int tam, int bls, double prob, bool best, int cruce, int seed, bool mostrarEstado);
+            if(memeticos_run){
+                cout << endl << files[f] << "_CONST_10. ";
+                time = memetico(par_10, TAM_POBLACION_MEMETICO, 10, 1.0, false, 2, seed, false,false);
+                aux_mem1010_tab.push_back(par_10.infeasibility());
+                aux_mem1010_tab.push_back(par_10.desviacionParticion());
+                aux_mem1010_tab.push_back(par_10.fitnessFunction());
+                aux_mem1010_tab.push_back(time);
+                
+                cout << files[f] << "_CONST_20. ";
+                time = memetico(par_20, TAM_POBLACION_MEMETICO, 10, 1.0, false, 2, seed, false,false);
+                aux_mem1020_tab.push_back(par_20.infeasibility());
+                aux_mem1020_tab.push_back(par_20.desviacionParticion());
+                aux_mem1020_tab.push_back(par_20.fitnessFunction());
+                aux_mem1020_tab.push_back(time);
 
-            cout << endl << files[f] << "_CONST_10. ";
-            time = memetico(par_10, TAM_POBLACION_MEMETICO, 10, 1.0, false, 2, seed, false,false);
-            aux_mem1010_tab.push_back(par_10.infeasibility());
-            aux_mem1010_tab.push_back(par_10.desviacionParticion());
-            aux_mem1010_tab.push_back(par_10.fitnessFunction());
-            aux_mem1010_tab.push_back(time);
+
+                cout << endl << files[f] << "_CONST_10. ";
+                time = memetico(par_10, TAM_POBLACION_MEMETICO, 10, 0.1, false, 2, seed, false,false);
+                aux_mem0110_tab.push_back(par_10.infeasibility());
+                aux_mem0110_tab.push_back(par_10.desviacionParticion());
+                aux_mem0110_tab.push_back(par_10.fitnessFunction());
+                aux_mem0110_tab.push_back(time);
             
-            cout << files[f] << "_CONST_20. ";
-            time = memetico(par_20, TAM_POBLACION_MEMETICO, 10, 1.0, false, 2, seed, false,false);
-            aux_mem1020_tab.push_back(par_20.infeasibility());
-            aux_mem1020_tab.push_back(par_20.desviacionParticion());
-            aux_mem1020_tab.push_back(par_20.fitnessFunction());
-            aux_mem1020_tab.push_back(time);
+                cout << files[f] << "_CONST_20. ";
+                time = memetico(par_20, TAM_POBLACION_MEMETICO, 10, 0.1, false, 2, seed, false,false);  
+                aux_mem0120_tab.push_back(par_20.infeasibility());
+                aux_mem0120_tab.push_back(par_20.desviacionParticion());
+                aux_mem0120_tab.push_back(par_20.fitnessFunction());
+                aux_mem0120_tab.push_back(time);          
 
 
-            cout << endl << files[f] << "_CONST_10. ";
-            time = memetico(par_10, TAM_POBLACION_MEMETICO, 10, 0.1, false, 2, seed, false,false);
-            aux_mem0110_tab.push_back(par_10.infeasibility());
-            aux_mem0110_tab.push_back(par_10.desviacionParticion());
-            aux_mem0110_tab.push_back(par_10.fitnessFunction());
-            aux_mem0110_tab.push_back(time);
-        
-            cout << files[f] << "_CONST_20. ";
-            time = memetico(par_20, TAM_POBLACION_MEMETICO, 10, 0.1, false, 2, seed, false,false);  
-            aux_mem0120_tab.push_back(par_20.infeasibility());
-            aux_mem0120_tab.push_back(par_20.desviacionParticion());
-            aux_mem0120_tab.push_back(par_20.fitnessFunction());
-            aux_mem0120_tab.push_back(time);          
+                cout << endl << files[f] << "_CONST_10. ";
+                time = memetico(par_10, TAM_POBLACION_MEMETICO, 10, 0.1, true, 2, seed, false,false); 
+                aux_mem01best10_tab.push_back(par_10.infeasibility());
+                aux_mem01best10_tab.push_back(par_10.desviacionParticion());
+                aux_mem01best10_tab.push_back(par_10.fitnessFunction());
+                aux_mem01best10_tab.push_back(time);           
+                
+                cout << files[f] << "_CONST_20. ";
+                time = memetico(par_20, TAM_POBLACION_MEMETICO, 10, 0.1, true, 2, seed, false,false);    
+                aux_mem01best20_tab.push_back(par_20.infeasibility());
+                aux_mem01best20_tab.push_back(par_20.desviacionParticion());
+                aux_mem01best20_tab.push_back(par_20.fitnessFunction());
+                aux_mem01best20_tab.push_back(time);  
+            }
 
-
-            cout << endl << files[f] << "_CONST_10. ";
-            time = memetico(par_10, TAM_POBLACION_MEMETICO, 10, 0.1, true, 2, seed, false,false); 
-            aux_mem01best10_tab.push_back(par_10.infeasibility());
-            aux_mem01best10_tab.push_back(par_10.desviacionParticion());
-            aux_mem01best10_tab.push_back(par_10.fitnessFunction());
-            aux_mem01best10_tab.push_back(time);           
+            ////////////////////////////////////
+            //          TRAYECTORIAS
+            ////////////////////////////////////
+            if(trayectorias_run){
+                cout << endl << files[f] << "_CONST_10. ";
+                time = enfriamientoSimulado(par_10, seed, false, false);
+                aux_es10_tab.push_back(par_10.infeasibility());
+                aux_es10_tab.push_back(par_10.desviacionParticion());
+                aux_es10_tab.push_back(par_10.fitnessFunction());
+                aux_es10_tab.push_back(time);
             
-            cout << files[f] << "_CONST_20. ";
-            time = memetico(par_20, TAM_POBLACION_MEMETICO, 10, 0.1, true, 2, seed, false,false);    
-            aux_mem01best20_tab.push_back(par_20.infeasibility());
-            aux_mem01best20_tab.push_back(par_20.desviacionParticion());
-            aux_mem01best20_tab.push_back(par_20.fitnessFunction());
-            aux_mem01best20_tab.push_back(time);  
+                cout << files[f] << "_CONST_20. ";
+                time = enfriamientoSimulado(par_20, seed, false, false);
+                aux_es20_tab.push_back(par_20.infeasibility());
+                aux_es20_tab.push_back(par_20.desviacionParticion());
+                aux_es20_tab.push_back(par_20.fitnessFunction());
+                aux_es20_tab.push_back(time); 
+
+
+                cout << endl << files[f] << "_CONST_10. ";
+                time = busquedaMultiArranque(par_10, seed, false, false);
+                aux_bmb10_tab.push_back(par_10.infeasibility());
+                aux_bmb10_tab.push_back(par_10.desviacionParticion());
+                aux_bmb10_tab.push_back(par_10.fitnessFunction());
+                aux_bmb10_tab.push_back(time);
+            
+                cout << files[f] << "_CONST_20. ";
+                time = busquedaMultiArranque(par_20, seed, false, false);
+                aux_bmb20_tab.push_back(par_20.infeasibility());
+                aux_bmb20_tab.push_back(par_20.desviacionParticion());
+                aux_bmb20_tab.push_back(par_20.fitnessFunction());
+                aux_bmb20_tab.push_back(time); 
+
+
+                cout << endl << files[f] << "_CONST_10. ";
+                time = busquedaLocalReiterada(par_10, seed, false, false);
+                aux_ils10_tab.push_back(par_10.infeasibility());
+                aux_ils10_tab.push_back(par_10.desviacionParticion());
+                aux_ils10_tab.push_back(par_10.fitnessFunction());
+                aux_ils10_tab.push_back(time);
+            
+                cout << files[f] << "_CONST_20. ";
+                time = busquedaLocalReiterada(par_20, seed, false, false);
+                aux_ils20_tab.push_back(par_20.infeasibility());
+                aux_ils20_tab.push_back(par_20.desviacionParticion());
+                aux_ils20_tab.push_back(par_20.fitnessFunction());
+                aux_ils20_tab.push_back(time); 
+
+                cout << endl << files[f] << "_CONST_10. ";
+                time = busquedaLocalReiteradaES(par_10, seed, false, false);
+                aux_ilses10_tab.push_back(par_10.infeasibility());
+                aux_ilses10_tab.push_back(par_10.desviacionParticion());
+                aux_ilses10_tab.push_back(par_10.fitnessFunction());
+                aux_ilses10_tab.push_back(time);
+            
+                cout << files[f] << "_CONST_20. ";
+                time = busquedaLocalReiteradaES(par_20, seed, false, false);
+                aux_ilses20_tab.push_back(par_20.infeasibility());
+                aux_ilses20_tab.push_back(par_20.desviacionParticion());
+                aux_ilses20_tab.push_back(par_20.fitnessFunction());
+                aux_ilses20_tab.push_back(time); 
+            }     
         }
 
         // Añadimos filas a las tablas
 
-        greedy10_tab.push_back(aux_greedy10_tab);
-        greedy20_tab.push_back(aux_greedy20_tab);
-
-        bl10_tab.push_back(aux_bl10_tab);
-        bl20_tab.push_back(aux_bl20_tab);
-
-        aggun10_tab.push_back(aux_aggun10_tab);
-        aggun20_tab.push_back(aux_aggun20_tab);
-        aggsf10_tab.push_back(aux_aggsf10_tab);
-        aggsf20_tab.push_back(aux_aggsf20_tab);
-
-        ageun10_tab.push_back(aux_ageun10_tab);
-        ageun20_tab.push_back(aux_ageun20_tab);
-        agesf10_tab.push_back(aux_agesf10_tab);
-        agesf20_tab.push_back(aux_agesf20_tab);
+        if(greedy_run){
+            greedy10_tab.push_back(aux_greedy10_tab);
+            greedy20_tab.push_back(aux_greedy20_tab);
+        }
         
-        mem1010_tab.push_back(aux_mem1010_tab);
-        mem1020_tab.push_back(aux_mem1020_tab);
-        mem0110_tab.push_back(aux_mem0110_tab);
-        mem0120_tab.push_back(aux_mem0120_tab);
-        mem01best10_tab.push_back(aux_mem01best10_tab);
-        mem01best20_tab.push_back(aux_mem01best20_tab);
-        
+        if(bl_run){
+            bl10_tab.push_back(aux_bl10_tab);
+            bl20_tab.push_back(aux_bl20_tab);
+        }
+
+        if(geneticos_run){
+            aggun10_tab.push_back(aux_aggun10_tab);
+            aggun20_tab.push_back(aux_aggun20_tab);
+            aggsf10_tab.push_back(aux_aggsf10_tab);
+            aggsf20_tab.push_back(aux_aggsf20_tab);
+
+            ageun10_tab.push_back(aux_ageun10_tab);
+            ageun20_tab.push_back(aux_ageun20_tab);
+            agesf10_tab.push_back(aux_agesf10_tab);
+            agesf20_tab.push_back(aux_agesf20_tab);
+        }
+
+        if(memeticos_run){
+            mem1010_tab.push_back(aux_mem1010_tab);
+            mem1020_tab.push_back(aux_mem1020_tab);
+            mem0110_tab.push_back(aux_mem0110_tab);
+            mem0120_tab.push_back(aux_mem0120_tab);
+            mem01best10_tab.push_back(aux_mem01best10_tab);
+            mem01best20_tab.push_back(aux_mem01best20_tab);
+        }
+
+        if(trayectorias_run){
+            es10_tab.push_back(aux_es10_tab);
+            es20_tab.push_back(aux_es20_tab);  
+
+            bmb10_tab.push_back(aux_bmb10_tab);
+            bmb20_tab.push_back(aux_bmb20_tab);    
+
+            ils10_tab.push_back(aux_ils10_tab);
+            ils20_tab.push_back(aux_ils20_tab); 
+            ilses10_tab.push_back(aux_ilses10_tab);
+            ilses20_tab.push_back(aux_ilses20_tab);            
+        }
+
+
     }
 
-    tablas.push_back(greedy10_tab);
-    tablas.push_back(greedy20_tab);
+    if(greedy_run){   
+        tablas.push_back(greedy10_tab);
+        tablas.push_back(greedy20_tab);
+    }
 
-    tablas.push_back(bl10_tab);
-    tablas.push_back(bl20_tab);
+    if(bl_run){
+        tablas.push_back(bl10_tab);
+        tablas.push_back(bl20_tab);
+    }
 
-    tablas.push_back(aggun10_tab);
-    tablas.push_back(aggun20_tab);
-    tablas.push_back(aggsf10_tab);
-    tablas.push_back(aggsf20_tab);
+    if(geneticos_run){
+        tablas.push_back(aggun10_tab);
+        tablas.push_back(aggun20_tab);
+        tablas.push_back(aggsf10_tab);
+        tablas.push_back(aggsf20_tab);
 
-    tablas.push_back(ageun10_tab);
-    tablas.push_back(ageun20_tab);
-    tablas.push_back(agesf10_tab);
-    tablas.push_back(agesf20_tab);
+        tablas.push_back(ageun10_tab);
+        tablas.push_back(ageun20_tab);
+        tablas.push_back(agesf10_tab);
+        tablas.push_back(agesf20_tab);
+    }
 
-    tablas.push_back(mem1010_tab);
-    tablas.push_back(mem1020_tab);
+    if(memeticos_run){
+        tablas.push_back(mem1010_tab);
+        tablas.push_back(mem1020_tab);
 
-    tablas.push_back(mem0110_tab);
-    tablas.push_back(mem0120_tab);
-    
-    tablas.push_back(mem01best10_tab);
-    tablas.push_back(mem01best20_tab);
+        tablas.push_back(mem0110_tab);
+        tablas.push_back(mem0120_tab);
+        
+        tablas.push_back(mem01best10_tab);
+        tablas.push_back(mem01best20_tab);
+    }
+
+    if(trayectorias_run){
+        tablas.push_back(es10_tab);
+        tablas.push_back(es20_tab);
+        
+        tablas.push_back(bmb10_tab);
+        tablas.push_back(bmb20_tab);
+        
+        tablas.push_back(ils10_tab);
+        tablas.push_back(ils20_tab);
+        tablas.push_back(ilses10_tab);
+        tablas.push_back(ilses20_tab);
+    }
+
 
     // Calculamos medias
     for(int tab=0; tab<tablas.size(); tab++){
@@ -396,36 +551,63 @@ int main(int argc, char * argv[]) {
 
                 fila_medias.push_back(media);
             }
-
+            if(tab%2==0){
+                //10%
+                medias10_tab.push_back(fila_medias);
+            }else{
+                medias20_tab.push_back(fila_medias);
+            }
             tablas[tab].push_back(fila_medias);
         }
     }
 
     vector<string> tab_name;
-    tab_name.push_back("Greedy 10%");
-    tab_name.push_back("Greedy 20%");
+    if(greedy_run){
+        tab_name.push_back("Greedy 10%");
+        tab_name.push_back("Greedy 20%");
+    }
 
-    tab_name.push_back("BL 10%");
-    tab_name.push_back("BL 20%");
+    if(bl_run){
+        tab_name.push_back("BL 10%");
+        tab_name.push_back("BL 20%");
+    }
 
-    tab_name.push_back("AGGUN 10%");
-    tab_name.push_back("AGGUN 20%");
-    tab_name.push_back("AGGSF 10%");
-    tab_name.push_back("AGGSF 20%");
+    if(geneticos_run){
+        tab_name.push_back("AGGUN 10%");
+        tab_name.push_back("AGGUN 20%");
+        tab_name.push_back("AGGSF 10%");
+        tab_name.push_back("AGGSF 20%");
 
-    tab_name.push_back("AGEUN 10%");
-    tab_name.push_back("AGEUN 20%");
-    tab_name.push_back("AGESF 10%");
-    tab_name.push_back("AGESF 20%");
+        tab_name.push_back("AGEUN 10%");
+        tab_name.push_back("AGEUN 20%");
+        tab_name.push_back("AGESF 10%");
+        tab_name.push_back("AGESF 20%");
+    }
 
-    tab_name.push_back("MEM10 10%");
-    tab_name.push_back("MEM10 20%");
+    if(memeticos_run){
+        tab_name.push_back("MEM10 10%");
+        tab_name.push_back("MEM10 20%");
 
-    tab_name.push_back("MEM01 10%");
-    tab_name.push_back("MEM01 20%");
+        tab_name.push_back("MEM01 10%");
+        tab_name.push_back("MEM01 20%");
 
-    tab_name.push_back("MEM01BEST 10%");
-    tab_name.push_back("MEM01BEST 20%");
+        tab_name.push_back("MEM01BEST 10%");
+        tab_name.push_back("MEM01BEST 20%");
+    }
+
+    if(trayectorias_run){
+        tab_name.push_back("ES 10%");
+        tab_name.push_back("ES 20%");
+
+        tab_name.push_back("BMB 10%");
+        tab_name.push_back("BMB 20%");
+
+
+        tab_name.push_back("ILS 10%");
+        tab_name.push_back("ILS 20%");
+        tab_name.push_back("ILSES 10%");
+        tab_name.push_back("ILSES 20%");
+    }
 
     if(hacer_tabla_tex){
         cout << endl << endl << "-----------TABLAS-----------"<<endl;
@@ -433,6 +615,12 @@ int main(int argc, char * argv[]) {
             cout << endl << endl << tab_name[tab] << endl;
             toTableTex(tablas[tab]);
         }
+
+        cout << endl << endl << "MEDIAS 10%" << endl;
+        toTableTex(medias10_tab);
+
+        cout << endl << endl << "MEDIAS 20%" << endl;
+        toTableTex(medias20_tab);
     }
     
 }

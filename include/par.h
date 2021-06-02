@@ -41,7 +41,11 @@ private:
     vector<vector<double>> instancias;
     vector<vector<double>> centroides;          // Contiene los $num_clases centroides. Uno de cada cluster
     vector<vector<int>> clusters;               // En la posición i contiene los índices de las instancias que pertenecen al cluster i
-    vector<int> inst_belong;                    // El entero de la posición i nos dice que la instancia i pertenece al cluster inst_belong[i]  
+    vector<int> inst_belong;                    // El entero de la posición i nos dice que la instancia i pertenece al cluster inst_belong[i] 
+
+    // Mejor solución 
+    vector<int> mejor_solucion;                 // Mejor solución inst_belong hasta el momento
+    double mejor_fitness;                       // Fitness de la mejor solución
     
     //Restricciones
     vector<vector<double>> restricciones;
@@ -57,6 +61,10 @@ private:
     vector<vector<double>> poblacion;           // Vector de 50 vectores soluciones. Estas soluciones son de tipo double, pero aún así las 
                                                 //  instancias son enteros. Su penúltima componente será la época en la que se generó. Su 
                                                 //  última componente si que es un double haciendo referencia al  valor de su función objetivo.
+
+    // Atributos de trayectorias
+    vector<double> mejores_fitness_tray;        // En la posición i guarda el mejor valor de fitness encontrado en la iteración i de búsqTrayectorias
+    vector<double> peores_fitness_tray;         // En la posición i guarda el peor valor de fitness encontrado en la iteración i de búsqTrayectorias
 
     // Seguiremos el orden según estos índices
     vector<int> indices;                        // Nos dice cómo recorremos las instancias
@@ -115,6 +123,8 @@ public:
     */
     vector<double> calcularCentroide(int ci);
 
+
+
     /*
         Actualiza los centroides
     */
@@ -149,6 +159,16 @@ public:
         Simula una solución. Actualiza clústers, centroides y función objetivo
     */
     bool simularSolucion(vector<double> &solucion);
+
+    /*
+        Sobrecarga para vectores int
+    */
+    bool simularSolucion(vector<int> &solucion);
+
+    /*
+        Simula la solucion mejor_solucion
+    */
+    bool simularMejorSolucion();
 
 
     ////////////////////////////////////////////////////////////////
@@ -204,8 +224,9 @@ public:
 
         Nos devuelve True en caso de haber encontrado un vecino mejor. En otro caso
         estamos ante la solución óptima y nos dará False
+            - int limite_iterations_ff: evaluaciones máximas de la función fitness
     */
-    bool buscarPrimerVecinoMejor();
+    bool buscarPrimerVecinoMejor(int limite_iterations_ff);
 
 
     /*
@@ -302,7 +323,29 @@ public:
         Nos devuelve False en caso contrario.
     */
     bool finishEpochs();
+
     
+
+
+    //////////////////////////////
+    //  BÚSQUEDA DE TRAYECTORIAS
+    //////////////////////////////
+    /*
+        USADO PARA LA METAHEURÍSTICA DE ENFRIAMIENTO SIMULADO
+        
+        Ejecuta una iteración de enfriamiento simulado.        
+    */
+    bool enfriamientoSimulado(double temperatura, int max_vecinos, int max_exitos);
+
+    /*
+        USADO PARA LA METAHEURÍSTICA DE ENFRIAMIENTO SIMULADO
+        
+        Muta la solución a través de segmento fijo. Un segmento
+        de tamaño "size" es mutado en la solución. Este segmento
+        comienza en una posición aleatoria.
+    */
+    bool mutacionILS(int size);
+
 
     
     /////////////////////////////////////////////////////////////
@@ -331,7 +374,10 @@ public:
         Función objetivo. Será la función que buscaremos minimizar y nos dirá 
         cómo de buena es nuestra solución actual
     */
-    double  fitnessFunction();
+    double  fitnessFunction();    
+
+
+   
 
 
     //////////////////////////////////
@@ -480,12 +526,20 @@ public:
     vector<int> getInstBelong() const{
         return inst_belong;
     }
-    void getInstBelong(vector<int> new_inst_belong){
+    void setInstBelong(vector<int> new_inst_belong){
         if(new_inst_belong.size()==num_instancias){
             inst_belong = new_inst_belong;
         }else{
             cout << "ERROR. Inst_belong asignado de distinto tamaño con respecto el número de instancias." << endl;
         }
+    }
+
+    vector<int> getMejorSolucion() const{
+        return mejor_solucion;
+    }
+
+    double getMejorFitness() const{
+        return mejor_fitness;
     }
     
     vector<vector<int>> getClusters() const{
@@ -558,6 +612,22 @@ public:
     }
     void setRecorridoFunObjetivo(vector<double> r){
         recorrido_fun_objetivo = r;
+    }
+
+
+    vector<double> getMejoresFitnessTrayectoria() const{
+        return mejores_fitness_tray;
+    }
+    void setMejoresFitnessTrayectoria(vector<double> fit_tray){
+        mejores_fitness_tray = fit_tray;
+    }
+
+
+    vector<double> getPeoresFitnessTrayectoria() const{
+        return peores_fitness_tray;
+    }
+    void setPeoresFitnessTrayectoria(vector<double> fit_tray){
+        peores_fitness_tray = fit_tray;
     }
 
 };

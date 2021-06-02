@@ -192,6 +192,11 @@ bool PAR::clear(){
     iterations_ff=0;
     resetClusters();
     poblacion.clear();
+    mejores_fitness_tray.clear();
+    peores_fitness_tray.clear();
+    mejor_fitness = 1000000;
+
+    return true;
 }
 
 //////////////////
@@ -252,6 +257,7 @@ vector<double> PAR::calcularCentroide(int ci){
 
     return mu_i;
 }
+
 
 
 
@@ -381,6 +387,13 @@ bool PAR::asignarInstanciasAleatoriamente(vector<int> &solucion){
             }
         }
     }
+
+    if(exito_inicializando){
+        mejor_solucion = inst_belong;
+        simularSolucion(mejor_solucion);
+        mejor_fitness = funcion_objetivo;
+    }
+
     return exito_inicializando;
 }
 
@@ -397,7 +410,6 @@ bool PAR::simularSolucion(vector<double> &solucion){
         inst_belong[i]=solucion[i];
         clusters[solucion[i]].push_back(i);
     }
-    int num=0;
     
     // Arreglamos las restricciones fuertes que se incumplan
     shuffleInstances();
@@ -431,6 +443,32 @@ bool PAR::simularSolucion(vector<double> &solucion){
     necesidad_actualizar_centroides=false;
     
     fitnessFunction();
+
+    return exito;
+}
+
+
+/*
+    Sobrecarga para vectores int
+*/
+bool PAR::simularSolucion(vector<int> &solucion){
+    vector<double> sol_aux;
+    for(int i=0; i<num_instancias; i++){
+        sol_aux.push_back(solucion[i]);
+    }
+
+    bool resultado = simularSolucion(sol_aux);
+
+    solucion = inst_belong;
+
+    return resultado;
+}
+
+/*
+    Simula la solucion mejor_solucion
+*/
+bool PAR::simularMejorSolucion(){
+    bool exito=simularSolucion(mejor_solucion);
 
     return exito;
 }
@@ -575,13 +613,10 @@ bool PAR::crearSolucionAleatoria(){
         cout << "Error al asignar instancias aleatoriamente: No se ha conseguido hacer respetando todas las restricciones fuertes." << endl;
     }
 
-    // Actualizamos los centroides y función objetivo
-    if(necesidad_actualizar_centroides){
-        updateCentroides();
-        necesidad_actualizar_centroides=false;
-    }
-    fitnessFunction();
 
+    // Actualizamos los centroides y función objetivo
+    simularSolucion(inst_belong);
+    
     return exito_inicializando;
 }
 
@@ -642,11 +677,29 @@ bool PAR::cambioClusterMejor(int instancia, int cluster){
 
     Nos devuelve True en caso de haber encontrado un vecino mejor. En otro caso
     estamos ante la solución óptima y nos dará False
+            - int limite_iterations_ff: evaluaciones máximas de la función fitness
+
 */
-bool PAR::buscarPrimerVecinoMejor(){
+bool PAR::buscarPrimerVecinoMejor(int limite_iterations_ff){
     
     bool hay_cambio=false;          // Nos dice si hemos encontrado un vecino mejor
 
+    shuffleInstances();
+    for(int ii=0; ii<num_instancias && !hay_cambio && iterations_ff<limite_iterations_ff; ii++){    // para cada instancia
+        int i = indices[ii];
+        
+        vector<int> indices_clust = ShuffleIndices(num_clases);      // Metemos aleatoriedad
+        for(int cc=0; cc<num_clases && !hay_cambio && iterations_ff<limite_iterations_ff; cc++){    // para cada clúster
+            int c = indices_clust[cc];
+            // Comprobamos que el clúster nuevo no es el actual de la instancia
+            // y que no dejamos vacío el clúster antiguo
+            if(inst_belong[i]!=c && clusters[inst_belong[i]].size()>1){
+                hay_cambio = cambioClusterMejor(i, c);
+            }
+        }
+    }
+
+    /*
     // Generamos el vecindario virtual:
     // Un vecino virtual tendrá la forma {i, c} donde
     //      -i      instancia a reasignar clúster
@@ -666,13 +719,14 @@ bool PAR::buscarPrimerVecinoMejor(){
     }
 
     vector<int> ind_vec = ShuffleIndices(vec_virtual.size());      // Metemos aleatoriedad
+    
 
-    for(int i=0; i<ind_vec.size() and !hay_cambio and iterations_ff<=100000; i++){
+    for(int i=0; i<ind_vec.size() and !hay_cambio and iterations_ff<limite_iterations_ff; i++){
         hay_cambio = cambioClusterMejor(vec_virtual[ind_vec[i]][0], vec_virtual[ind_vec[i]][1]);
     }
+    */
 
-
-    return hay_cambio and iterations_ff<100000;
+    return hay_cambio and iterations_ff<limite_iterations_ff;
 }
 
 
@@ -701,14 +755,14 @@ bool PAR::busquedaLocalSuave(vector<double> &solucion, int fallos){
     int f = 0;  // Cuenta de fallos
     bool mejora = true;
     int i = 0;
-    vector<double> mejor_solucion=solucion;
+    vector<double> mejor_solucionbs=solucion;
     
     while((mejora || f<fallos) && i<num_instancias){
         mejora = false;
 
         int cluster_de_partida = solucion[indices[i]];   
         int mejor_cluster = cluster_de_partida;
-        double f_objetivo_mejor = mejor_solucion[mejor_solucion.size()-1];
+        double f_objetivo_mejor = mejor_solucionbs[mejor_solucionbs.size()-1];
 
         // Si podemos sacarlo de ese cluster 
         if(clusters[solucion[indices[i]]].size()>1){
@@ -730,13 +784,13 @@ bool PAR::busquedaLocalSuave(vector<double> &solucion, int fallos){
                     if(funcion_objetivo < f_objetivo_mejor){
                         mejor_cluster = c;
                         f_objetivo_mejor = funcion_objetivo;
-                        mejor_solucion = solucion;
+                        mejor_solucionbs = solucion;
                     }
                 }
             }
 
             // Nos quedamos la mejor solución
-            solucion = mejor_solucion;
+            solucion = mejor_solucionbs;
 
             // Actualizamos las variables dependiendo si se ha mejorado la solución en esta iteración o no
             if(mejor_cluster!=cluster_de_partida){
@@ -887,7 +941,6 @@ bool PAR::operadorMutacion(vector<vector<double>> &pob, double ngenes){
     int total_genes = pob.size()*num_instancias;
     bool mutacion_en_esta_epoca = false;
     int epoca_mutacion=1;
-    int num_genes_a_mutar = ngenes;
     
     
     if(ngenes<1 && ngenes>0){
@@ -916,7 +969,7 @@ bool PAR::operadorMutacion(vector<vector<double>> &pob, double ngenes){
 
                 // Asignamos la mutación
                 pob[i][j]=new_cluster;
-                bool exito = simularSolucion(pob[i]);
+                exito = simularSolucion(pob[i]);
 
                 // Actualizamos iteraciones
                 iterations_ff++;
@@ -929,6 +982,7 @@ bool PAR::operadorMutacion(vector<vector<double>> &pob, double ngenes){
         }
     }
 
+    return exito;
 }
 
 
@@ -1022,9 +1076,7 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
     }
     
     // Proceso mutación 
-    double num_total_genes = tam_pob * num_instancias;
     double genes_a_mutar = PROB_MUT_GEN*tam_pob;
-    
 
     operadorMutacion(poblacion_hijos, genes_a_mutar);
 
@@ -1084,6 +1136,8 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
     
 
     epoca++;
+
+    return true;
 }
 
     
@@ -1124,6 +1178,112 @@ bool PAR::finishEpochs(){
     return exito;
 }
 
+
+
+    
+
+
+//////////////////////////////
+//  BÚSQUEDA DE TRAYECTORIAS
+//////////////////////////////
+/*
+    USADO PARA LA METAHEURÍSTICA DE ENFRIAMIENTO SIMULADO
+
+    Ejecuta una iteración de enfriamiento simulado.
+*/
+bool PAR::enfriamientoSimulado(double temperatura, int max_vecinos, int max_exitos){
+    int exitos = 0;
+    vector<double> solucion;
+    for(int i=0; i<num_instancias;i++){
+        solucion.push_back(mejor_solucion[i]);
+    }
+
+    // Simulamos la mejor solución
+    simularSolucion(solucion);
+    mejor_fitness = funcion_objetivo;
+    double f_actual = mejor_fitness;
+    double peor_fitness = mejor_fitness;
+
+
+    for(int i=0; i<max_vecinos && exitos<max_exitos && iterations_ff<100000; i++){
+        // Seleccionamos la instancia
+        int instancia_random;
+        do{
+            instancia_random = Randint(0,num_instancias-1);
+        }while(clusters[inst_belong[instancia_random]].size()<=1);
+
+        // Seleccionamos el nuevo clúster
+        int cluster_anterior = inst_belong[instancia_random];
+        int cluster_random = Randint(0,num_clases-2);
+        if(cluster_random>=inst_belong[i]){
+            cluster_random++;
+        }
+
+        // Aplicamos los cambios
+        solucion[instancia_random]=cluster_random;
+
+        // Simulamos la nueva solución
+        simularSolucion(solucion);
+        iterations_ff++;
+        
+
+        double incremento_fit = funcion_objetivo - f_actual;
+
+        // Si no mejora y no tiene la probabilidad suficiente para aceptarse
+        if(incremento_fit>0 && Rand()>exp(-incremento_fit/temperatura)){    
+            // Deshacemos el cambio
+            solucion[instancia_random] = cluster_anterior;
+            simularSolucion(solucion);
+        }else{
+            exitos++;
+            f_actual = funcion_objetivo;
+            // Si es la mejor explorada, actualizamos
+            if(funcion_objetivo < mejor_fitness){
+                mejor_fitness = funcion_objetivo;
+                mejor_solucion = inst_belong;
+            }
+        }
+        
+        // Guardamos los datos del peor fitness
+        if(funcion_objetivo>peor_fitness){
+            peor_fitness = funcion_objetivo;
+        }
+
+    }    
+
+    mejores_fitness_tray.push_back(mejor_fitness);
+    peores_fitness_tray.push_back(peor_fitness);
+
+    return  exitos<=0;
+}
+
+
+/*
+    USADO PARA LA METAHEURÍSTICA DE ENFRIAMIENTO SIMULADO
+    
+    Muta la solución a través de segmento fijo. Un segmento
+    de tamaño "size" es mutado en la solución. Este segmento
+    comienza en en una posición aleatoria.
+
+*/
+bool PAR::mutacionILS(int size){
+    vector<int> solucion = inst_belong;
+
+    // Cogemos un inicio del segmento aleatorio
+    int inicio = Randint(0,num_instancias-1);
+    
+    // Generamos asignaciones completamente aleatorias
+    for(int t=0; t<size; t++){
+        int i = (t+inicio)%num_instancias;
+
+        solucion[i] = Randint(0,num_clases-1);
+    }
+
+    // Arreglamos las restricciones fuertes que se incumplan y nos quedamos con la solución
+    bool exito = simularSolucion(solucion);
+
+    return exito;
+}
 
 
 
@@ -1210,6 +1370,15 @@ double  PAR::fitnessFunction(){
 
     funcion_objetivo = desviacionParticion()+ lambda*infeasibility();
 
+    // Si mejor_fitness no estaba inicializado o, si lo estaba, el actual
+    // le mejora.
+    if(mejor_fitness <= 0 ||  funcion_objetivo < mejor_fitness){
+        mejor_fitness = funcion_objetivo;
+        mejor_solucion = inst_belong;
+    }
+
+
+    
     return funcion_objetivo;
 }
 

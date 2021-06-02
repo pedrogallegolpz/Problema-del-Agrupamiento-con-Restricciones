@@ -16,7 +16,9 @@ using namespace std;
 int busquedaLocalPAR(PAR &par, int seed, bool mostrarEstado){
     // Asignamos semilla aleatoria
     Set_random(seed);
-    
+    par.clear();
+    int evaluaciones_max_ff = 100000;
+
     auto begin = chrono::high_resolution_clock::now();
     // Inicializamos aleatoriamente la asignación de clústers
     if(!par.crearSolucionAleatoria()){
@@ -27,7 +29,7 @@ int busquedaLocalPAR(PAR &par, int seed, bool mostrarEstado){
     // Buscamos mejores vecinos hasta llegar al mejor
     int i=0;
     par.setIterationsFF(0);
-    while(par.buscarPrimerVecinoMejor()){
+    while(par.buscarPrimerVecinoMejor(evaluaciones_max_ff)){
         i++;
     }
 
