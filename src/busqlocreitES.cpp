@@ -31,8 +31,13 @@ int busquedaLocalReiteradaES(PAR &par, int seed, bool mostrarEstado, bool mostra
 
     // Inicializamos constantes
     int size = 0.1*par.getNumInstancias();
+    /*
+    double mu = 0.1;     // Se admiten soluciones de hasta 'mu' tanto por ciento de empeoramiento
+    double phi = 0.4;    // Se aceptan las soluciones admitidas con probabilidad 'phi'
+    */
     double mu = 0.3;     // Se admiten soluciones de hasta 'mu' tanto por ciento de empeoramiento
     double phi = 0.3;    // Se aceptan las soluciones admitidas con probabilidad 'phi'
+     
     int max_vecinos = 10*par.getNumInstancias(); // max_vecinos generados en cada iteracion
     int max_exitos = 0.1*max_vecinos;
     
@@ -44,9 +49,11 @@ int busquedaLocalReiteradaES(PAR &par, int seed, bool mostrarEstado, bool mostra
     if(!par.crearSolucionAleatoria()){
         cout << "Error al asignar instancias aleatoriamente en el algoritmo de enfriamiento simulado." << endl;
     }
+    inicios_fit.push_back(par.getFuncionObjetivo());
 
     // Generamos las temperaturas
     double Ti = (mu*par.fitnessFunction())/(-log(phi));
+    //double Tf = 0.0001;
     double Tf = 0.001;
 
     // Nos aseguramos de que Ti sea menor que Tf
@@ -57,12 +64,6 @@ int busquedaLocalReiteradaES(PAR &par, int seed, bool mostrarEstado, bool mostra
     int M = 10000/max_vecinos;
     vector<double> temperaturas = generarTemperaturas( Ti, Tf, M);
 
-
-    // Inicializamos aleatoriamente la asignación de clústers
-    if(!par.crearSolucionAleatoria()){
-        cout << "Error al asignar instancias aleatoriamente en el algoritmo de enfriamiento simulado." << endl;
-    }
-    inicios_fit.push_back(par.getFuncionObjetivo());
 
     // Iniciamos búsqueda
     int iteraciones=0;

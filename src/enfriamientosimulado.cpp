@@ -23,7 +23,7 @@ vector<double> generarTemperaturas(double Ti, double Tf, int M){
     // Generamos los M enfriamientos (M+1 temperaturas)
     temperatura.push_back(Ti);
     
-    double k = pow(Tf/Ti, 1/M);
+    double k = 0.95;
     
     for(int i=0; i<M; i++){
        //temperatura.push_back( k*temperatura[i] ); // T <- k*T
@@ -50,8 +50,13 @@ int enfriamientoSimulado(PAR &par, int seed, bool mostrarEstado, bool mostrarEvo
     par.setIterationsFF(0);
 
     // Inicializamos constantes:
+    /*
+    double mu = 0.1;     // Se admiten soluciones de hasta 'mu' tanto por ciento de empeoramiento
+    double phi = 0.4;    // Se aceptan las soluciones admitidas con probabilidad 'phi'
+    */
     double mu = 0.3;     // Se admiten soluciones de hasta 'mu' tanto por ciento de empeoramiento
     double phi = 0.3;    // Se aceptan las soluciones admitidas con probabilidad 'phi'
+    
     int max_vecinos = 10*par.getNumInstancias(); // max_vecinos generados en cada iteracion
     int max_exitos = 0.1*max_vecinos;
     
@@ -66,9 +71,10 @@ int enfriamientoSimulado(PAR &par, int seed, bool mostrarEstado, bool mostrarEvo
 
     // Generamos las temperaturas
     double Ti = (mu*par.fitnessFunction())/(-log(phi));
+    //double Tf = 0.0001;
     double Tf = 0.001;
 
-    // Nos aseguramos de que Ti sea menor que Tf
+    // Nos aseguramos de que Ti sea mayor que Tf
     if(Ti<=Tf){
         Tf=Ti*Tf;
     }

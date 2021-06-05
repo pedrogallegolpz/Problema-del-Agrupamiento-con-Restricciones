@@ -38,13 +38,13 @@ int busquedaMultiArranque(PAR &par, int seed, bool mostrarEstado, bool mostrarEv
         par.setIterationsFF(0);
 
         // Inicializamos aleatoriamente la asignación de clústers
-        if(!par.crearSolucionAleatoria()){
-            cout << "Error al asignar instancias aleatoriamente en el algoritmo de enfriamiento simulado." << endl;
-        }
+        par.crearSolucionAleatoria();
         inicios_fit.push_back(par.getFuncionObjetivo());
 
         // Iniciamos búsqueda
-        while(par.buscarPrimerVecinoMejor(evaluaciones_max_ff)){
+        bool continua = true;
+        while(continua){
+            continua = par.buscarPrimerVecinoMejor(evaluaciones_max_ff);
             it++;
         }
         finales_fit.push_back(par.getFuncionObjetivo());

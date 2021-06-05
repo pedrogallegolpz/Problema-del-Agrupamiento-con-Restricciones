@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <math.h> 
+#include <algorithm>
 #include "../include/random.h" 
 #include "../include/par.h"
 
@@ -348,9 +349,30 @@ int PAR::incrementoInfeasibility(int instancia, int c1, int c2){
 bool PAR::asignarInstanciasAleatoriamente(vector<int> &solucion){
     bool exito_inicializando=true;      // Nos dirá si se queda algún clúter vacío
 
-
     // Reseteamos la información que haya
     resetClusters();
+
+    /*
+    // Cogemos las cantidades de instancias que tendrá cada clúster
+    int inst = 0;
+    random_shuffle (indices.begin(), indices.end());
+    
+    for(int c=0; c<num_clases-1; c++){
+        int cantidad_en_el_cluster = Randint(1,((num_instancias-inst)-1)-(num_clases-1-c));
+        for(int i=0; i<cantidad_en_el_cluster; i++){
+            // Asignamos el cluster a la instancia i
+            solucion[indices[inst]] = c;
+            clusters[c].push_back(indices[inst]);
+            inst++;
+        }
+    }
+    while(inst<num_instancias){
+        // Asignamos el cluster a la instancia i
+        solucion[indices[inst]] = clusters.size()-1;
+        clusters[ clusters.size()-1].push_back(indices[inst]);
+        inst++;
+    }*/
+
 
     // Asignamos a cada instancia un clúster aleatorio sin tener en cuenta restricciones
     for(int i=0; i<num_instancias; i++){
@@ -361,9 +383,10 @@ bool PAR::asignarInstanciasAleatoriamente(vector<int> &solucion){
         solucion[i] = cluster_aleatorio;
         clusters[cluster_aleatorio].push_back(i);
     }
+    
 
     // Arreglamos las restricciones fuertes que se incumplan
-    shuffleInstances();
+    random_shuffle (indices.begin(), indices.end());
     for(int c=0; c<num_clases and exito_inicializando; c++){    // Para cada clúster comprobamos que no esté vacío
 
         if(clusters[c].size() == 0){    // Si está vacío
@@ -387,11 +410,10 @@ bool PAR::asignarInstanciasAleatoriamente(vector<int> &solucion){
             }
         }
     }
+    
 
     if(exito_inicializando){
-        mejor_solucion = inst_belong;
-        simularSolucion(mejor_solucion);
-        mejor_fitness = funcion_objetivo;
+        simularSolucion(solucion);
     }
 
     return exito_inicializando;
@@ -684,22 +706,6 @@ bool PAR::buscarPrimerVecinoMejor(int limite_iterations_ff){
     
     bool hay_cambio=false;          // Nos dice si hemos encontrado un vecino mejor
 
-    shuffleInstances();
-    for(int ii=0; ii<num_instancias && !hay_cambio && iterations_ff<limite_iterations_ff; ii++){    // para cada instancia
-        int i = indices[ii];
-        
-        vector<int> indices_clust = ShuffleIndices(num_clases);      // Metemos aleatoriedad
-        for(int cc=0; cc<num_clases && !hay_cambio && iterations_ff<limite_iterations_ff; cc++){    // para cada clúster
-            int c = indices_clust[cc];
-            // Comprobamos que el clúster nuevo no es el actual de la instancia
-            // y que no dejamos vacío el clúster antiguo
-            if(inst_belong[i]!=c && clusters[inst_belong[i]].size()>1){
-                hay_cambio = cambioClusterMejor(i, c);
-            }
-        }
-    }
-
-    /*
     // Generamos el vecindario virtual:
     // Un vecino virtual tendrá la forma {i, c} donde
     //      -i      instancia a reasignar clúster
@@ -718,13 +724,12 @@ bool PAR::buscarPrimerVecinoMejor(int limite_iterations_ff){
         }
     }
 
-    vector<int> ind_vec = ShuffleIndices(vec_virtual.size());      // Metemos aleatoriedad
-    
+    random_shuffle (vec_virtual.begin(), vec_virtual.end());
 
-    for(int i=0; i<ind_vec.size() and !hay_cambio and iterations_ff<limite_iterations_ff; i++){
-        hay_cambio = cambioClusterMejor(vec_virtual[ind_vec[i]][0], vec_virtual[ind_vec[i]][1]);
+    for(int i=0; i<vec_virtual.size() and !hay_cambio and iterations_ff<limite_iterations_ff; i++){
+        hay_cambio = cambioClusterMejor(vec_virtual[i][0], vec_virtual[i][1]);
     }
-    */
+
 
     return hay_cambio and iterations_ff<limite_iterations_ff;
 }
@@ -1100,7 +1105,7 @@ bool PAR::runEpoch(int tipo, int cruce, int bls, double prob, bool best){
         for(int i=0; i<num_soluciones_bls; i++){
             busquedaLocalSuave(poblacion_hijos[i], fallos);
 
-            //Vamos a probar con la BL de la P1
+            //Vamos a probar con la BL de la P1I
             /*simularSolucion(poblacion_hijos[i]);
             for(int n=0; n<num_instancias; n++){
                 buscarPrimerVecinoMejor();
