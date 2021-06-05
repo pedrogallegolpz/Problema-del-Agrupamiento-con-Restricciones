@@ -81,14 +81,13 @@ int busquedaLocalReiterada(PAR &par, int seed, bool mostrarEstado, bool mostrarE
     }
 
     if(mostrarEvolucionFitness){
-        cout << endl << "Enfriamiento Simulado Mejores " << endl << "ES_mejores=[";
+        cout << endl << endl << "Enfriamiento Simulado Peores " << endl << "ILS_peores=[";
         for(int i=0; i<inicios_fit.size()-1;i++){
             cout << inicios_fit[i] << ", ";
         }
         cout << inicios_fit[inicios_fit.size()-1] <<"]\n";
 
-
-        cout << endl << endl << "Enfriamiento Simulado Peores " << endl << "ES_mejores=[";
+        cout << endl << "Enfriamiento Simulado Mejores " << endl << "ILS_mejores=[";
         for(int i=0; i<finales_fit.size()-1;i++){
             cout << finales_fit[i] << ", ";
         }

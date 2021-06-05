@@ -98,8 +98,8 @@ int main(int argc, char * argv[]) {
     bool greedy_run = true;
     bool bl_run = true;
 
-    bool geneticos_run = true;
-    bool memeticos_run = true;
+    bool geneticos_run = false;
+    bool memeticos_run = false;
 
     bool trayectorias_run = true;
     

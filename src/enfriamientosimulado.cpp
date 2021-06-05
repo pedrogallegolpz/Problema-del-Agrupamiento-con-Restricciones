@@ -121,7 +121,7 @@ int enfriamientoSimulado(PAR &par, int seed, bool mostrarEstado, bool mostrarEvo
         cout << mejores_fit[mejores_fit.size()-1] <<"]\n";
 
 
-        cout << endl << endl << "Enfriamiento Simulado Peores " << endl << "ES_mejores=[";
+        cout << endl << endl << "Enfriamiento Simulado Peores " << endl << "ES_peores=[";
         for(int i=0; i<peores_fit.size()-1;i++){
             cout << peores_fit[i] << ", ";
         }
